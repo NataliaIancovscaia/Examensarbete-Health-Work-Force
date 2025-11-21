@@ -1,0 +1,24 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+.input-alert-msg,
+.mobile-alert-error {
+  color: red;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 0;
+}
+
+.input-success-msg,
+.mobile-alert-success {
+  color: green;
+  text-align: center;
+  font-size: 0.8rem;
+  text-align: center;
+  margin: 0;
+}
