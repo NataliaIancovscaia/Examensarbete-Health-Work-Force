@@ -1,11 +1,8 @@
 import logo from "./logo.png";
 import search_icon from "./search_icon.svg";
 import company_icon from "./company_icon.svg";
-import microsoft_logo from "./microsoft_logo.svg";
-import walmart_logo from "./walmart_logo.svg";
 import accenture_logo from "./accenture_logo.png";
-import profile_img from "./profile_img.png";
-import app_main_img from "./app_main_img.png";
+import profile_img from "./profile-image.png"
 import cross_icon from './cross_icon.svg';
 import location_icon from './location_icon.svg';
 import money_icon from './money_icon.svg';
@@ -30,59 +27,11 @@ import resume_download_icon from './resume_download_icon.svg';
 import delete_icon from './delete_icon.svg';
 import email_icon from './email_icon.svg';
 import lock_icon from './lock_icon.svg';
-import samsung_logo from './samsung_logo.png';
 import adobe_logo from './adobe_logo.png';
 
 
 
-// TYPES
 
-
-export interface Company {
-    _id: string;
-    name: string;
-    email: string;
-    image: string;
-}
-
-export interface JobItem {
-    _id: string;
-    title: string;
-    location: string;
-    level: string;
-    companyId: Company;
-    description: string;
-    salary: number;
-    date: number;
-    category: string;
-}
-
-export interface ManageJobItem {
-    _id: number;
-    title: string;
-    date: number;
-    location: string;
-    applicants: number;
-}
-
-export interface AppliedJob {
-    company: string;
-    title: string;
-    category: string;
-    location: string;
-    date: string;
-    status: "Open" | "Pending" | "Closed";
-    logo: string;
-}
-
-export interface ApplicationUser {
-    _id: number;
-    name: string;
-    jobTitle: string;
-    location: string;
-    imgSrc: string;
-    category: string;
-}
 
 
 // ASSETS EXPORT
@@ -96,10 +45,7 @@ export const assets = {
     company_icon,
     resume_not_selected,
     resume_selected,
-    microsoft_logo,
-    walmart_logo,
     accenture_logo,
-    app_main_img,
     play_store,
     app_store,
     back_arrow_icon,
@@ -120,8 +66,7 @@ export const assets = {
     delete_icon,
     profile_upload_icon,
     email_icon,
-    lock_icon,
-    samsung_logo,
+    lock_icon,   
     adobe_logo,
     
 };
@@ -130,7 +75,7 @@ export const assets = {
 // DATA ARRAYS
 
 
-export const JobCategories: string[] = [
+export const JobCategories = [
     "Doctors",
     "Dentistry",
     "Pharmaceuticals",
@@ -140,7 +85,7 @@ export const JobCategories: string[] = [
     "Paramedical",
 ];
 
-export const JobLocations: string[] = [
+export const JobLocations = [
     "Stockholm",
     "Gothenburg",
     "Malmo",
@@ -153,14 +98,14 @@ export const JobLocations: string[] = [
     "Norrkoping",
 ];
 
-export const manageJobsData: ManageJobItem[] = [
+export const manageJobsDate = [
     { _id: 1, title: "Dentist-therapist", date: 1760376000000, location: "Norrkoping", applicants: 2 },
     { _id: 2, title: "Surgeon", date: 1760462400000, location: "Jonkoping", applicants: 1 },
     { _id: 3, title: "Pediatric cardiologist", date: 1760548800000, location: "Linkoping", applicants: 3 },
     { _id: 4, title: "Laboratory assistant", date: 1760635200000, location: "Orebro", applicants: 2 },
 ];
 
-export const jobsApplied: AppliedJob[] = [
+export const jobsApplied = [
     {
         company: 'Karolinska Institute',
         title: 'General Practitioner',
@@ -226,7 +171,7 @@ export const jobsApplied: AppliedJob[] = [
     },
 ];
 
-export const viewApplicationsPageData: ApplicationUser[] = [
+export const viewApplicationsPageData = [
     { _id: 1, name: "Anna Svensson", jobTitle: "General Practitioner", location: "Stockholm", imgSrc: profile_img, category: "Doctors" },
     { _id: 2, name: "Erik Johansson", jobTitle: "Dentist", location: "Gothenburg", imgSrc: profile_img, category: "Dentistry" },
     { _id: 3, name: "Sara Lindberg", jobTitle: "Pharmacist", location: "Malmo", imgSrc: profile_img, category: "Pharmaceuticals" },
@@ -236,7 +181,7 @@ export const viewApplicationsPageData: ApplicationUser[] = [
     { _id: 7, name: "Karin Olsson", jobTitle: "Physiotherapist", location: "Linkoping", imgSrc: profile_img, category: "Paramedical" },
 ];
 
-export const jobsData: JobItem[] = [
+export const jobsData= [
     {
         _id: '1',
         title: "General Practitioner",
