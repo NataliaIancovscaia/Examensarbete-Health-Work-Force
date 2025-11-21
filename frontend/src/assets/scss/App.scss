@@ -1,16 +1,73 @@
 @import './NavigationBar.scss';
 
-
-
-
 html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: rgb(234, 225, 225);
+  height: 100%;
+  font-family: sans-serif;
+  
 }
 
+.app-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
+/* GLASS BACKGROUND*/
+.glass-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+
+  img.background-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -2;
+
+    filter: blur(10px) brightness(0.85); 
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: -1;
+  }
+
+  @media (max-width: 768px) {
+    img.background-img {
+      object-position: center top;
+    }
+  }
+}
+
+.app-content {
+  position: relative;
+  z-index: 1;
+  padding-top: 80px; 
+}
+
+/* -----------------------------
+   ALERT MESSAGES
+------------------------------ */
 .input-alert-msg,
 .mobile-alert-error {
   color: red;
@@ -26,3 +83,4 @@ html, body {
   text-align: center;
   margin: 0;
 }
+

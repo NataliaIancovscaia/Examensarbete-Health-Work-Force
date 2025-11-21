@@ -12,6 +12,7 @@ import upload_area from './upload_area.svg';
 import resume_selected from './resume_selected.svg';
 import resume_not_selected from './resume_not_selected.svg';
 import play_store from './play_store.svg';
+import background from './background1.jpg';
 import app_store from './app_store.svg';
 import back_arrow_icon from './back_arrow_icon.svg';
 import left_arrow_icon from './left_arrow_icon.svg';
@@ -39,6 +40,7 @@ import adobe_logo from './adobe_logo.png';
 
 export const assets = {
     logo,
+     background,
     search_icon,
     cross_icon,
     upload_area,

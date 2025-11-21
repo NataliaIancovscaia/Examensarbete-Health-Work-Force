@@ -10,6 +10,7 @@ const NavigationBar: React.FC = () => {
       <div className="glass-navbar__left">
         <div className="glass-navbar__logo-container">
           <img src={assets.logo} alt="Logo" className="glass-navbar__logo" />
+          <h2 >Health Work Force</h2>
         </div>
       </div>
 
