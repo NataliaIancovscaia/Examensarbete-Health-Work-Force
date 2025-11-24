@@ -11,7 +11,7 @@ const NavigationBar: React.FC = () => {
 
   return (
     <nav className="glass-navbar">
-      {/* LEFT — LOGO */}
+     
       <div className="glass-navbar__left">
         <div className="glass-navbar__logo-container">
           <img src={assets.logo} alt="Logo" className="glass-navbar__logo" />
@@ -19,10 +19,10 @@ const NavigationBar: React.FC = () => {
         </div>
       </div>
 
-      {/* RIGHT — MENU (universal for both states) */}
+      
       <div className={`glass-navbar__menu ${open ? "open" : ""}`}>
 
-        {/* If logged in */}
+       
         {user ? (
           <>
             <Link to="/applications" className="glass-navbar__menu-link">
@@ -48,7 +48,7 @@ const NavigationBar: React.FC = () => {
         )}
       </div>
 
-      {/* BURGER */}
+      
       <button
         className={`glass-navbar__burger ${open ? "active" : ""}`}
         onClick={() => setOpen(!open)}

@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { type SearchFilter, type AppContextType, AppContext } from "./AppContext";
+import { AppContext, type AppContextType, type Job, type SearchFilter} from "./AppContext";
+import { jobsData } from "../assets/images/assets";
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface AppProviderProps {
+  children: React.ReactNode;
+}
+
+export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [searchFilter, setSearchFilter] = useState<SearchFilter>({
     title: "",
     location: "",
   });
 
   const [isSearched, setIsSearched] = useState<boolean>(false);
+  const [jobs, setJobs] = useState<Job[]>(jobsData); 
 
   const value: AppContextType = {
     searchFilter,
     setSearchFilter,
     isSearched,
     setIsSearched,
+    jobs,
+    setJobs,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
+

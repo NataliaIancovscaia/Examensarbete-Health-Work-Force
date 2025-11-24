@@ -1,5 +1,6 @@
 
 import HeroSection from "../components/Herosection";
+import JobMenu from "../components/JobMenu";
 import NavigationBar from "../components/NavigationBar"
 
 
@@ -9,6 +10,7 @@ const Home = () => {
     <div >
      <NavigationBar />
      <HeroSection/>
+     <JobMenu/>
     </div>
   )
 }

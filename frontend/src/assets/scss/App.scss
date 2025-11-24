@@ -1,5 +1,7 @@
 @import './NavigationBar.scss';
 @import './HeroSection.scss';
+@import './JobCard.scss';
+@import './JobMenu.scss';
 
 
 html, body {
@@ -18,7 +20,6 @@ html, body {
   overflow-x: hidden;
 }
 
-/* GLASS BACKGROUND*/
 .glass-background {
   position: fixed;
   top: 0;
@@ -67,9 +68,7 @@ html, body {
   padding-top: 80px; 
 }
 
-/* -----------------------------
-   ALERT MESSAGES
------------------------------- */
+
 .input-alert-msg,
 .mobile-alert-error {
   color: red;
