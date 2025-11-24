@@ -9,7 +9,6 @@ import NavigationBar from "./components/NavigationBar";
 
 import backgroundImg from "./assets/images/background1.jpg";
 
-// SCSS
 import "./assets/scss/App.scss";
 
 const App: React.FC = () => {
