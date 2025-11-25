@@ -1,9 +1,7 @@
-
-import HeroSection from "../components/Herosection";
+import HeroSection from "../components/HeroSection";
 import JobMenu from "../components/JobMenu";
-import NavigationBar from "../components/NavigationBar"
-
-
+import NavigationBar from "../components/NavigationBar";
+import ReviewSlider from "../components/ReviewSlider";
 
 const Home = () => {
   return (
@@ -11,6 +9,7 @@ const Home = () => {
      <NavigationBar />
      <HeroSection/>
      <JobMenu/>
+     <ReviewSlider/>
     </div>
   )
 }

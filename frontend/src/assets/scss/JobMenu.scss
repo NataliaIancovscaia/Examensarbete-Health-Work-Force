@@ -78,7 +78,7 @@
     justify-content: flex-start;
 
     > * {
-      flex: 0 0 250px; // фиксированная ширина карточки
+      flex: 0 0 250px; 
     }
   }
 
@@ -101,11 +101,12 @@
   }
 
   &__jobs {
-    min-height: 800px; // минимальная высота
+    min-height: 800px; 
     display: flex;
     flex-direction: column;
-    justify-content: space-between; // пагинация внизу
+    justify-content: space-between; 
     gap: 1rem;
+    padding: 1rem;
   }
 
   @media (min-width: 768px) {

@@ -183,6 +183,89 @@ export const viewApplicationsPageData = [
     { _id: 7, name: "Karin Olsson", jobTitle: "Physiotherapist", location: "Linkoping", imgSrc: profile_img, category: "Paramedical" },
 ];
 
+export const siteReviews = [
+    {
+        _id: "1",
+        name: "Anna Svensson",
+        role: "General Practitioner",
+        rating: "★★★★★",
+        comment:
+            "The platform helped me find a new job in less than two weeks. The filters and application tracking system are extremely useful.",
+        date: "2024-05-22",
+       
+    },
+    {
+        _id: "2",
+        name: "Erik Johansson",
+        role: "Dentist",
+               rating: "★★★★★",
+
+        comment:
+            "Great website for medical professionals. I received several interview invitations within days.",
+        date: "2024-04-30",
+        
+    },
+    {
+        _id: "3",
+        name: "Sara Lindberg",
+        role: "Pharmacist",
+        rating: "★★★★★",
+        comment:
+            "Very smooth experience. Many high-quality job postings and fast responses from employers.",
+        date: "2024-03-18",
+        
+    },
+    {
+        _id: "4",
+        name: "Lars Karlsson",
+        role: "Pediatrician",
+        rating: "★★★★★",
+        comment:
+            "The site made my job search so much easier. Found a position that perfectly matched my specialization.",
+        date: "2024-02-14",
+       
+    },
+    
+     {
+        _id: "5",
+        employer: "Karolinska Hospital",
+        rating: "★★★★★",
+        comment:
+            "We found several highly qualified candidates through the platform. The hiring process became much faster and more efficient.",
+        date: "2024-05-10",
+        
+    },
+    {
+        _id: "6",
+        employer: "Gothenburg Dental Center",
+        rating: "★★★★★",
+        comment:
+            "Great selection of dental professionals. We filled two vacant positions quickly.",
+        date: "2024-04-22",
+        
+    },
+    {
+        _id: "7",
+        employer: "Apoteket AB",
+        rating: "★★★★★",
+        comment:
+            "Excellent tool for recruiting pharmacists. The candidates we found exceeded our expectations.",
+        date: "2024-03-14",
+       
+    },
+    {
+        _id: "8",
+        employer: "Uppsala Children's Clinic",
+         rating: "★★★★★",
+        comment:
+            "The platform made it easy to review applications and contact pediatric specialists.",
+        date: "2024-02-18",
+        
+    },
+    
+];
+
+
 export const jobsData= [
     {
         _id: '1',
