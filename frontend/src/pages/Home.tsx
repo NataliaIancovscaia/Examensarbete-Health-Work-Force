@@ -1,3 +1,4 @@
+import Footer from "../components/Footer";
 import HeroSection from "../components/HeroSection";
 import JobMenu from "../components/JobMenu";
 import NavigationBar from "../components/NavigationBar";
@@ -10,6 +11,7 @@ const Home = () => {
      <HeroSection/>
      <JobMenu/>
      <ReviewSlider/>
+     <Footer/>
     </div>
   )
 }
