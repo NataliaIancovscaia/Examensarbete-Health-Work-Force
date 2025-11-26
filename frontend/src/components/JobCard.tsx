@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/images/assets";
 import type { Job } from "../context/AppContext";
 
@@ -7,6 +8,8 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job }) => {
+  const navigate=useNavigate();
+  
   return (
    <div className="job-card">
 
@@ -32,8 +35,19 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   ></p>
 
   <div className="job-card__buttons">
-    <button>Apply</button>
-    <button>Read more</button>
+    <button onClick={() => { 
+    navigate(`/apply-job/${job.id}`); 
+    scrollTo(0, 0); 
+}}>
+  Apply
+</button>
+
+<button onClick={() => { 
+    navigate(`/apply-job/${job.id}`); 
+    scrollTo(0, 0); 
+}}>
+  Read more
+</button>
   </div>
 </div>
 

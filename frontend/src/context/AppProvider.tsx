@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AppContext, type AppContextType, type Job, type SearchFilter} from "./AppContext";
 import { jobsData } from "../assets/images/assets";
 
+
 interface AppProviderProps {
   children: React.ReactNode;
 }

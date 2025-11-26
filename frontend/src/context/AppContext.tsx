@@ -6,13 +6,21 @@ export interface SearchFilter {
 }
 
 export interface Job {
+  id: string;
   title: string;
   category: string;
   location: string;
   level: string;
   description: string;
+  salary: number;
+  date: number;
+  companyId: {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+  };
 }
-
 export interface AppContextType {
   searchFilter: SearchFilter;
   setSearchFilter: React.Dispatch<React.SetStateAction<SearchFilter>>;

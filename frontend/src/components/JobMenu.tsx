@@ -17,17 +17,14 @@ const JobMenu: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
-  // --------------------------------------
-  // FILTER CHANGE HANDLERS
-  // --------------------------------------
-
+  
   const handleCategoryChange = (category: string) => {
     setSelectedCategories(prev =>
       prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
     );
-    setCurrentPage(1); // OK — не в effect
+    setCurrentPage(1); 
   };
 
   const handleLocationsChange = (location: string) => {
@@ -36,7 +33,7 @@ const JobMenu: React.FC = () => {
         ? prev.filter(c => c !== location)
         : [...prev, location]
     );
-    setCurrentPage(1); // OK — не в effect
+    setCurrentPage(1); 
   };
 
   const clearTitleFilter = () => {
@@ -49,9 +46,6 @@ const JobMenu: React.FC = () => {
     setCurrentPage(1);
   };
 
-  // --------------------------------------
-  // DERIVED FILTERED JOBS via useMemo (React 19-friendly)
-  // --------------------------------------
 
   const filteredJobs = useMemo(() => {
     const matchesCategory = (job: Job) =>
@@ -82,23 +76,18 @@ const JobMenu: React.FC = () => {
       );
   }, [jobs, selectedCategories, selectedLocations, searchFilter]);
 
-  // --------------------------------------
-  // PAGINATION LOGIC
-  // --------------------------------------
 
   const totalPages = Math.ceil(filteredJobs.length / 6);
 
-  // Always keep currentPage within bounds (derived state)
+ 
   const page = Math.min(currentPage, totalPages || 1);
 
-  // --------------------------------------
-  // RENDER
-  // --------------------------------------
+
 
   return (
     <div className="job-menu">
 
-      {/* Toggle Filters */}
+   
       <button
         className="job-menu__toggle"
         onClick={() => setShowFilter(prev => !prev)}
@@ -106,7 +95,7 @@ const JobMenu: React.FC = () => {
         {showFilter ? "Close" : "Filters"}
       </button>
 
-      {/* Filters */}
+    
       {showFilter && (
         <div className="job-menu__filters">
           {isSearched &&
@@ -140,7 +129,7 @@ const JobMenu: React.FC = () => {
               </div>
             )}
 
-          {/* Category Filter */}
+        
           <div className="job-menu__block">
             <h4>Category Search</h4>
             <ul className="job-menu__list">
@@ -158,7 +147,7 @@ const JobMenu: React.FC = () => {
             </ul>
           </div>
 
-          {/* Locations Filter */}
+      
           <div className="job-menu__block">
             <h4>Locations Search</h4>
             <ul className="job-menu__list">
@@ -178,7 +167,7 @@ const JobMenu: React.FC = () => {
         </div>
       )}
 
-      {/* Jobs Section */}
+      
       <section className="job-menu__block job-menu__jobs">
         <h3>Jobs</h3>
 
@@ -190,7 +179,7 @@ const JobMenu: React.FC = () => {
             ))}
         </div>
 
-        {/* Pagination */}
+     
         {filteredJobs.length > 0 && (
           <div className="pagination">
             <img

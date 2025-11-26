@@ -268,12 +268,12 @@ export const siteReviews = [
 
 export const jobsData= [
     {
-        _id: '1',
+        id: '1',
         title: "General Practitioner",
         location: "Stockholm",
         level: "Senior Level",
         companyId: {
-            _id: "1",
+            id: "1",
             name: "Karolinska Hospital",
             email: "info@karolinska.se",
             image: company_icon,
@@ -286,12 +286,12 @@ export const jobsData= [
         category: "Doctors",
     },
     {
-        _id: '2',
+        id: '2',
         title: "Dentist",
         location: "Gothenburg",
         level: "Intermediate Level",
         companyId: {
-            _id: "2",
+            id: "2",
             name: "Gothenburg Dental Clinic",
             email: "contact@gothenburgdental.se",
             image: company_icon,
@@ -304,12 +304,12 @@ export const jobsData= [
         category: "Dentistry",
     },
     {
-        _id: '3',
+        id: '3',
         title: "Pharmacist",
         location: "Malmo",
         level: "Senior Level",
         companyId: {
-            _id: "3",
+            id: "3",
             name: "Apoteket Pharmacy",
             email: "hr@apoteket.se",
             image: company_icon,
@@ -322,12 +322,12 @@ export const jobsData= [
         category: "Pharmaceuticals",
     },
     {
-        _id: '4',
+        id: '4',
         title: "Pediatrician",
         location: "Uppsala",
         level: "Intermediate Level",
         companyId: {
-            _id: "4",
+            id: "4",
             name: "Uppsala Children's Hospital",
             email: "info@uppsalachildren.se",
             image: company_icon,
@@ -340,12 +340,12 @@ export const jobsData= [
         category: "Pediatrics",
     },
     {
-        _id: '5',
+        id: '5',
         title: "Lab Technician",
         location: "Vasteras",
         level: "Beginner Level",
         companyId: {
-            _id: "5",
+            id: "5",
             name: "Vasteras Diagnostics Lab",
             email: "hr@vasteraslab.se",
             image: company_icon,
@@ -358,12 +358,12 @@ export const jobsData= [
         category: "Diagnostics",
     },
     {
-        _id: '6',
+        id: '6',
         title: "Medical Assistant",
         location: "Vasteras",
         level: "Beginner Level",
         companyId: {
-            _id: "6",
+            id: "6",
             name: "Vasteras Diagnostics Lab",
             email: "hr@vasteraslab.se",
             image: company_icon,
@@ -376,12 +376,12 @@ export const jobsData= [
         category: "Healthcare",
     },
     {
-        _id: '7',
+        id: '7',
         title: "Clinical Research Coordinator",
         location: "Vasteras",
         level: "Beginner Level",
         companyId: {
-            _id: "7",
+            id: "7",
             name: "Vasteras Diagnostics Lab",
             email: "hr@vasteraslab.se",
             image: company_icon,
@@ -394,12 +394,12 @@ export const jobsData= [
         category: "Research",
     },
     {
-        _id: '8',
+        id: '8',
         title: "Lab Assistant",
         location: "Vasteras",
         level: "Beginner Level",
         companyId: {
-            _id: "8",
+            id: "8",
             name: "Vasteras Diagnostics Lab",
             email: "hr@vasteraslab.se",
             image: company_icon,
