@@ -1,10 +1,9 @@
-@import './NavigationBar.scss';
-@import './HeroSection.scss';
-@import './JobCard.scss';
-@import './JobMenu.scss';
-@import './ReviewSlider.scss';
-@import './Footer.scss';
-
+@use './NavigationBar' as *;
+@use './HeroSection' as *;
+@use './JobCard' as *;
+@use './JobMenu' as *;
+@use './ReviewSlider' as *;
+@use './Footer' as *;
 
 
 html, body {

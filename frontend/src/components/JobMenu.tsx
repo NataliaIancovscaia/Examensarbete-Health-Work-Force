@@ -1,5 +1,5 @@
-import { useContext, useState } from "react";
-import { AppContext } from "../context/AppContext";
+import { useContext, useMemo, useState } from "react";
+import { AppContext, type Job, type SearchFilter } from "../context/AppContext";
 import { assets, JobCategories, JobLocations } from "../assets/images/assets";
 import JobCard from "./JobCard";
 
@@ -11,15 +11,94 @@ const JobMenu: React.FC = () => {
 
   const { isSearched, searchFilter, setSearchFilter, jobs } = appContext;
 
-  const [showFilter, setShowFilter] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [showFilter, setShowFilter] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const totalPages = Math.ceil(jobs.length / 6);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+
+  // --------------------------------------
+  // FILTER CHANGE HANDLERS
+  // --------------------------------------
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    );
+    setCurrentPage(1); // OK — не в effect
+  };
+
+  const handleLocationsChange = (location: string) => {
+    setSelectedLocations(prev =>
+      prev.includes(location)
+        ? prev.filter(c => c !== location)
+        : [...prev, location]
+    );
+    setCurrentPage(1); // OK — не в effect
+  };
+
+  const clearTitleFilter = () => {
+    setSearchFilter((prev: SearchFilter) => ({ ...prev, title: "" }));
+    setCurrentPage(1);
+  };
+
+  const clearLocationFilter = () => {
+    setSearchFilter((prev: SearchFilter) => ({ ...prev, location: "" }));
+    setCurrentPage(1);
+  };
+
+  // --------------------------------------
+  // DERIVED FILTERED JOBS via useMemo (React 19-friendly)
+  // --------------------------------------
+
+  const filteredJobs = useMemo(() => {
+    const matchesCategory = (job: Job) =>
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(job.category);
+
+    const matchesLocation = (job: Job) =>
+      selectedLocations.length === 0 ||
+      selectedLocations.includes(job.location);
+
+    const matchesTitle = (job: Job) =>
+      searchFilter.title === "" ||
+      job.title.toLowerCase().includes(searchFilter.title.toLowerCase());
+
+    const matchesSearchLocation = (job: Job) =>
+      searchFilter.location === "" ||
+      job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
+
+    return jobs
+      .slice()
+      .reverse()
+      .filter(
+        job =>
+          matchesCategory(job) &&
+          matchesLocation(job) &&
+          matchesTitle(job) &&
+          matchesSearchLocation(job)
+      );
+  }, [jobs, selectedCategories, selectedLocations, searchFilter]);
+
+  // --------------------------------------
+  // PAGINATION LOGIC
+  // --------------------------------------
+
+  const totalPages = Math.ceil(filteredJobs.length / 6);
+
+  // Always keep currentPage within bounds (derived state)
+  const page = Math.min(currentPage, totalPages || 1);
+
+  // --------------------------------------
+  // RENDER
+  // --------------------------------------
 
   return (
     <div className="job-menu">
 
-    
+      {/* Toggle Filters */}
       <button
         className="job-menu__toggle"
         onClick={() => setShowFilter(prev => !prev)}
@@ -27,11 +106,9 @@ const JobMenu: React.FC = () => {
         {showFilter ? "Close" : "Filters"}
       </button>
 
-      
+      {/* Filters */}
       {showFilter && (
         <div className="job-menu__filters">
-
-       
           {isSearched &&
             (searchFilter.title !== "" || searchFilter.location !== "") && (
               <div className="job-menu__block">
@@ -42,9 +119,7 @@ const JobMenu: React.FC = () => {
                     <span>
                       {searchFilter.title}
                       <img
-                        onClick={() =>
-                          setSearchFilter(prev => ({ ...prev, title: "" }))
-                        }
+                        onClick={clearTitleFilter}
                         src={assets.cross_icon}
                         alt="Delete"
                       />
@@ -55,9 +130,7 @@ const JobMenu: React.FC = () => {
                     <span>
                       {searchFilter.location}
                       <img
-                        onClick={() =>
-                          setSearchFilter(prev => ({ ...prev, location: "" }))
-                        }
+                        onClick={clearLocationFilter}
                         src={assets.cross_icon}
                         alt="Delete"
                       />
@@ -67,84 +140,92 @@ const JobMenu: React.FC = () => {
               </div>
             )}
 
+          {/* Category Filter */}
           <div className="job-menu__block">
             <h4>Category Search</h4>
             <ul className="job-menu__list">
               {JobCategories.map((category, index) => (
                 <li key={index}>
-                  <input type="checkbox" id={`cat-${index}`} />
+                  <input
+                    type="checkbox"
+                    id={`cat-${index}`}
+                    onChange={() => handleCategoryChange(category)}
+                    checked={selectedCategories.includes(category)}
+                  />
                   <label htmlFor={`cat-${index}`}>{category}</label>
                 </li>
               ))}
             </ul>
           </div>
 
-         
+          {/* Locations Filter */}
           <div className="job-menu__block">
             <h4>Locations Search</h4>
             <ul className="job-menu__list">
               {JobLocations.map((location, index) => (
                 <li key={index}>
-                  <input type="checkbox" id={`loc-${index}`} />
+                  <input
+                    type="checkbox"
+                    id={`loc-${index}`}
+                    onChange={() => handleLocationsChange(location)}
+                    checked={selectedLocations.includes(location)}
+                  />
                   <label htmlFor={`loc-${index}`}>{location}</label>
                 </li>
               ))}
             </ul>
           </div>
-
         </div>
       )}
 
-     
+      {/* Jobs Section */}
       <section className="job-menu__block job-menu__jobs">
         <h3>Jobs</h3>
 
         <div className="job-menu__grid">
-          {jobs.slice((currentPage - 1) * 6, currentPage * 6).map((job, index) => (
-            <JobCard key={index} job={job} />
-          ))}
+          {filteredJobs
+            .slice((page - 1) * 6, page * 6)
+            .map((job, index) => (
+              <JobCard key={index} job={job} />
+            ))}
         </div>
 
-       
-        {jobs.length > 0 && (
+        {/* Pagination */}
+        {filteredJobs.length > 0 && (
           <div className="pagination">
-
-           
             <img
               src={assets.left_arrow_icon}
               alt="LeftArrow"
               onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
             />
 
-           
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentPage(index + 1)}
-                className={currentPage === index + 1 ? "active" : "inactive"}
+                className={page === index + 1 ? "active" : "inactive"}
               >
                 {index + 1}
               </button>
             ))}
 
-          
             <img
               src={assets.right_arrow_icon}
               alt="RightArrow"
-              onClick={() =>
-                setCurrentPage(p => Math.min(p + 1, totalPages))
-              }
+              onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
             />
-
           </div>
         )}
-
       </section>
     </div>
   );
 };
 
 export default JobMenu;
+
+
+
+
 
 
 
