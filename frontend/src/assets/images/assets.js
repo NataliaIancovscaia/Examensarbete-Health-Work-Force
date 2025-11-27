@@ -266,228 +266,323 @@ export const siteReviews = [
 ];
 
 
-export const jobsData= [
-    {
-        id: '1',
-        title: "General Practitioner",
-        location: "Stockholm",
-        level: "Senior Level",
-        companyId: {
-            id: "1",
-            name: "Karolinska Hospital",
-            email: "info@karolinska.se",
-            image: company_icon,
-        },
-        description: `
-        The General Practitioner provides comprehensive medical care to patients of all ages. This role requires excellent diagnostic abilities, strong communication skills, and the ability to manage both acute and chronic health conditions. You will be responsible for assessing patient needs, offering preventive care, and supporting patients through various stages of treatment.
-        <p><strong>Employee Responsibilities:</strong><br/>
-        -Conduct routine checkups and perform physical examinations.<br/>
+export const jobsData = [
+  {
+    id: "1",
+    title: "General Practitioner",
+    location: "Stockholm",
+    level: "Senior Level",
+    companyId: {
+      id: "1",
+      name: "Karolinska Hospital",
+      email: "info@karolinska.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        As a General Practitioner, you will become the first sentinel of care — a clinician whose expertise forms the cornerstone upon which patients of all generations rest their trust. This role demands not only diagnostic precision but a profound understanding of the human pulse behind every symptom. You will operate in a high-velocity, technologically empowered clinical ecosystem, where prevention, early detection, and long-term patient stewardship intertwine to form a seamless continuum of healthcare.
+      </p>
 
-Diagnose and treat a broad range of medical issues.<br/>
+      <h4>Core Clinical Duties:</h4>
+      <ul>
+        <li>Conduct comprehensive medical examinations, capture detailed patient histories, and perform evidence-based clinical assessments.</li>
+        <li>Diagnose and treat an extensive spectrum of conditions — acute, chronic, viral, metabolic, cardiovascular, or psychosomatic.</li>
+        <li>Design patient-specific treatment pathways, adjusting plans dynamically to medical response, safety margins, and quality-of-life expectations.</li>
+        <li>Educate patients on preventive strategies, lifestyle medicine, pharmacological effects, and long-term health maintenance.</li>
+        <li>Maintain meticulous clinical documentation, preserving confidentiality, medical legality, and data precision.</li>
+        <li>Coordinate referrals to specialists, ensuring continuity rather than interruption of care.</li>
+      </ul>
 
-Create treatment plans and provide follow-up care.<br/>
+      <h4>Professional Requirements:</h4>
+      <ul>
+        <li>Valid Swedish Medical License (Legitimerad Läkare) approved by national healthcare authority.</li>
+        <li>Advanced clinical reasoning, strong leadership in multidisciplinary flows, and steady decision-making under pressure.</li>
+        <li>Empathy, adaptability, communicative clarity, and the ability to translate medical complexity into patient comprehension.</li>
+      </ul>
 
-Educate patients on health maintenance and disease prevention.<br/>
+      <p>
+        Beyond the consultation room, Karolinska opens corridors into academic horizons — allowing you to mentor medical students, participate in collaborative clinical research, and contribute to modernizing Swedish primary healthcare models. This is more than a profession; it is a journey from clinical rigor to intellectual legacy.
+      </p>
+      <p><em>Annual salary estimate is listed approximately in SEK.</em></p>
+    `,
+    salary: 95000,
+    date: 1732041600000,
+    category: "Doctors",
+  },
 
-Maintain accurate and confidential patient records.<br/>
+  {
+    id: "2",
+    title: "Dentist",
+    location: "Gothenburg",
+    level: "Intermediate Level",
+    companyId: {
+      id: "2",
+      name: "Gothenburg Dental Clinic",
+      email: "contact@gothenburgdental.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Dentist is a craftsman of structure and aesthetic brilliance — a medical artisan sculpting health through precision and restoring confidence through science-guided design. In this role, you will navigate the delicate equilibrium between biological preservation and visual harmony, turning complex restorative procedures into enduring architectural triumphs of oral healthcare.
+      </p>
 
-Refer patients to specialists when necessary.<br/>
-        <p><strong>Other Information:</strong><br/>
-        A valid Swedish medical license is required. This role offers opportunities for career development and involvement in ongoing medical research projects.
-        `,
-        salary: 95000,
-        date: 1732041600000,
-        category: "Doctors",
-    },
-    {
-        id: '2',
-        title: "Dentist",
-        location: "Gothenburg",
-        level: "Intermediate Level",
-        companyId: {
-            id: "2",
-            name: "Gothenburg Dental Clinic",
-            email: "contact@gothenburgdental.se",
-            image: company_icon,
-        },
-        description: `
-         Provide dental care, perform diagnoses, and carry out restorative and preventive procedures. You will work closely with dental assistants and hygienists to deliver high-quality patient care.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Conduct dental examinations and interpret X-rays.<br/>
-        - Perform fillings, extractions, crowns, and other treatments.<br/>
-        - Educate patients on oral hygiene and preventive care.<br/>
-        - Maintain sterilization standards and clinic protocols.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Experience with modern dental equipment preferred.<br/>
-        - Continuing education support provided.<br/>
-        - Must hold a Swedish dental license.</p>
-        `,
-        salary: 87000,
-        date: 1732128000000,
-        category: "Dentistry",
-    },
-    {
-        id: '3',
-        title: "Pharmacist",
-        location: "Malmo",
-        level: "Senior Level",
-        companyId: {
-            id: "3",
-            name: "Apoteket Pharmacy",
-            email: "hr@apoteket.se",
-            image: company_icon,
-        },
-        description: `
-       Responsible for dispensing medications, providing pharmaceutical advice, and ensuring customers receive safe and accurate prescriptions. Requires strong attention to detail and knowledge of drug interactions.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Review and process prescriptions accurately.<br/>
-        - Provide guidance on medication use and side effects.<br/>
-        - Assist in inventory management and stock ordering.<br/>
-        - Ensure regulatory compliance within the pharmacy.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Opportunities for training and specialization.<br/>
-        - Modern pharmacy environment.<br/>
-        - Requires certified pharmacist credentials in Sweden.</p>
-        `,
-        salary: 80000,
-        date: 1732214400000,
-        category: "Pharmaceuticals",
-    },
-    {
-        id: '4',
-        title: "Pediatrician",
-        location: "Uppsala",
-        level: "Intermediate Level",
-        companyId: {
-            id: "4",
-            name: "Uppsala Children's Hospital",
-            email: "info@uppsalachildren.se",
-            image: company_icon,
-        },
-        description: `
-       Provide specialized medical care to infants, children, and adolescents. The role involves diagnosing childhood illnesses, offering treatment, and guiding parents on child health and development.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Conduct pediatric examinations and developmental assessments.<br/>
-        - Treat acute and chronic childhood conditions.<br/>
-        - Work collaboratively with nurses and pediatric specialists.<br/>
-        - Communicate effectively with families and caregivers.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Child-friendly environment with modern equipment.<br/>
-        - Support for pediatric-related research.<br/>
-        - Requires a pediatric specialization license.</p>
-        `,
-        salary: 92000,
-        date: 1732300800000,
-        category: "Pediatrics",
-    },
-    {
-        id: '5',
-        title: "Lab Technician",
-        location: "Vasteras",
-        level: "Beginner Level",
-        companyId: {
-            id: "5",
-            name: "Vasteras Diagnostics Lab",
-            email: "hr@vasteraslab.se",
-            image: company_icon,
-        },
-        description: `
-         Perform laboratory tests and assist in sample preparation and analysis. You will work under senior lab specialists to ensure accurate test results.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Prepare biological samples.<br/>
-        - Operate laboratory equipment.<br/>
-        - Record and organize test data.<br/>
-        - Follow all safety and sterilization procedures.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Entry-level role with training available.<br/>
-        - Requires basic laboratory knowledge.<br/>
-        - Opportunities for internal career growth.</p>
-        `,
-        salary: 60000,
-        date: 1732387200000,
-        category: "Diagnostics",
-    },
-    {
-        id: '6',
-        title: "Medical Assistant",
-        location: "Vasteras",
-        level: "Beginner Level",
-        companyId: {
-            id: "6",
-            name: "Vasteras Diagnostics Lab",
-            email: "hr@vasteraslab.se",
-            image: company_icon,
-        },
-        description: `
-        Assist healthcare professionals in patient care, record keeping, and routine clinical tasks.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Take patient vitals and record medical history.<br/>
-        - Support patient examinations.<br/>
-        - Handle administrative tasks.<br/>
-        - Maintain cleanliness within clinical areas.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Ideal for individuals starting a medical career.<br/>
-        - On-the-job training provided.<br/>
-        - Requires strong interpersonal skills.</p>
-        `,
-        salary: 58000,
-        date: 1732387200000,
-        category: "Healthcare",
-    },
-    {
-        id: '7',
-        title: "Clinical Research Coordinator",
-        location: "Vasteras",
-        level: "Beginner Level",
-        companyId: {
-            id: "7",
-            name: "Vasteras Diagnostics Lab",
-            email: "hr@vasteraslab.se",
-            image: company_icon,
-        },
-        description: `
-        Coordinate and support clinical research studies, ensuring compliance and accurate data collection.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Assist with study documentation and participant scheduling.<br/>
-        - Maintain research databases and logs.<br/>
-        - Communicate with research teams and participants.<br/>
-        - Ensure studies meet ethical and regulatory standards.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Great entry point into clinical research.<br/>
-        - Training in research protocols included.<br/>
-        - Requires strong organizational skills.</p>
-        `,
-        salary: 62000,
-        date: 1732387200000,
-        category: "Research",
-    },
-    {
-        id: '8',
-        title: "Lab Assistant",
-        location: "Vasteras",
-        level: "Beginner Level",
-        companyId: {
-            id: "8",
-            name: "Vasteras Diagnostics Lab",
-            email: "hr@vasteraslab.se",
-            image: company_icon,
-        },
-        description: `
-        Support laboratory operations through sample handling, equipment cleaning, and general lab maintenance.</p>
-        <p><strong>Employee Responsibilities:</strong><br/>
-        - Label and organize samples.<br/>
-        - Assist lab technicians during tests.<br/>
-        - Maintain equipment cleanliness.<br/>
-        - Follow safety and quality standards.</p>
-        <p><strong>Other Information:</strong><br/>
-        - Suitable for entry-level laboratory workers.<br/>
-        - Basic scientific knowledge required.<br/>
-        - Opportunities for advancement to technician roles.</p>
-        `,
-        salary: 57000,
-        date: 1732387200000,
-        category: "Diagnostics",
-    },
+      <h4>Essential Responsibilities:</h4>
+      <ul>
+        <li>Perform thorough dental diagnostics including digital radiography, 3D scans, and CBCT interpretation.</li>
+        <li>Execute restorative and surgical interventions such as crowns, bridges, implants, extractions, and enamel reconstruction.</li>
+        <li>Develop longitudinal treatment plans centered on disease prevention, periodontal stability, and structural longevity.</li>
+        <li>Guide patients in evidence-based oral hygiene, post-surgical care, and lifestyle impact on dental health.</li>
+        <li>Work collaboratively with hygienists and assistants while maintaining premium sterilization and safety standards.</li>
+      </ul>
 
+      <h4>Required Qualifications:</h4>
+      <ul>
+        <li>Swedish Dental License (Legitimerad Tandläkare).</li>
+        <li>Experience with CAD/CAM systems, laser-assisted treatment, and digital patient-record platforms.</li>
+      </ul>
 
-];
+      <p>
+        The clinic encourages continuous professional evolution: specialized training, conference participation, and research exposure in emerging domains such as regenerative therapies, implantology, and cosmetic-driven occlusion reconstruction. Here, you polish both teeth and reputation.
+      </p>
+      <p><em>Salary listed approximately in SEK per year.</em></p>
+    `,
+    salary: 87000,
+    date: 1732128000000,
+    category: "Dentistry",
+  },
+
+  {
+    id: "3",
+    title: "Pharmacist",
+    location: "Malmo",
+    level: "Senior Level",
+    companyId: {
+      id: "3",
+      name: "Apoteket Pharmacy",
+      email: "hr@apoteket.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Pharmacist stands as the final guardian before treatment reaches human physiology — a professional whose vigilance preserves safety where even microscopic miscalculations are too large to allow. You will serve at the intersection of clinical pharmacology and patient education — a translator of chemical complexity into safe, intelligible, and life-improving medical guidance.
+      </p>
+
+      <h4>Key Responsibilities:</h4>
+      <ul>
+        <li>Verify and dispense prescriptions with unimpeachable accuracy.</li>
+        <li>Advise on therapeutic effects, drug compatibility, dosage safety, and interaction risks.</li>
+        <li>Manage pharmaceutical inventory, digital prescription flows, and compliance documentation.</li>
+        <li>Preserve adherence to Swedish pharmaceutical regulatory frameworks and medical ethics.</li>
+      </ul>
+
+      <p>
+        Apoteket offers progression into specialized clinical consultancy such as oncology pharmacy guidance, pediatric pharmacology, geriatric drug-plan auditing, or regional pharmacy operations leadership. This is a role of prevention, not just distribution — preventing harm by delivering knowledge.
+      </p>
+      <p><em>Salary listed approximately in SEK per year.</em></p>
+    `,
+    salary: 80000,
+    date: 1732214400000,
+    category: "Pharmaceuticals",
+  },
+
+  {
+    id: "4",
+    title: "Pediatrician",
+    location: "Uppsala",
+    level: "Intermediate Level",
+    companyId: {
+      id: "4",
+      name: "Uppsala Children's Hospital",
+      email: "info@uppsalachildren.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Pediatrician is a voyager into the most transformative phase of human development — where diagnosis is intertwined with nurture, and treatment resonates beyond the patient into entire constellations of family and caregivers. In this role, every heartbeat is both a medical datum and a promise of a future you help safeguard.
+      </p>
+
+      <h4>Core Duties:</h4>
+      <ul>
+        <li>Diagnose and treat acute and chronic pathologies in children from infancy to adolescence.</li>
+        <li>Monitor developmental, neurological, endocrinological, and immunological milestones.</li>
+        <li>Partner with pediatric nurses and specialized research teams.</li>
+        <li>Provide parental coaching on treatment, preventive immunity, and long-term wellbeing.</li>
+      </ul>
+
+      <p>
+        The hospital nurtures your growth toward neonatology, pediatric cardiology, allergy-focused care, or medical-education leadership programs — allowing your influence to expand from patient care to shaping Sweden's pediatric standards for generations yet to smile, speak, and thrive.
+      </p>
+      <p><em>Salary listed approximately in SEK per year.</em></p>
+    `,
+    salary: 92000,
+    date: 1732300800000,
+    category: "Pediatrics",
+  },
+
+  {
+    id: "5",
+    title: "Lab Technician",
+    location: "Vasteras",
+    level: "Beginner Level",
+    companyId: {
+      id: "5",
+      name: "Vasteras Diagnostics Lab",
+      email: "hr@vasteraslab.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Laboratory Technician is the cartographer of microscopic truths — decoding the silent languages of biology into data that dictates medical action. This role operates in a precision-driven laboratory orchestra, where instrumentation, sterility, documentation, and analytical discipline perform a synchronized ballet to uncover diagnostic certainty.
+      </p>
+
+      <h4>Responsibilities:</h4>
+      <ul>
+        <li>Prepare, process, and analyze biological samples using modern diagnostic machinery.</li>
+        <li>Calibrate, operate, and maintain sophisticated instrumentation.</li>
+        <li>Document findings systematically for clinical and research usage.</li>
+        <li>Perform fully aligned with biosafety and regulatory protocols.</li>
+      </ul>
+
+      <p>
+        This position is an academic seedbed — offering training, internal ladder growth into biomedical analysis, data-centric laboratory specialties, or quality-assurance coordination. Here, knowledge evolves, accuracy defines you, and measurement becomes medicine.
+      </p>
+      <p><em>Salary estimate listed approximately per year in SEK.</em></p>
+    `,
+    salary: 60000,
+    date: 1732387200000,
+    category: "Diagnostics",
+  },
+
+  {
+    id: "6",
+    title: "Medical Assistant",
+    location: "Vasteras",
+    level: "Beginner Level",
+    companyId: {
+      id: "7",
+      name: "Vasteras Diagnostics Lab",
+      email: "hr@vasteraslab.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Medical Assistant is the connective tissue of clinical rhythm — an essential counterpart to physicians whose role ensures patient care is not disrupted by logistics but empowered by it. This is a position where clinical fundamentals meet structured administration — building order, trust, comfort, and efficiency into the scaffolding of medical environments.
+      </p>
+
+      <h4>Duties:</h4>
+      <ul>
+        <li>Collect patient vitals and medical histories.</li>
+        <li>Assist in examinations and clinical procedures.</li>
+        <li>Perform medical administration, data entry, and clinic flow coordination.</li>
+        <li>Maintain clinical hygiene and assist procedural readiness.</li>
+      </ul>
+
+      <p>
+        Training is offered as a launchpad for advancement into clinical nursing programs, administrative medical data coordination, or research-focused assistant roles. Here, medicine leans on your hands before it trusts the instruments.
+      </p>
+    `,
+    salary: 58000,
+    date: 1732387200000,
+    category: "Healthcare",
+  },
+
+  {
+    id: "7",
+    title: "Clinical Research Coordinator",
+    location: "Vasteras",
+    level: "Beginner Level",
+    companyId: {
+      id: "7",
+      name: "Vasteras Diagnostics Lab",
+      email: "hr@vasteraslab.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Clinical Research Coordinator is a sentinel of scientific exactitude — a role that governs the ethical cadence between patient participants, research documentation, clinical timelines, and compliance directives. You become the architect of research integrity — where schedules are not mere time, they are pathways, and data is not static, it is destiny measured.
+      </p>
+
+      <h4>Responsibilities:</h4>
+      <ul>
+        <li>Manage participant scheduling and study documentation.</li>
+        <li>Maintain clinical research logs and databases.</li>
+        <li>Ensure ethical and regulatory adherence.</li>
+        <li>Communicate between clinical teams and research participants.</li>
+      </ul>
+
+      <p>
+        This role is a key entry point into clinical science careers, offering progression toward CRO communication specialization, medical data management, clinical auditing, or full research program leadership. Here, medicine evolves — and you ensure it evolves correctly.
+      </p>
+    `,
+    salary: 62000,
+    date: 1732387200000,
+    category: "Research",
+  },
+
+  {
+    id: "8",
+    title: "Lab Assistant",
+    location: "Vasteras",
+    level: "Beginner Level",
+    companyId: {
+      id: "7",
+      name: "Vasteras Diagnostics Lab",
+      email: "hr@vasteraslab.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Lab Assistant is a steward of foundational accuracy — supporting the laboratory engine that transforms samples into answers. This is a role where scientific precision meets operational flow — labeling, preparing, and safeguarding the environment that high-stakes diagnostics depend on.
+      </p>
+
+      <h4>Duties:</h4>
+      <ul>
+        <li>Label and structure biological samples.</li>
+        <li>Maintain equipment hygiene and assist procedural preparation.</li>
+        <li>Support technicians mid-analysis.</li>
+        <li>Adhere to safety and protocol regulations.</li>
+      </ul>
+
+      <p>
+        This role provides training and growth toward full lab-technical careers, data analysis specialization, and quality control coordination. Here, knowledge becomes microscope, and microscope becomes medicine.
+      </p>
+    `,
+    salary: 57000,
+    date: 1732387200000,
+    category: "Diagnostics",
+  },
+
+ {
+    id: "9",
+    title: "Clinic Assistant",
+    location: "Vasteras",
+    level: "Beginner Level",
+    companyId: {
+      id: "7",
+      name: "Vasteras Diagnostics Lab",
+      email: "hr@vasteraslab.se",
+      image: company_icon,
+    },
+    description: `
+      <p>
+        The Lab Assistant is a steward of foundational accuracy — supporting the laboratory engine that transforms samples into answers. This is a role where scientific precision meets operational flow — labeling, preparing, and safeguarding the environment that high-stakes diagnostics depend on.
+      </p>
+
+      <h4>Duties:</h4>
+      <ul>
+        <li>Label and structure biological samples.</li>
+        <li>Maintain equipment hygiene and assist procedural preparation.</li>
+        <li>Support technicians mid-analysis.</li>
+        <li>Adhere to safety and protocol regulations.</li>
+      </ul>
+
+      <p>
+        This role provides training and growth toward full lab-technical careers, data analysis specialization, and quality control coordination. Here, knowledge becomes microscope, and microscope becomes medicine.
+      </p>
+    `,
+    salary: 57000,
+    date: 1732387200000,
+    category: "Diagnostics",
+  },
+
+]
