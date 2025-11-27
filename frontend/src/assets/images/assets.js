@@ -279,7 +279,21 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>We are seeking a highly skilled General Practitioner to provide excellent healthcare services...</p>
+        The General Practitioner provides comprehensive medical care to patients of all ages. This role requires excellent diagnostic abilities, strong communication skills, and the ability to manage both acute and chronic health conditions. You will be responsible for assessing patient needs, offering preventive care, and supporting patients through various stages of treatment.
+        <p><strong>Employee Responsibilities:</strong><br/>
+        -Conduct routine checkups and perform physical examinations.<br/>
+
+Diagnose and treat a broad range of medical issues.<br/>
+
+Create treatment plans and provide follow-up care.<br/>
+
+Educate patients on health maintenance and disease prevention.<br/>
+
+Maintain accurate and confidential patient records.<br/>
+
+Refer patients to specialists when necessary.<br/>
+        <p><strong>Other Information:</strong><br/>
+        A valid Swedish medical license is required. This role offers opportunities for career development and involvement in ongoing medical research projects.
         `,
         salary: 95000,
         date: 1732041600000,
@@ -297,7 +311,16 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Provide dental care including diagnosis...</p>
+         Provide dental care, perform diagnoses, and carry out restorative and preventive procedures. You will work closely with dental assistants and hygienists to deliver high-quality patient care.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Conduct dental examinations and interpret X-rays.<br/>
+        - Perform fillings, extractions, crowns, and other treatments.<br/>
+        - Educate patients on oral hygiene and preventive care.<br/>
+        - Maintain sterilization standards and clinic protocols.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Experience with modern dental equipment preferred.<br/>
+        - Continuing education support provided.<br/>
+        - Must hold a Swedish dental license.</p>
         `,
         salary: 87000,
         date: 1732128000000,
@@ -315,7 +338,16 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Responsible for dispensing medications...</p>
+       Responsible for dispensing medications, providing pharmaceutical advice, and ensuring customers receive safe and accurate prescriptions. Requires strong attention to detail and knowledge of drug interactions.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Review and process prescriptions accurately.<br/>
+        - Provide guidance on medication use and side effects.<br/>
+        - Assist in inventory management and stock ordering.<br/>
+        - Ensure regulatory compliance within the pharmacy.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Opportunities for training and specialization.<br/>
+        - Modern pharmacy environment.<br/>
+        - Requires certified pharmacist credentials in Sweden.</p>
         `,
         salary: 80000,
         date: 1732214400000,
@@ -333,7 +365,16 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Provide specialized medical care...</p>
+       Provide specialized medical care to infants, children, and adolescents. The role involves diagnosing childhood illnesses, offering treatment, and guiding parents on child health and development.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Conduct pediatric examinations and developmental assessments.<br/>
+        - Treat acute and chronic childhood conditions.<br/>
+        - Work collaboratively with nurses and pediatric specialists.<br/>
+        - Communicate effectively with families and caregivers.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Child-friendly environment with modern equipment.<br/>
+        - Support for pediatric-related research.<br/>
+        - Requires a pediatric specialization license.</p>
         `,
         salary: 92000,
         date: 1732300800000,
@@ -351,7 +392,16 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Perform laboratory tests...</p>
+         Perform laboratory tests and assist in sample preparation and analysis. You will work under senior lab specialists to ensure accurate test results.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Prepare biological samples.<br/>
+        - Operate laboratory equipment.<br/>
+        - Record and organize test data.<br/>
+        - Follow all safety and sterilization procedures.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Entry-level role with training available.<br/>
+        - Requires basic laboratory knowledge.<br/>
+        - Opportunities for internal career growth.</p>
         `,
         salary: 60000,
         date: 1732387200000,
@@ -369,7 +419,16 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Assist healthcare professionals...</p>
+        Assist healthcare professionals in patient care, record keeping, and routine clinical tasks.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Take patient vitals and record medical history.<br/>
+        - Support patient examinations.<br/>
+        - Handle administrative tasks.<br/>
+        - Maintain cleanliness within clinical areas.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Ideal for individuals starting a medical career.<br/>
+        - On-the-job training provided.<br/>
+        - Requires strong interpersonal skills.</p>
         `,
         salary: 58000,
         date: 1732387200000,
@@ -387,7 +446,16 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Coordinate and support clinical research...</p>
+        Coordinate and support clinical research studies, ensuring compliance and accurate data collection.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Assist with study documentation and participant scheduling.<br/>
+        - Maintain research databases and logs.<br/>
+        - Communicate with research teams and participants.<br/>
+        - Ensure studies meet ethical and regulatory standards.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Great entry point into clinical research.<br/>
+        - Training in research protocols included.<br/>
+        - Requires strong organizational skills.</p>
         `,
         salary: 62000,
         date: 1732387200000,
@@ -405,10 +473,21 @@ export const jobsData= [
             image: company_icon,
         },
         description: `
-        <p>Support laboratory operations...</p>
+        Support laboratory operations through sample handling, equipment cleaning, and general lab maintenance.</p>
+        <p><strong>Employee Responsibilities:</strong><br/>
+        - Label and organize samples.<br/>
+        - Assist lab technicians during tests.<br/>
+        - Maintain equipment cleanliness.<br/>
+        - Follow safety and quality standards.</p>
+        <p><strong>Other Information:</strong><br/>
+        - Suitable for entry-level laboratory workers.<br/>
+        - Basic scientific knowledge required.<br/>
+        - Opportunities for advancement to technician roles.</p>
         `,
         salary: 57000,
         date: 1732387200000,
         category: "Diagnostics",
     },
+
+
 ];
