@@ -3,7 +3,7 @@ import { assets } from "../assets/images/assets";
 const Footer = () => {
   return (
     <footer className="glass-footer">
-      <div className="glass-footer__container">
+      <div className="glass-footer_container">
 
   
         <div className="footer-col">

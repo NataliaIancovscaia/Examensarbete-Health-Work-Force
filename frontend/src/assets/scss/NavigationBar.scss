@@ -14,12 +14,12 @@
   box-sizing: border-box;
 
 
-  &__left {
+  &_left {
     display: flex;
     align-items: center;
   }
 
-  &__logo-container {
+  &_logo-container {
     display: flex;
     align-items: center;
     gap: .75rem;
@@ -37,7 +37,7 @@
     }
   }
 
-  &__logo {
+  &_logo {
     width: 38px;
     height: 38px;
     border-radius: 12px;
@@ -47,7 +47,7 @@
   }
 
   
-  &__menu {
+  &_menu {
     display: flex;
     align-items: center;
     gap: 1.2rem;
@@ -85,8 +85,8 @@
     }
   }
 
-  &__menu-link,
-  &__menu-user {
+  &_menu-link,
+  &_menu-user {
     background: rgba(255,255,255,0.14);
     padding: 10px 16px;
     border-radius: 12px;
@@ -103,7 +103,7 @@
     }
   }
 
-  &__menu-btn {
+  &_menu-btn {
     padding: 10px 18px;
     font-size: 1rem;
     border-radius: 12px;
@@ -120,7 +120,7 @@
   }
 
  
-  &__burger {
+  &_burger {
     position: relative;
     width: 32px;
     height: 26px;

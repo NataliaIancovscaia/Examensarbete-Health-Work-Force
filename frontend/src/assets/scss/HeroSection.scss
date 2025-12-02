@@ -47,7 +47,7 @@
     animation-delay: 0.45s;
   }
 
-  &__search {
+  &_search {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -66,7 +66,7 @@
     }
   }
 
-  &__input-box {
+  &_input-box {
     display: flex;
     align-items: center;
     gap: 0.7rem;
@@ -79,7 +79,7 @@
     img { width: 22px; height: 22px; }
   }
 
-  &__input {
+  &_input {
     border: none;
     outline: none;
     background: transparent;
@@ -87,7 +87,7 @@
     width: 100%;
   }
 
-  &__btn {
+  &_btn {
     padding: 0.95rem 1.5rem;
     font-size: 1rem;
     font-weight: 600;

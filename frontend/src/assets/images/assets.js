@@ -114,7 +114,7 @@ export const jobsApplied = [
         category: 'Doctors',
         location: 'Stockholm',
         date: '10 Nov, 2025',
-        status: 'Open',
+        status: 'Accepted',
         logo: company_icon
     },
     {
@@ -132,7 +132,7 @@ export const jobsApplied = [
         category: 'Pharmaceuticals',
         location: 'Malmo',
         date: '11 Nov, 2025',
-        status: 'Open',
+        status: 'Rejected',
         logo: company_icon
     },
     {
@@ -141,7 +141,7 @@ export const jobsApplied = [
         category: 'Pediatrics',
         location: 'Uppsala',
         date: '13 Nov, 2025',
-        status: 'Closed',
+        status: 'Rejected',
         logo: company_icon
     },
     {
@@ -150,7 +150,7 @@ export const jobsApplied = [
         category: 'Diagnostics',
         location: 'Vasteras',
         date: '15 Nov, 2025',
-        status: 'Open',
+        status: 'Pending',
         logo: company_icon
     },
     {
@@ -168,7 +168,7 @@ export const jobsApplied = [
         category: 'Paramedical',
         location: 'Linkoping',
         date: '16 Nov, 2025',
-        status: 'Open',
+        status: 'Accepted',
         logo: company_icon
     },
 ];
@@ -280,13 +280,13 @@ export const jobsData = [
     },
     description: `
       <p>
-        As a General Practitioner, you will become the first sentinel of care — a clinician whose expertise forms the cornerstone upon which patients of all generations rest their trust. This role demands not only diagnostic precision but a profound understanding of the human pulse behind every symptom. You will operate in a high-velocity, technologically empowered clinical ecosystem, where prevention, early detection, and long-term patient stewardship intertwine to form a seamless continuum of healthcare.
+        As a General Practitioner, you will become the first sentinel of care - a clinician whose expertise forms the cornerstone upon which patients of all generations rest their trust. This role demands not only diagnostic precision but a profound understanding of the human pulse behind every symptom. You will operate in a high-velocity, technologically empowered clinical ecosystem, where prevention, early detection, and long-term patient stewardship intertwine to form a seamless continuum of healthcare.
       </p>
 
       <h4>Core Clinical Duties:</h4>
       <ul>
         <li>Conduct comprehensive medical examinations, capture detailed patient histories, and perform evidence-based clinical assessments.</li>
-        <li>Diagnose and treat an extensive spectrum of conditions — acute, chronic, viral, metabolic, cardiovascular, or psychosomatic.</li>
+        <li>Diagnose and treat an extensive spectrum of conditions - acute, chronic, viral, metabolic, cardiovascular, or psychosomatic.</li>
         <li>Design patient-specific treatment pathways, adjusting plans dynamically to medical response, safety margins, and quality-of-life expectations.</li>
         <li>Educate patients on preventive strategies, lifestyle medicine, pharmacological effects, and long-term health maintenance.</li>
         <li>Maintain meticulous clinical documentation, preserving confidentiality, medical legality, and data precision.</li>
@@ -301,7 +301,7 @@ export const jobsData = [
       </ul>
 
       <p>
-        Beyond the consultation room, Karolinska opens corridors into academic horizons — allowing you to mentor medical students, participate in collaborative clinical research, and contribute to modernizing Swedish primary healthcare models. This is more than a profession; it is a journey from clinical rigor to intellectual legacy.
+        Beyond the consultation room, Karolinska opens corridors into academic horizons - allowing you to mentor medical students, participate in collaborative clinical research, and contribute to modernizing Swedish primary healthcare models. This is more than a profession; it is a journey from clinical rigor to intellectual legacy.
       </p>
       <p><em>Annual salary estimate is listed approximately in SEK.</em></p>
     `,
@@ -323,7 +323,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Dentist is a craftsman of structure and aesthetic brilliance — a medical artisan sculpting health through precision and restoring confidence through science-guided design. In this role, you will navigate the delicate equilibrium between biological preservation and visual harmony, turning complex restorative procedures into enduring architectural triumphs of oral healthcare.
+        The Dentist is a craftsman of structure and aesthetic brilliance - a medical artisan sculpting health through precision and restoring confidence through science-guided design. In this role, you will navigate the delicate equilibrium between biological preservation and visual harmony, turning complex restorative procedures into enduring architectural triumphs of oral healthcare.
       </p>
 
       <h4>Essential Responsibilities:</h4>
@@ -364,7 +364,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Pharmacist stands as the final guardian before treatment reaches human physiology — a professional whose vigilance preserves safety where even microscopic miscalculations are too large to allow. You will serve at the intersection of clinical pharmacology and patient education — a translator of chemical complexity into safe, intelligible, and life-improving medical guidance.
+        The Pharmacist stands as the final guardian before treatment reaches human physiology - a professional whose vigilance preserves safety where even microscopic miscalculations are too large to allow. You will serve at the intersection of clinical pharmacology and patient education - a translator of chemical complexity into safe, intelligible, and life-improving medical guidance.
       </p>
 
       <h4>Key Responsibilities:</h4>
@@ -376,7 +376,7 @@ export const jobsData = [
       </ul>
 
       <p>
-        Apoteket offers progression into specialized clinical consultancy such as oncology pharmacy guidance, pediatric pharmacology, geriatric drug-plan auditing, or regional pharmacy operations leadership. This is a role of prevention, not just distribution — preventing harm by delivering knowledge.
+        Apoteket offers progression into specialized clinical consultancy such as oncology pharmacy guidance, pediatric pharmacology, geriatric drug-plan auditing, or regional pharmacy operations leadership. This is a role of prevention, not just distribution - preventing harm by delivering knowledge.
       </p>
       <p><em>Salary listed approximately in SEK per year.</em></p>
     `,
@@ -398,7 +398,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Pediatrician is a voyager into the most transformative phase of human development — where diagnosis is intertwined with nurture, and treatment resonates beyond the patient into entire constellations of family and caregivers. In this role, every heartbeat is both a medical datum and a promise of a future you help safeguard.
+        The Pediatrician is a voyager into the most transformative phase of human development - where diagnosis is intertwined with nurture, and treatment resonates beyond the patient into entire constellations of family and caregivers. In this role, every heartbeat is both a medical datum and a promise of a future you help safeguard.
       </p>
 
       <h4>Core Duties:</h4>
@@ -410,7 +410,7 @@ export const jobsData = [
       </ul>
 
       <p>
-        The hospital nurtures your growth toward neonatology, pediatric cardiology, allergy-focused care, or medical-education leadership programs — allowing your influence to expand from patient care to shaping Sweden's pediatric standards for generations yet to smile, speak, and thrive.
+        The hospital nurtures your growth toward neonatology, pediatric cardiology, allergy-focused care, or medical-education leadership programs - allowing your influence to expand from patient care to shaping Sweden's pediatric standards for generations yet to smile, speak, and thrive.
       </p>
       <p><em>Salary listed approximately in SEK per year.</em></p>
     `,
@@ -432,7 +432,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Laboratory Technician is the cartographer of microscopic truths — decoding the silent languages of biology into data that dictates medical action. This role operates in a precision-driven laboratory orchestra, where instrumentation, sterility, documentation, and analytical discipline perform a synchronized ballet to uncover diagnostic certainty.
+        The Laboratory Technician is the cartographer of microscopic truths - decoding the silent languages of biology into data that dictates medical action. This role operates in a precision-driven laboratory orchestra, where instrumentation, sterility, documentation, and analytical discipline perform a synchronized ballet to uncover diagnostic certainty.
       </p>
 
       <h4>Responsibilities:</h4>
@@ -444,7 +444,7 @@ export const jobsData = [
       </ul>
 
       <p>
-        This position is an academic seedbed — offering training, internal ladder growth into biomedical analysis, data-centric laboratory specialties, or quality-assurance coordination. Here, knowledge evolves, accuracy defines you, and measurement becomes medicine.
+        This position is an academic seedbed - offering training, internal ladder growth into biomedical analysis, data-centric laboratory specialties, or quality-assurance coordination. Here, knowledge evolves, accuracy defines you, and measurement becomes medicine.
       </p>
       <p><em>Salary estimate listed approximately per year in SEK.</em></p>
     `,
@@ -466,7 +466,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Medical Assistant is the connective tissue of clinical rhythm — an essential counterpart to physicians whose role ensures patient care is not disrupted by logistics but empowered by it. This is a position where clinical fundamentals meet structured administration — building order, trust, comfort, and efficiency into the scaffolding of medical environments.
+        The Medical Assistant is the connective tissue of clinical rhythm - an essential counterpart to physicians whose role ensures patient care is not disrupted by logistics but empowered by it. This is a position where clinical fundamentals meet structured administration - building order, trust, comfort, and efficiency into the scaffolding of medical environments.
       </p>
 
       <h4>Duties:</h4>
@@ -499,7 +499,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Clinical Research Coordinator is a sentinel of scientific exactitude — a role that governs the ethical cadence between patient participants, research documentation, clinical timelines, and compliance directives. You become the architect of research integrity — where schedules are not mere time, they are pathways, and data is not static, it is destiny measured.
+        The Clinical Research Coordinator is a sentinel of scientific exactitude - a role that governs the ethical cadence between patient participants, research documentation, clinical timelines, and compliance directives. You become the architect of research integrity - where schedules are not mere time, they are pathways, and data is not static, it is destiny measured.
       </p>
 
       <h4>Responsibilities:</h4>
@@ -511,7 +511,7 @@ export const jobsData = [
       </ul>
 
       <p>
-        This role is a key entry point into clinical science careers, offering progression toward CRO communication specialization, medical data management, clinical auditing, or full research program leadership. Here, medicine evolves — and you ensure it evolves correctly.
+        This role is a key entry point into clinical science careers, offering progression toward CRO communication specialization, medical data management, clinical auditing, or full research program leadership. Here, medicine evolves - and you ensure it evolves correctly.
       </p>
     `,
     salary: 62000,
@@ -532,7 +532,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Lab Assistant is a steward of foundational accuracy — supporting the laboratory engine that transforms samples into answers. This is a role where scientific precision meets operational flow — labeling, preparing, and safeguarding the environment that high-stakes diagnostics depend on.
+        The Lab Assistant is a steward of foundational accuracy - supporting the laboratory engine that transforms samples into answers. This is a role where scientific precision meets operational flow - labeling, preparing, and safeguarding the environment that high-stakes diagnostics depend on.
       </p>
 
       <h4>Duties:</h4>
@@ -565,7 +565,7 @@ export const jobsData = [
     },
     description: `
       <p>
-        The Lab Assistant is a steward of foundational accuracy — supporting the laboratory engine that transforms samples into answers. This is a role where scientific precision meets operational flow — labeling, preparing, and safeguarding the environment that high-stakes diagnostics depend on.
+        The Lab Assistant is a steward of foundational accuracy - supporting the laboratory engine that transforms samples into answers. This is a role where scientific precision meets operational flow - labeling, preparing, and safeguarding the environment that high-stakes diagnostics depend on.
       </p>
 
       <h4>Duties:</h4>

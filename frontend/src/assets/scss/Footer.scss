@@ -9,7 +9,7 @@
   justify-content: center;
 }
 
-.glass-footer__container {
+.glass-footer_container {
   width: 100%;
   max-width: 1250px;
   display: grid;
@@ -19,14 +19,14 @@
 
 
 @media (min-width: 640px) {
-  .glass-footer__container {
+  .glass-footer_container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 
 @media (min-width: 950px) {
-  .glass-footer__container {
+  .glass-footer_container {
     grid-template-columns: repeat(3, 1fr);
   }
 }

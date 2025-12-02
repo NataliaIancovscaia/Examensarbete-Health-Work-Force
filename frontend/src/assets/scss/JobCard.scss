@@ -11,12 +11,12 @@
   gap: 0.8rem;
 }
 
-.job-card__header {
+.job-card_header {
   display: flex;
   align-items: center;
   gap: 0.8rem;
 
-  .job-card__logo {
+  .job-card_logo {
     width: 45px;
     height: 45px;
     border-radius: 12px;
@@ -24,12 +24,12 @@
   }
 }
 
-.job-card__title {
+.job-card_title {
   font-size: 1.1rem;
   font-weight: 700;
 }
 
-.job-card__meta {
+.job-card_meta {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
@@ -43,12 +43,12 @@
   }
 }
 
-.job-card__description {
+.job-card_description {
   font-size: 0.9rem;
   opacity: 0.85;
 }
 
-.job-card__buttons {
+.job-card_buttons {
   margin-top: 0.5rem;
   display: flex;
   gap: 0.8rem;

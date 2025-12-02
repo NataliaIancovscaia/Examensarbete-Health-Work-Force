@@ -5,7 +5,7 @@
   flex-direction: column;
   gap: 1.5rem;
 
-  &__block {
+  &_block {
     background: rgba(255, 255, 255, 0.25);
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(14px);
@@ -22,7 +22,7 @@
     font-weight: 700;
   }
 
-  &__selected-tags {
+  &_selected-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
@@ -50,7 +50,7 @@
     }
   }
 
-  &__list {
+  &_list {
     list-style: none;
     padding: 0 0.5rem;
     display: flex;
@@ -70,7 +70,7 @@
     }
   }
 
-  &__grid {
+  &_grid {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -82,7 +82,7 @@
     }
   }
 
-  &__toggle {
+  &_toggle {
     display: none;
     padding: 0.7rem 1.2rem;
     background: rgba(255, 255, 255, 0.3);
@@ -100,7 +100,7 @@
     }
   }
 
-  &__jobs {
+  &_jobs {
     min-height: 800px; 
     display: flex;
     flex-direction: column;
@@ -120,7 +120,7 @@
     gap: 2rem;
     padding-right: 1rem;
 
-    &__filters {
+    &_filters {
       position: sticky;
       top: 90px;
       height: fit-content;
@@ -132,13 +132,13 @@
 }
 
 @media (max-width: 1023px) {
-  .job-menu__filters {
+  .job-menu_filters {
     display: flex;
     flex-direction: column;
     gap: 1.2rem;
   }
 
-  .job-menu__toggle {
+  .job-menu_toggle {
     display: block;
   }
 }

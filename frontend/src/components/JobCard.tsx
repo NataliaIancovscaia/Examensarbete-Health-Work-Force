@@ -13,28 +13,28 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   return (
    <div className="job-card">
 
-  <div className="job-card__header">
+  <div className="job-card_header">
     <img
-      className="job-card__logo"
+      className="job-card_logo"
       src={assets.company_icon}
       alt="Company icon"
     />
 
-    <h4 className="job-card__title">{job.title}</h4>
+    <h4 className="job-card_title">{job.title}</h4>
   </div>
 
-  <div className="job-card__meta">
+  <div className="job-card_meta">
     <span>{job.category}</span>
     <span>{job.location}</span>
     <span>{job.level}</span>
   </div>
 
   <p
-    className="job-card__description"
-    dangerouslySetInnerHTML={{ __html: job.description.slice(0, 150) }}
+    className="job-card_description"
+    dangerouslySetInnerHTML={{__html: job.description.slice(0, 150) }}
   ></p>
 
-  <div className="job-card__buttons">
+  <div className="job-card_buttons">
     <button onClick={() => { 
     navigate(`/apply-job/${job.id}`); 
     scrollTo(0, 0); 

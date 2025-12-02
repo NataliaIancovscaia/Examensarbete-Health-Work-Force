@@ -38,28 +38,28 @@ const HeroSection: React.FC = () => {
         organizations.
       </p>
 
-      <div className="hero__search">
-        <div className="hero__input-box">
+      <div className="hero_search">
+        <div className="hero_input-box">
           <img src={assets.search_icon} alt="Search" />
           <input
             type="text"
             placeholder="Search for jobs"
-            className="hero__input"
+            className="hero_input"
             ref={titleRef}
           />
         </div>
 
-        <div className="hero__input-box">
+        <div className="hero_input-box">
           <img src={assets.location_icon} alt="Location" />
           <input
             type="text"
             placeholder="Location"
-            className="hero__input"
+            className="hero_input"
             ref={locationRef}
           />
         </div>
 
-        <button onClick={onSearch} className="hero__btn">
+        <button onClick={onSearch} className="hero_btn">
           Search
         </button>
       </div>

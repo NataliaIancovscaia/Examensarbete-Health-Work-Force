@@ -89,7 +89,7 @@ const JobMenu: React.FC = () => {
 
    
       <button
-        className="job-menu__toggle"
+        className="job-menu_toggle"
         onClick={() => setShowFilter(prev => !prev)}
       >
         {showFilter ? "Close" : "Filters"}
@@ -97,13 +97,13 @@ const JobMenu: React.FC = () => {
 
     
       {showFilter && (
-        <div className="job-menu__filters">
+        <div className="job-menu_filters">
           {isSearched &&
             (searchFilter.title !== "" || searchFilter.location !== "") && (
-              <div className="job-menu__block">
+              <div className="job-menu_block">
                 <h3>Selected Search</h3>
 
-                <div className="job-menu__selected-tags">
+                <div className="job-menu_selected-tags">
                   {searchFilter.title && (
                     <span>
                       {searchFilter.title}
@@ -130,9 +130,9 @@ const JobMenu: React.FC = () => {
             )}
 
         
-          <div className="job-menu__block">
+          <div className="job-menu_block">
             <h4>Category Search</h4>
-            <ul className="job-menu__list">
+            <ul className="job-menu_list">
               {JobCategories.map((category, index) => (
                 <li key={index}>
                   <input
@@ -148,9 +148,9 @@ const JobMenu: React.FC = () => {
           </div>
 
       
-          <div className="job-menu__block">
+          <div className="job-menu_block">
             <h4>Locations Search</h4>
-            <ul className="job-menu__list">
+            <ul className="job-menu_list">
               {JobLocations.map((location, index) => (
                 <li key={index}>
                   <input
@@ -168,10 +168,10 @@ const JobMenu: React.FC = () => {
       )}
 
       
-      <section className="job-menu__block job-menu__jobs">
+      <section className="job-menu_block job-menu_jobs">
         <h3>Jobs</h3>
 
-        <div className="job-menu__grid">
+        <div className="job-menu_grid">
           {filteredJobs
             .slice((page - 1) * 6, page * 6)
             .map((job, index) => (

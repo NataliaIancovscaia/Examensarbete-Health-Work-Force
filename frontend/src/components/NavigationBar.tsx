@@ -12,24 +12,24 @@ const NavigationBar: React.FC = () => {
   return (
     <nav className="glass-navbar">
      
-      <div className="glass-navbar__left">
-        <div className="glass-navbar__logo-container">
-          <img src={assets.logo} alt="Logo" className="glass-navbar__logo" />
+      <div className="glass-navbar_left">
+        <div className="glass-navbar_logo-container">
+          <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
           <h2>Health Work Force</h2>
         </div>
       </div>
 
       
-      <div className={`glass-navbar__menu ${open ? "open" : ""}`}>
+      <div className={`glass-navbar_menu ${open ? "open" : ""}`}>
 
        
         {user ? (
           <>
-            <Link to="/applications" className="glass-navbar__menu-link">
+            <Link to="/applications" className="glass-navbar_menu-link">
               Applied Jobs
             </Link>
 
-            <p className="glass-navbar__menu-user">
+            <p className="glass-navbar_menu-user">
               Hi, {user.firstName} {user.lastName}
             </p>
 
@@ -37,10 +37,10 @@ const NavigationBar: React.FC = () => {
           </>
         ) : (
           <>
-            <button className="glass-navbar__menu-btn">Recruiter Login</button>
+            <button className="glass-navbar_menu-btn">Recruiter Login</button>
             <button
               onClick={() => openSignIn()}
-              className="glass-navbar__menu-btn"
+              className="glass-navbar_menu-btn"
             >
               User Login
             </button>
@@ -50,7 +50,7 @@ const NavigationBar: React.FC = () => {
 
       
       <button
-        className={`glass-navbar__burger ${open ? "active" : ""}`}
+        className={`glass-navbar_burger ${open ? "active" : ""}`}
         onClick={() => setOpen(!open)}
       >
         <span />
