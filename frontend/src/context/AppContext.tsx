@@ -21,6 +21,13 @@ export interface Job {
     image: string;
   };
 }
+export interface Recruiter {
+  id: string;
+  name: string;
+  email: string;
+  company: string;
+  image: string;
+}
 export interface AppContextType {
   searchFilter: SearchFilter;
   setSearchFilter: React.Dispatch<React.SetStateAction<SearchFilter>>;
@@ -30,6 +37,9 @@ export interface AppContextType {
   setJobs: React.Dispatch<React.SetStateAction<Job[]>>;
   showRecruiterLogin: boolean;
   setShowRecruiterLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  recruiter: Recruiter | null;
+  setRecruiter: React.Dispatch<React.SetStateAction<Recruiter | null>>;
+  logoutRecruiter: () => void;
 }
 
 

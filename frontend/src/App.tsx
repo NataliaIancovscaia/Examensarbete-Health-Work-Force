@@ -8,6 +8,10 @@ import backgroundImg from "./assets/images/background1.jpg";
 import "./assets/scss/App.scss";
 import RecruterLogin from "./components/RecruterLogin";
 import { AppContext } from "./context/AppContext";
+import Dashboard from "./pages/Dashboard";
+import AddJob from "./pages/AddJob";
+import ManageJobs from "./pages/ManageJobs";
+import ViewApplications from "./pages/ViewApplications";
 
 const App: React.FC = () => {
    
@@ -34,6 +38,11 @@ const{showRecruiterLogin}=appContext;
           <Route path="/" element={<Home />} />
           <Route path="/apply-job/:id" element={<ApplyJob />} />
           <Route path="/applications" element={<Applications />} />
+          <Route path="/dashboard" element={<Dashboard/>}>
+            <Route path="add-job" element={<AddJob/>}/>
+            <Route path="manage-jobs" element={<ManageJobs/>}/>
+            <Route path="view-applications" element={<ViewApplications/>}/>
+          </Route>
         </Routes>
       </div>
     </div>

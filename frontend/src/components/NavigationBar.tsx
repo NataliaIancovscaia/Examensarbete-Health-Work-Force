@@ -13,7 +13,7 @@ const NavigationBar: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) throw new Error("NavigationBar must be used inside AppProvider");
 
-  const { setShowRecruiterLogin } = appContext;
+  const { recruiter, setShowRecruiterLogin, logoutRecruiter } = appContext;
 
   const handleRecruiterLogin = () => {
     setShowRecruiterLogin(true);
@@ -27,7 +27,6 @@ const NavigationBar: React.FC = () => {
 
   return (
     <nav className="glass-navbar">
-
       <div className="glass-navbar_left">
         <div className="glass-navbar_logo-container">
           <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
@@ -36,17 +35,30 @@ const NavigationBar: React.FC = () => {
       </div>
 
       <div className={`glass-navbar_menu ${open ? "open" : ""}`}>
-        {user ? (
+        {user && !recruiter ? (
           <>
             <Link to="/applications" className="glass-navbar_menu-link">
               Applied Jobs
             </Link>
-
             <p className="glass-navbar_menu-user">
               Hi, {user.firstName} {user.lastName}
             </p>
-
             <UserButton />
+          </>
+        ) : recruiter && !user ? (
+          <>
+            <Link to="/dashboard/add-job" className="glass-navbar_menu-link">Post Job</Link>
+            <Link to="/dashboard/manage-jobs" className="glass-navbar_menu-link">My Jobs</Link>
+            <Link to="/dashboard/view-applications" className="glass-navbar_menu-link">Applications</Link>
+            <p className="glass-navbar_menu-user">
+              Hi, {recruiter.name}
+            </p>
+            <button
+              className="glass-navbar_menu-btn"
+              onClick={logoutRecruiter}
+            >
+              Logout
+            </button>
           </>
         ) : (
           <>
@@ -66,7 +78,6 @@ const NavigationBar: React.FC = () => {
         )}
       </div>
 
-     
       <button
         className={`glass-navbar_burger ${open ? "active" : ""}`}
         onClick={() => setOpen(!open)}
@@ -78,6 +89,7 @@ const NavigationBar: React.FC = () => {
     </nav>
   );
 };
+
 
 export default NavigationBar;
 

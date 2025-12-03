@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AppContext, type AppContextType, type Job, type SearchFilter} from "./AppContext";
+import { AppContext, type AppContextType, type Job, type Recruiter, type SearchFilter} from "./AppContext";
 import { jobsData } from "../assets/images/assets";
 
 
@@ -16,7 +16,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [jobs, setJobs] = useState<Job[]>(jobsData); 
   const[showRecruiterLogin,setShowRecruiterLogin]=useState<boolean>(false);
-
+   const [recruiter, setRecruiter] = useState<Recruiter | null>(null);
+  const logoutRecruiter = () => setRecruiter(null);
   const value: AppContextType = {
     searchFilter,
     setSearchFilter,
@@ -25,7 +26,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     jobs,
     setJobs,
     showRecruiterLogin,
-    setShowRecruiterLogin
+    setShowRecruiterLogin,
+     recruiter,
+    setRecruiter,
+    logoutRecruiter,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
