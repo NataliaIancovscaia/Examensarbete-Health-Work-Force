@@ -28,6 +28,8 @@ export interface AppContextType {
   setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
   jobs: Job[];
   setJobs: React.Dispatch<React.SetStateAction<Job[]>>;
+  showRecruiterLogin: boolean;
+  setShowRecruiterLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 

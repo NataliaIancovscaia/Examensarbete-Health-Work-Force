@@ -15,6 +15,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [jobs, setJobs] = useState<Job[]>(jobsData); 
+  const[showRecruiterLogin,setShowRecruiterLogin]=useState<boolean>(false);
 
   const value: AppContextType = {
     searchFilter,
@@ -23,6 +24,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setIsSearched,
     jobs,
     setJobs,
+    showRecruiterLogin,
+    setShowRecruiterLogin
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
