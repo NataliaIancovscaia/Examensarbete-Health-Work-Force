@@ -28,7 +28,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* Sidebar + Content */}
+     
       <main className="dashboard-main">
         <aside className="dashboard-sidebar">
           <NavLink to="/dashboard/add-job" className="dashboard-link">
