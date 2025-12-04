@@ -10,7 +10,7 @@ const ViewApplications: React.FC = () => {
 
   return (
     <div className="view-applications">
-      <h2 className="view-applications_title">Applications</h2>
+      <h2 className="view-applications_title"><strong>Applications</strong></h2>
 
       <div className="view-applications_table-wrapper">
         <table className="view-applications_table">
@@ -28,9 +28,10 @@ const ViewApplications: React.FC = () => {
           <tbody>
             {viewApplicationsPageData.map((applicant, index) => (
               <tr key={index} className="view-applications_row">
-                <td>{index + 1}</td>
 
-                <td className="view-applications_user-cell">
+                <td data-label="Nr.">{index + 1}</td>
+
+                <td data-label="User Name" className="view-applications_user-cell">
                   <img
                     src={applicant.imgSrc}
                     alt={applicant.name}
@@ -39,10 +40,10 @@ const ViewApplications: React.FC = () => {
                   <span>{applicant.name}</span>
                 </td>
 
-                <td>{applicant.jobTitle}</td>
-                <td>{applicant.location}</td>
+                <td data-label="Job Title">{applicant.jobTitle}</td>
+                <td data-label="Location">{applicant.location}</td>
 
-                <td>
+                <td data-label="Resume">
                   <a
                     href={applicant.resumeUrl}
                     target="_blank"
@@ -53,7 +54,7 @@ const ViewApplications: React.FC = () => {
                   </a>
                 </td>
 
-                <td>
+                <td data-label="Action">
                   <div className="view-applications_action-wrapper">
                     <div
                       className="view-applications_dots-btn"
@@ -76,11 +77,13 @@ const ViewApplications: React.FC = () => {
           </tbody>
         </table>
       </div>
+      
     </div>
   );
 };
 
 export default ViewApplications;
+
 
 
 

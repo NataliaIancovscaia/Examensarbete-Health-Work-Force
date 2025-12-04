@@ -21,17 +21,14 @@
   animation: fadeInGlass 0.6s ease forwards;
 
   &_headline {
-    
-    font-size: 22px; 
+  font-size: 20px;
     font-weight: 700;
     text-align: center;
-    background: linear-gradient(130deg, rgba(255,255,255,0.85), rgba(255,255,255,0.4));
+    margin-bottom: 16px;
+    background: linear-gradient(130deg, rgba(0,0,0,0.85), rgba(0,0,0,0.4));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-   
-    
-    margin-bottom: 4px;
 
     @media (min-width: 769px) {
       font-size: 26px;

@@ -10,6 +10,7 @@
 @use './Dashboard' as *;
 @use './AddJob' as *;
 @use './ViewApplications' as *;
+@use './ManageJobs' as *;
 
 html, body {
   margin: 0;

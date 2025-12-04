@@ -50,7 +50,7 @@ const AddJob = () => {
       <h2 className="add-job-form_headline">Add Job Listing</h2>
 
       <div className="add-job-form_field">
-        <label>Job Title</label>
+        <label><strong>Job Title</strong></label>
         <input
           type="text"
           placeholder="Enter position title"
