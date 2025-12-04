@@ -9,6 +9,7 @@
 @use './Recruiter' as *;
 @use './Dashboard' as *;
 @use './AddJob' as *;
+@use './ViewApplications' as *;
 
 html, body {
   margin: 0;
