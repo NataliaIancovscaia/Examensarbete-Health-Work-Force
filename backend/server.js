@@ -29,10 +29,10 @@ const ensureDbConnection = async () => {
   if (!isDbConnected) {
     await connectDB();
     isDbConnected = true;
+    console.log("MongoDB Connected (cold start)");
   }
 };
 
-let handler;
 
 if (process.env.LOCAL === "true") {
   (async () => {
@@ -42,20 +42,14 @@ if (process.env.LOCAL === "true") {
       console.log(`Local server running on http://localhost:${PORT}`)
     );
   })();
-} else {
-  handler = serverless(async (req, res) => {
-    try {
-      await ensureDbConnection();
-      return app(req, res);
-    } catch (err) {
-      Sentry.captureException(err);
-      console.error("Server error:", err);
-      return res.status(500).json({ success: false, message: "Server error" });
-    }
-  });
 }
 
+
+await ensureDbConnection(); 
+const handler = serverless(app);
+
 export default handler;
+
 
 
 
