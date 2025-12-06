@@ -3,11 +3,11 @@ import User from "../models/User.js";
 
 export const clerkWebhooks = async (req, res) => {
   try {
-    // Определяем локальный запуск
+    
     const isLocal = process.env.LOCAL && process.env.LOCAL.toLowerCase() === "true";
     console.log("LOCAL:", process.env.LOCAL, "isLocal:", isLocal);
 
-    // Проверка подписи только на продакшне
+   
     if (!isLocal) {
       const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
       await whook.verify(JSON.stringify(req.body), {
