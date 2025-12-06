@@ -11,10 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.get("/", (req, res) => res.send("API Working"));
 app.post("/webhooks", clerkWebhooks);
-
 
 process.on("uncaughtException", (err) => {
   Sentry.captureException(err);
@@ -29,29 +27,22 @@ process.on("unhandledRejection", (err) => {
 let isDbConnected = false;
 const ensureDbConnection = async () => {
   if (!isDbConnected) {
-    try {
-      await connectDB();
-      isDbConnected = true;
-    } catch (err) {
-      Sentry.captureException(err);
-      console.error("DB Connection Failed:", err);
-      throw err;
-    }
+    await connectDB();
+    isDbConnected = true;
   }
 };
 
-
 let handler;
-
 
 if (process.env.LOCAL === "true") {
   (async () => {
     await ensureDbConnection();
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`Local server running on http://localhost:${PORT}`));
+    app.listen(PORT, () =>
+      console.log(`Local server running on http://localhost:${PORT}`)
+    );
   })();
 } else {
- 
   handler = serverless(async (req, res) => {
     try {
       await ensureDbConnection();
@@ -64,8 +55,7 @@ if (process.env.LOCAL === "true") {
   });
 }
 
-
-export { handler };
+export default handler;
 
 
 
