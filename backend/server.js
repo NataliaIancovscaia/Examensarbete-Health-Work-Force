@@ -10,28 +10,34 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// No top-level await here!
+async function startServer() {
+  await connectDB();
 
-await connectDB();
+  app.get("/", (req, res) => {
+    res.send("API Working");
+  });
 
+  app.post("/webhooks", clerkWebhooks);
 
-app.get("/", (req, res) => {
-  res.send("API Working");
-});
-app.post('/webhooks',clerkWebhooks);
+  process.on("uncaughtException", (err) => {
+    Sentry.captureException(err);
+    console.error("Uncaught Exception:", err);
+  });
 
+  process.on("unhandledRejection", (err) => {
+    Sentry.captureException(err);
+    console.error("Unhandled Rejection:", err);
+  });
 
-process.on("uncaughtException", (err) => {
-  Sentry.captureException(err);
-  console.error("Uncaught Exception:", err);
-});
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () =>
+    console.log(`Server running on http://0.0.0.0:${PORT}`)
+  );
+}
 
-process.on("unhandledRejection", (err) => {
-  Sentry.captureException(err);
-  console.error("Unhandled Rejection:", err);
-});
+startServer();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on http://0.0.0.0:${PORT}`));
 
 
 
