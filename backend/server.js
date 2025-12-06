@@ -10,9 +10,15 @@ import { clerkWebhooks } from "./controllers/webhooks.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => res.send("API Working"));
+
+app.get("/", (req, res) => {
+  console.log("Root route called");
+  res.send("API Working");
+});
 app.post("/webhooks", clerkWebhooks);
+
 
 process.on("uncaughtException", (err) => {
   Sentry.captureException(err);
@@ -23,6 +29,7 @@ process.on("unhandledRejection", (err) => {
   Sentry.captureException(err);
   console.error("Unhandled Rejection:", err);
 });
+
 
 let isDbConnected = false;
 const ensureDbConnection = async () => {
@@ -49,6 +56,7 @@ await ensureDbConnection();
 const handler = serverless(app);
 
 export default handler;
+
 
 
 
