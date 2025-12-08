@@ -2,6 +2,7 @@ import Company from "../models/Company.js";
 import bcrypt, { genSaltSync } from 'bcrypt';
 import {v2 as cloudinary} from 'cloudinary';
 import generateToken from "../utils/generateToken.js";
+import Job from "../models/Job.js";
 //Register company
 export const registerCompany=async(req,res)=>{
     const {name,email,password}=req.body;
@@ -74,7 +75,7 @@ export const loginCompany=async(req,res)=>{
             res.json({success:false,message:'Invalid email or password'})
         }
     } catch (error) {
-         res.json({success:false,message:error.message})
+         res.json({success:false,message:error.message});
     }
 
 }
@@ -86,9 +87,28 @@ export const getCompanyData=async(req,res)=>{
 
 //Create a new job
 export const postJob=async(req,res)=>{
-    const {title,description,location, salary}=req.body;
+
+    const {title,description,location,category,level, salary}=req.body;
+
     const companyId=req.company._id;
-    console.log(companyId,{title,description,location, salary});
+    try {
+        const newJob=new Job({
+            title,
+            description,
+            location,
+            level,
+            category,
+            salary,
+            companyId,
+            date:Date.now()
+        });
+        await newJob.save();
+       res.json({success:true,newJob});
+    } catch (error) {
+         res.json({success:false,message:error.message});
+    }
+
+    
 
 }
 
