@@ -5,7 +5,8 @@ import cors from "cors";
 import { Sentry } from "./config/instrument.js"; 
 import connectDB from "./config/db.js";
 import { clerkWebhooks } from "./controllers/webhooks.js";
-import companyRoutes from './routes/companyRoutes.js'
+import companyRoutes from './routes/companyRoutes.js';
+import jobRoutes from './routes/jobRoutes.js'
 import connectCloudinary from "./config/cloudinary.js";
 const app = express();
 
@@ -56,6 +57,7 @@ app.post("/webhooks", (req, res, next) => {
 });
 
 app.use('/api/company',companyRoutes);
+app.use('/api/jobs',jobRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);
