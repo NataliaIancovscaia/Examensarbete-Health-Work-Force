@@ -82,6 +82,20 @@ export const loginCompany=async(req,res)=>{
 
 //Company data
 export const getCompanyData=async(req,res)=>{
+   
+
+    try {
+         const company=req.company;
+            res.json({
+                succes:true,
+                company            
+            })
+
+        }
+    catch (error) {
+         res.json({success:false,message:error.message});
+    }
+
 
 }
 
@@ -120,6 +134,20 @@ export const getCompanyJobApplicants=async(req,res)=>{
 //Company posted jobs
 export const getCompanyPostedJobes=async(req,res)=>{
 
+    try {
+         const companyId=req.company._id;
+
+         const jobs=await Job.find({companyId});
+            res.json({
+                succes:true,
+               jobsData: jobs           
+            })
+
+        }
+    catch (error) {
+         res.json({success:false,message:error.message});
+    }
+
 }
 
 //Change Job application status
@@ -127,7 +155,45 @@ export const changeJobApplicationsStatus=async(req,res)=>{
 
 }
 //Change Job visibility
-export const changeVisibility=async(req,res)=>{
+export const changeVisibility = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const companyId = req.company._id;
 
-}
+    if (!id) {
+      return res.json({
+        success: false,
+        message: "Job id is required",
+      });
+    }
 
+    const job = await Job.findById(id);
+
+    if (!job) {
+      return res.json({
+        success: false,
+        message: "Job not found",
+      });
+    }
+
+    if (job.companyId.toString() !== companyId.toString()) {
+      return res.json({
+        success: false,
+        message: "You are not allowed to edit this job",
+      });
+    }
+
+    job.visible = !job.visible;
+    await job.save();
+
+    res.json({
+      success: true,
+      job,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
