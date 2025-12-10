@@ -1,5 +1,5 @@
 import Company from "../models/Company.js";
-import bcrypt, { genSaltSync } from 'bcrypt';
+import bcrypt from 'bcrypt';
 import {v2 as cloudinary} from 'cloudinary';
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/Job.js";
@@ -51,34 +51,43 @@ export const registerCompany=async(req,res)=>{
 
 }
 
-//Company logo
-export const loginCompany=async(req,res)=>{
-    const {email,password}=req.body;
-    try {
-        const company=await Company.findOne({email});
-        if(bcrypt.compare(password,company.password)){
+//Company login
+export const loginCompany = async (req, res) => {
+  const { email, password } = req.body;
 
-            res.json({
-                succes:true,
-                company:{
-                _id:company._id,
-                name:company.name,
-                email:company.email,
-                image:company.image
+  try {
+    const company = await Company.findOne({ email });
 
-
-            },
-            token:generateToken(company._id)
-            })
-
-        }else{
-            res.json({success:false,message:'Invalid email or password'})
-        }
-    } catch (error) {
-         res.json({success:false,message:error.message});
+    if (!company) {
+      return res.json({
+        success: false,
+        message: "Invalid email or password",
+      });
     }
 
-}
+    const isMatch = await bcrypt.compare(password, company.password);
+
+    if (!isMatch) {
+      return res.json({
+        success: false,
+        message: "Invalid email or password",
+      });
+    }
+
+    res.json({
+      success: true,
+      company: {
+        _id: company._id,
+        name: company.name,
+        email: company.email,
+        image: company.image,
+      },
+      token: generateToken(company._id),
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
 
 //Company data
 export const getCompanyData=async(req,res)=>{
@@ -87,7 +96,7 @@ export const getCompanyData=async(req,res)=>{
     try {
          const company=req.company;
             res.json({
-                succes:true,
+                success:true,
                 company            
             })
 
@@ -139,7 +148,7 @@ export const getCompanyPostedJobes=async(req,res)=>{
 
          const jobs=await Job.find({companyId});
             res.json({
-                succes:true,
+                success:true,
                jobsData: jobs           
             })
 

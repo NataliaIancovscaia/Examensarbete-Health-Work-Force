@@ -1,9 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/images/assets";
 import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 const RecruiterLogin = () => {
-  const [state, setState] = useState("Login");
+  const navigate = useNavigate();
+
+  const [state, setState] = useState<"Login" | "Sign Up">("Login");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -12,46 +16,117 @@ const RecruiterLogin = () => {
   const [isTextDataSubmitted, setIsTextDataSubmitted] = useState(false);
 
   const appContext = useContext(AppContext);
-  if (!appContext) throw new Error("RecruiterLogin must be used inside AppProvider");
+  if (!appContext) {
+    throw new Error("RecruiterLogin must be used inside AppProvider");
+  }
 
-  const { setShowRecruiterLogin } = appContext;
+  const {
+    setShowRecruiterLogin,
+    backendUrl,
+    setCompanyData,
+    setCompanyToken,
+  } = appContext;
 
-  const onSubmitHandler = (e: React.FormEvent) => {
+  const resetFormState = () => {
+    setPassword("");
+    setEmail("");
+    setName("");
+    setImage(null);
+    setImagePreview(null);
+    setIsTextDataSubmitted(false);
+  };
+
+  const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (state === "Login") {
-      console.log("Logging in:", { email, password });
-      return;
-    }
+    try {
+     
+      if (state === "Login") {
+        const { data } = await axios.post(
+          backendUrl + "/api/company/login",
+          { email, password }
+        );
 
-    if (state === "Sign Up") {
+        if (!data.success) {
+          alert(data.message);
+          return;
+        }
+
+        setCompanyData(data.company);
+        setCompanyToken(data.token);
+        localStorage.setItem("companyToken", data.token);
+
+        setShowRecruiterLogin(false);
+        navigate("/dashboard");
+        return;
+      }
+
+    
       if (!isTextDataSubmitted) {
         setIsTextDataSubmitted(true);
         return;
       }
 
+      
       if (!image) {
-        alert("Please upload a company logo before creating the account.");
+        alert("Upload company logo");
         return;
       }
 
-      console.log("Creating recruiter account:", { name, email, password, image });
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("image", image);
+
+      const { data } = await axios.post(
+        backendUrl + "/api/company/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      if (!data.success) {
+        alert(data.message);
+        return;
+      }
+
+      setCompanyData(data.company);
+      setCompanyToken(data.token);
+      localStorage.setItem("companyToken", data.token);
+
+      setShowRecruiterLogin(false);
+      navigate("/dashboard");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Something went wrong");
+        console.error(error.response?.data);
+      } else {
+        console.error(error);
+      }
     }
   };
 
   useEffect(() => {
-  document.body.style.overflow = "hidden";
-  return () => {
-    document.body.style.overflow = "unset";
-  };
-}, []);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
-
-useEffect(() => {
-  return () => {
-    if (imagePreview) URL.revokeObjectURL(imagePreview);
-  };
-}, [imagePreview]);
+  useEffect(() => {
+    return () => {
+      if (imagePreview) URL.revokeObjectURL(imagePreview);
+    };
+  }, [imagePreview]);
 
   return (
     <div className="popup-wrapper" onClick={() => setShowRecruiterLogin(false)}>
@@ -60,16 +135,21 @@ useEffect(() => {
         className="popup-form"
         onClick={(e) => e.stopPropagation()}
       >
-     
-        <div className="popup-close" onClick={() => setShowRecruiterLogin(false)}>
-    <img src={assets.cross_icon} alt="Close" />
-  </div>
+        <div
+          className="popup-close"
+          onClick={() => setShowRecruiterLogin(false)}
+        >
+          <img src={assets.cross_icon} alt="Close" />
+        </div>
 
-
-        <h1 className="popup-title">Recruiter {state === "Login" ? "Login" : "Sign Up"}</h1>
+        <h1 className="popup-title">
+          Recruiter {state === "Login" ? "Login" : "Sign Up"}
+        </h1>
 
         <p className="popup-subtitle">
-          {state === "Login" ? "Sign in to continue" : "Sign up to continue"}
+          {state === "Login"
+            ? "Sign in to continue"
+            : "Sign up to continue"}
         </p>
 
         {state === "Sign Up" && isTextDataSubmitted ? (
@@ -81,57 +161,54 @@ useEffect(() => {
                 className={imagePreview ? "uploaded-preview" : ""}
               />
               <input
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    setImage(file);
-                    const url = URL.createObjectURL(file);
-                    setImagePreview(url);
-                  } else {
-                    setImage(null);
-                    setImagePreview(null);
-                  }
-                }}
                 type="file"
                 id="image"
                 hidden
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+
+                  setImage(file);
+                  const url = URL.createObjectURL(file);
+                  setImagePreview(url);
+                }}
               />
             </label>
             <p>Upload Company Logo</p>
           </div>
         ) : (
           <>
-            {state !== "Login" && (
+            {state === "Sign Up" && (
               <div className="popup-input">
-                <img src={assets.person_icon} alt="Person icon" />
+                <img src={assets.person_icon} alt="Person" />
                 <input
                   type="text"
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
                   placeholder="Company Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
                 />
               </div>
             )}
 
             <div className="popup-input">
-              <img src={assets.email_icon} alt="Email icon" />
+              <img src={assets.email_icon} alt="Email" />
               <input
                 type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
 
             <div className="popup-input">
-              <img src={assets.lock_icon} alt="Password icon" />
+              <img src={assets.lock_icon} alt="Password" />
               <input
                 type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -151,12 +228,28 @@ useEffect(() => {
         {state === "Login" ? (
           <p className="switch">
             Don’t have an account?
-            <span onClick={() => setState("Sign Up")}> Sign Up</span>
+            <span
+              onClick={() => {
+                setState("Sign Up");
+                resetFormState();
+              }}
+            >
+              {" "}
+              Sign Up
+            </span>
           </p>
         ) : (
           <p className="switch">
             Already have an account?
-            <span onClick={() => setState("Login")}> Login</span>
+            <span
+              onClick={() => {
+                setState("Login");
+                resetFormState();
+              }}
+            >
+              {" "}
+              Login
+            </span>
           </p>
         )}
       </form>
@@ -165,5 +258,6 @@ useEffect(() => {
 };
 
 export default RecruiterLogin;
+
 
 

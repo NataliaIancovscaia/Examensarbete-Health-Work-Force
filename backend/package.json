@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-  "start:local": "export LOCAL=true && node server.js"
+    "start:local": "export LOCAL=true && node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@clerk/express": "^1.7.56",
     "@sentry/node": "^10.29.0",
     "@sentry/tracing": "^7.120.4",
     "bcrypt": "^6.0.0",
