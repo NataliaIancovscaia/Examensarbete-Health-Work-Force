@@ -1,9 +1,17 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { assets } from "../assets/images/assets";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const context = useContext(AppContext);
+if (!context) throw new Error("Dashboard must be used inside AppProvider");
+
+const { companyData } = context;
+
+
 
   return (
     <div className="dashboard-container">
@@ -14,18 +22,25 @@ const Dashboard = () => {
              src={assets.logo} 
              alt="logo" 
              className="dashboard-logo"/>
-        <div className="dashboard-welcome">
-          <p>Welcome</p>
+
+         {companyData&&(
+
+          <div className="dashboard-welcome">
+        
+          <p>Welcome,{companyData.name}</p>
 
           <div className="dashboard-profile">
-            <img src={assets.company_icon} alt="Company icon"/>
+            <img src={companyData.image} alt="Company icon"/>
             <div>
               <ul>
                 <li>Logout</li>
               </ul>
             </div>
           </div>
+           
+        
         </div>
+          )} 
       </header>
 
      

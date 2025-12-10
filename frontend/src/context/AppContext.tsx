@@ -58,7 +58,7 @@ export interface AppContextType {
   setCompanyToken: React.Dispatch<React.SetStateAction<string | null>>;
 
   companyData: Company | null;
-setCompanyData: React.Dispatch<React.SetStateAction<Company | null>>;
+ setCompanyData: React.Dispatch<React.SetStateAction<Company | null>>;
 }
 
 

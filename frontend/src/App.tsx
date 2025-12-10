@@ -18,7 +18,7 @@ const App: React.FC = () => {
 const appContext = useContext(AppContext);
 if (!appContext) throw new Error("App must be used inside AppProvider");
 
-const{showRecruiterLogin}=appContext;
+const{showRecruiterLogin,companyToken}=appContext;
   return (
     <div className="app-container">
      
@@ -39,9 +39,16 @@ const{showRecruiterLogin}=appContext;
           <Route path="/apply-job/:id" element={<ApplyJob />} />
           <Route path="/applications" element={<Applications />} />
           <Route path="/dashboard" element={<Dashboard/>}>
-            <Route path="add-job" element={<AddJob/>}/>
+
+          if{companyToken ?<>
+
+          <Route path="add-job" element={<AddJob/>}/>
             <Route path="manage-jobs" element={<ManageJobs/>}/>
             <Route path="view-applications" element={<ViewApplications/>}/>
+          </>:null
+
+          }
+            
           </Route>
         </Routes>
       </div>
