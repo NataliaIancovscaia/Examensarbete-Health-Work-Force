@@ -1,8 +1,9 @@
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { JobCategories, JobLocations } from "../assets/images/assets";
-
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
 
 const AddJob = () => {
   const [title, setTitle] = useState("");
@@ -15,8 +16,12 @@ const AddJob = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillRef = useRef<Quill | null>(null);
 
+  const { backendUrl, companyToken } = useContext(AppContext)!;
+
+
   useEffect(() => {
     if (!editorRef.current) return;
+
     if (!quillRef.current) {
       quillRef.current = new Quill(editorRef.current, {
         theme: "snow",
@@ -30,19 +35,59 @@ const AddJob = () => {
           ],
         },
       });
+
       quillRef.current.on("text-change", () => {
         setDescription(quillRef.current?.root.innerHTML || "");
       });
     }
+
     return () => {
       quillRef.current?.off("text-change");
       quillRef.current = null;
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({ title, description, location, category, level, salary });
+
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/company/post-job",
+        {
+          title,
+          description,
+          location,
+          salary,
+          category,
+          level,
+        },
+        { headers: { token: companyToken } }
+      );
+
+      if (data.success) {
+        alert(data.message);
+
+        // Reset form
+        setTitle("");
+        setSalary(0);
+        setDescription("");
+
+        // Clear quill editor
+        if (quillRef.current) {
+          quillRef.current.root.innerHTML = "";
+        }
+      } else {
+        alert(data.message);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Something went wrong");
+        console.error(error.response?.data);
+      } else {
+        console.error(error);
+      }
+    }
   };
 
   return (

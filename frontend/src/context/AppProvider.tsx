@@ -51,7 +51,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     const fetchCompanyData = async () => {
       try {
-        const { data } = await axios.get(`${backendUrl}api/company/company`, {
+        const { data } = await axios.get(`${backendUrl}/api/company/company`, {
           headers: { token: companyToken }
         });
 
