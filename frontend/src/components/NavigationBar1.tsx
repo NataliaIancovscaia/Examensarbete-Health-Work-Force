@@ -49,7 +49,7 @@ const NavigationBar: React.FC = () => {
 
       <div className={`glass-navbar_menu ${open ? "open" : ""}`}>
 
-      {/* Clerk */}
+        {/* ---------- IF USER (Clerk) LOGGED IN ---------- */}
         {user && !companyData && (
           <>
             <Link to="/applications" className="glass-navbar_menu-link">
@@ -64,10 +64,10 @@ const NavigationBar: React.FC = () => {
           </>
         )}
 
-       {/* recruter */}
+        {/* ---------- IF RECRUITER (companyData) LOGGED IN ---------- */}
         {!user && companyData && (
           <>
-            {/* <Link to="/dashboard/add-job" className="glass-navbar_menu-link">
+            <Link to="/dashboard/add-job" className="glass-navbar_menu-link">
               Post Job
             </Link>
             <Link to="/dashboard/manage-jobs" className="glass-navbar_menu-link">
@@ -75,14 +75,10 @@ const NavigationBar: React.FC = () => {
             </Link>
             <Link to="/dashboard/view-applications" className="glass-navbar_menu-link">
               Applications
-            </Link> */}
-             
+            </Link>
+
             <p className="glass-navbar_menu-user">Hi, {companyData.name}</p>
-           <img
-               src={companyData.image}
-               alt="Recruiter Logo"
-               className="recruiter-avatar"
-            />
+            
 
             <button className="glass-navbar_menu-btn" onClick={logoutCompany}>
               Logout
@@ -123,7 +119,3 @@ const NavigationBar: React.FC = () => {
 };
 
 export default NavigationBar;
-
-
-
-
