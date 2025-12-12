@@ -268,7 +268,7 @@ export const siteReviews = [
 
 export const jobsData = [
   {
-    id: "1",
+    _id: "1",
     title: "General Practitioner",
     location: "Stockholm",
     level: "Senior Level",
@@ -308,10 +308,12 @@ export const jobsData = [
     salary: 95000,
     date: 1732041600000,
     category: "Doctors",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "2",
+    _id: "2",
     title: "Dentist",
     location: "Gothenburg",
     level: "Intermediate Level",
@@ -349,10 +351,12 @@ export const jobsData = [
     salary: 87000,
     date: 1732128000000,
     category: "Dentistry",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "3",
+    _id: "3",
     title: "Pharmacist",
     location: "Malmo",
     level: "Senior Level",
@@ -383,10 +387,12 @@ export const jobsData = [
     salary: 80000,
     date: 1732214400000,
     category: "Pharmaceuticals",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "4",
+    _id: "4",
     title: "Pediatrician",
     location: "Uppsala",
     level: "Intermediate Level",
@@ -417,10 +423,12 @@ export const jobsData = [
     salary: 92000,
     date: 1732300800000,
     category: "Pediatrics",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "5",
+    _id: "5",
     title: "Lab Technician",
     location: "Vasteras",
     level: "Beginner Level",
@@ -451,10 +459,12 @@ export const jobsData = [
     salary: 60000,
     date: 1732387200000,
     category: "Diagnostics",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "6",
+    _id: "6",
     title: "Medical Assistant",
     location: "Vasteras",
     level: "Beginner Level",
@@ -484,10 +494,12 @@ export const jobsData = [
     salary: 58000,
     date: 1732387200000,
     category: "Healthcare",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "7",
+    _id: "7",
     title: "Clinical Research Coordinator",
     location: "Vasteras",
     level: "Beginner Level",
@@ -517,10 +529,12 @@ export const jobsData = [
     salary: 62000,
     date: 1732387200000,
     category: "Research",
+    applicants: 0,
+    visible: true,
   },
 
   {
-    id: "8",
+    _id: "8",
     title: "Lab Assistant",
     location: "Vasteras",
     level: "Beginner Level",
@@ -550,10 +564,12 @@ export const jobsData = [
     salary: 57000,
     date: 1732387200000,
     category: "Diagnostics",
+    applicants: 0,
+    visible: true,
   },
 
  {
-    id: "9",
+    _id: "9",
     title: "Clinic Assistant",
     location: "Vasteras",
     level: "Beginner Level",
@@ -583,6 +599,8 @@ export const jobsData = [
     salary: 57000,
     date: 1732387200000,
     category: "Diagnostics",
+    applicants: 0,
+    visible: true,
   },
 
 ]

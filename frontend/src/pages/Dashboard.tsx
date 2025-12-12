@@ -9,7 +9,14 @@ const Dashboard = () => {
   const context = useContext(AppContext);
 if (!context) throw new Error("Dashboard must be used inside AppProvider");
 
-const { companyData } = context;
+const { companyData,setCompanyData,setCompanyToken } = context;
+
+const logout=()=>{
+    setCompanyToken(null);
+    localStorage.removeItem('companyToken');
+    setCompanyData(null);
+    navigate('/');
+}
 
 
 
@@ -33,7 +40,7 @@ const { companyData } = context;
             <img src={companyData.image} alt="Company icon"/>
             <div>
               <ul>
-                <li>Logout</li>
+                <li onClick={logout}>Logout</li>
               </ul>
             </div>
           </div>
