@@ -9,7 +9,7 @@ export const getJobs=async(req,res)=>{
                   .populate({path:'companyId',
                    select:'-password'});
 
-                  res.json({succes:true,jobs})
+                  res.json({success:true,jobs})
     } catch (error) {
         res.json({success:false,message:error.message});
     }
@@ -28,7 +28,7 @@ export const getJobById=async(req,res)=>{
                     return  res.json({succes:false,message:'Job not found'});
                    }
 
-                  res.json({succes:true,job})
+                  res.json({success:true,job})
     } catch (error) {
         res.json({success:false,message:error.message});
     }
