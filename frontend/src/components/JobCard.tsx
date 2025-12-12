@@ -36,14 +36,14 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
   <div className="job-card_buttons">
     <button onClick={() => { 
-    navigate(`/apply-job/${job.id}`); 
+    navigate(`/apply-job/${job._id}`); 
     scrollTo(0, 0); 
 }}>
   Apply
 </button>
 
 <button onClick={() => { 
-    navigate(`/apply-job/${job.id}`); 
+    navigate(`/apply-job/${job._id}`); 
     scrollTo(0, 0); 
 }}>
   Read more

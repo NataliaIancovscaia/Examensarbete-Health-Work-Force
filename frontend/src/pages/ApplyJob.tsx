@@ -1,27 +1,53 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { AppContext, type Job } from "../context/AppContext";
-import Loading from "../components/Loading";
+
 import NavigationBar from "../components/NavigationBar";
 import { assets } from "../assets/images/assets";
 import moment from "moment";
 import "../assets/scss/ApplyJob.scss";
 import JobCard from "../components/JobCard";
 import Footer from "../components/Footer";
+import axios from "axios";
 
 const ApplyJob: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) throw new Error("ApplyJob must be used inside AppProvider");
 
   const { id } = useParams<{ id: string }>();
-  const { jobs } = appContext;
+  const { jobs, backendUrl } = appContext;
 
-  const jobData: Job | undefined = jobs.find(job => job.id === id);
-  if (!jobData) return <Loading />;
+  const [jobData, setJobData] = useState<Job | null>(null);
 
- 
+  useEffect(() => {
+    const getJob = async () => {
+      try {
+        const { data } = await axios.get(`${backendUrl}/api/jobs/${id}`);
+
+        if (data.success) {
+          setJobData(data.job);
+        } else {
+          alert(data.message);
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          alert(error.response?.data?.message || "Something went wrong");
+        }
+        console.error(error);
+      }
+    };
+
+    getJob();
+  }, [id, backendUrl]);
+
+  if (!jobData) return <div className="loading">Loading...</div>;
+
   const similarJobs = jobs
-    .filter(job => job.id !== jobData.id && job.companyId.id === jobData.companyId.id)
+    .filter(
+      (job) =>
+        job._id !== jobData._id &&
+        job.companyId._id === jobData.companyId._id
+    )
     .slice(0, 3);
 
   return (
@@ -29,16 +55,27 @@ const ApplyJob: React.FC = () => {
       <NavigationBar />
 
       <main className="apply-job">
-      
         <section className="apply-job_header">
           <img src={jobData.companyId.image} alt="Company Icon" />
           <h1>{jobData.title}</h1>
 
           <div className="apply-job_header-tags">
-            <span><img src={assets.suitcase_icon} alt="" />{jobData.companyId.name}</span>
-            <span><img src={assets.location_icon} alt="" />{jobData.location}</span>
-            <span><img src={assets.person_icon} alt="" />{jobData.level}</span>
-            <span><img src={assets.money_icon} alt="" />{jobData.salary} SEK</span>
+            <span>
+              <img src={assets.suitcase_icon} alt="" />
+              {jobData.companyId.name}
+            </span>
+            <span>
+              <img src={assets.location_icon} alt="" />
+              {jobData.location}
+            </span>
+            <span>
+              <img src={assets.person_icon} alt="" />
+              {jobData.level}
+            </span>
+            <span>
+              <img src={assets.money_icon} alt="" />
+              {jobData.salary} SEK
+            </span>
           </div>
 
           <div className="apply-job_header-apply">
@@ -47,9 +84,7 @@ const ApplyJob: React.FC = () => {
           </div>
         </section>
 
-      
         <section className="apply-job_content">
-         
           <article className="apply-job_description">
             <h2>Job Description</h2>
             <div
@@ -59,37 +94,38 @@ const ApplyJob: React.FC = () => {
             <button className="apply-btn">Apply Now</button>
           </article>
 
-          
           {similarJobs.length > 0 && (
             <aside className="apply-job_sidebar">
               <h2>More similar {jobData.companyId.name} jobs</h2>
               <div className="apply-job_more-jobs-list">
-                {similarJobs.map(job => (
-                  <JobCard key={job.id} job={job} />
+                {similarJobs.map((job) => (
+                  <JobCard key={job._id} job={job} />
                 ))}
               </div>
             </aside>
           )}
         </section>
 
-       
         {similarJobs.length > 0 && (
           <section className="mobile-only">
             <h2>More similar {jobData.companyId.name} jobs</h2>
             <div className="apply-job_more-jobs-list">
-              {similarJobs.map(job => (
-                <JobCard key={job.id} job={job} />
+              {similarJobs.map((job) => (
+                <JobCard key={job._id} job={job} />
               ))}
             </div>
           </section>
         )}
       </main>
-      <Footer/>
+
+      <Footer />
     </>
   );
 };
 
 export default ApplyJob;
+
+
 
 
 

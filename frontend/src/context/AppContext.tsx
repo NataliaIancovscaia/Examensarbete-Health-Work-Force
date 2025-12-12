@@ -22,14 +22,14 @@ export interface Job {
   salary: number;
   date: number;
   companyId: {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     image: string;
   };
 
-   applicants: number;
-   visible: boolean;
+  applicants: number;
+  visible: boolean;
 }
 export interface Recruiter {
   id: string;

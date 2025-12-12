@@ -25,7 +25,7 @@ export const getJobById=async(req,res)=>{
                   .populate({path:'companyId',
                    select:'-password'});
                    if (!job){
-                    return  res.json({succes:false,message:'Job not found'});
+                    return  res.json({success:false,message:'Job not found'});
                    }
 
                   res.json({success:true,job})

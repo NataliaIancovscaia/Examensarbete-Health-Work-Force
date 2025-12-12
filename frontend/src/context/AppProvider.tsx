@@ -7,7 +7,7 @@ import {
   type Recruiter,
   type SearchFilter
 } from "./AppContext";
-import { jobsData } from "../assets/images/assets";
+// import { jobsData } from "../assets/images/assets";
 import axios from "axios";
 
 interface AppProviderProps {
@@ -23,7 +23,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   });
 
   const [isSearched, setIsSearched] = useState<boolean>(false);
-  const [jobs, setJobs] = useState<Job[]>(jobsData);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState<boolean>(false);
   const [recruiter, setRecruiter] = useState<Recruiter | null>(null);
 
