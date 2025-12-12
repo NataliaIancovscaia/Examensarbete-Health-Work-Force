@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { assets } from "../assets/images/assets";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AppContext } from "../context/AppContext";
 
 
@@ -17,8 +17,13 @@ const logout=()=>{
     setCompanyData(null);
     navigate('/');
 }
-
-
+const hasRedirected = useRef(false);
+useEffect(() => {
+    if (companyData && !hasRedirected.current) {
+      hasRedirected.current = true;
+      navigate('/dashboard/manage-jobs', { replace: true });
+    }
+  }, [companyData, navigate]);
 
   return (
     <div className="dashboard-container">
