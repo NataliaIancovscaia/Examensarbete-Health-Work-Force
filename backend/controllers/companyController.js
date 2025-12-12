@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import {v2 as cloudinary} from 'cloudinary';
 import generateToken from "../utils/generateToken.js";
 import Job from "../models/Job.js";
+import JobApplication from "../models/JobApplications.js";
+
 //Register company
 export const registerCompany=async(req,res)=>{
     const {name,email,password}=req.body;
@@ -109,6 +111,7 @@ export const getCompanyData=async(req,res)=>{
 }
 
 //Create a new job
+
 export const postJob=async(req,res)=>{
 
     const {title,description,location,category,level, salary}=req.body;
@@ -136,34 +139,49 @@ export const postJob=async(req,res)=>{
 }
 
 //Job Applicants
+
 export const getCompanyJobApplicants=async(req,res)=>{
 
 }
 
 //Company posted jobs
-export const getCompanyPostedJobes=async(req,res)=>{
 
-    try {
-         const companyId=req.company._id;
+export const getCompanyPostedJobes = async (req, res) => {
+  try {
+    const companyId = req.company._id;
 
-         const jobs=await Job.find({companyId});
-            res.json({
-                success:true,
-               jobsData: jobs           
-            })
+    const jobs = await Job.find({ companyId });
 
-        }
-    catch (error) {
-         res.json({success:false,message:error.message});
-    }
+    const jobsData = await Promise.all(
+      jobs.map(async (job) => {
+        const applicants = await JobApplication.find({
+          jobId: job._id,
+        });
 
-}
+        return {
+          ...job.toObject(),
+          applicants: applicants.length,
+        };
+      })
+    );
+
+    res.json({
+      success: true,
+      jobsData,
+    });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 
 //Change Job application status
+
 export const changeJobApplicationsStatus=async(req,res)=>{
 
 }
 //Change Job visibility
+
 export const changeVisibility = async (req, res) => {
   try {
     const { id } = req.body;
@@ -197,6 +215,7 @@ export const changeVisibility = async (req, res) => {
 
     res.json({
       success: true,
+      // message: "Job visibility updated successfully",
       job,
     });
   } catch (error) {

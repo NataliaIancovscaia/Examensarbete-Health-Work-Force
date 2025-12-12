@@ -68,12 +68,12 @@ const AddJob = () => {
       if (data.success) {
         alert(data.message);
 
-        // Reset form
+     
         setTitle("");
         setSalary(0);
         setDescription("");
 
-        // Clear quill editor
+        
         if (quillRef.current) {
           quillRef.current.root.innerHTML = "";
         }

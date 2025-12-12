@@ -13,7 +13,7 @@ export interface Company {
 }
 
 export interface Job {
-  id: string;
+  _id: string;
   title: string;
   category: string;
   location: string;
@@ -27,6 +27,9 @@ export interface Job {
     email: string;
     image: string;
   };
+
+   applicants: number;
+   visible: boolean;
 }
 export interface Recruiter {
   id: string;
