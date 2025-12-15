@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { assets } from "../assets/images/assets";
+// import { assets } from "../assets/images/assets";
 import type { Job } from "../context/AppContext";
 
 
@@ -16,7 +16,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   <div className="job-card_header">
     <img
       className="job-card_logo"
-      src={assets.company_icon}
+      src={job.companyId.image}
       alt="Company icon"
     />
 
