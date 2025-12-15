@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
   AppContext,
   type AppContextType,
   type Company,
   type Job,
   type Recruiter,
-  type SearchFilter
+  type SearchFilter,
+   type User,
 } from "./AppContext";
-// import { jobsData } from "../assets/images/assets";
 import axios from "axios";
+import { useAuth, useUser } from "@clerk/clerk-react";
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -17,11 +18,11 @@ interface AppProviderProps {
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+ 
   const [searchFilter, setSearchFilter] = useState<SearchFilter>({
     title: "",
-    location: ""
+    location: "",
   });
-
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState<boolean>(false);
@@ -30,40 +31,80 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [companyToken, setCompanyToken] = useState<string | null>(null);
   const [companyData, setCompanyData] = useState<Company | null>(null);
 
+  const [userData, setUserData] = useState<User| null>(null);
+  const [userApplications, setUserApplications] = useState<Job[]>([]);
+
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
   const logoutRecruiter = () => setRecruiter(null);
 
+  
+  const fetchUserData = useCallback(
+    async (isMounted: { current: boolean }) => {
+      try {
+        const token = await getToken();
+        const { data } = await axios.get(`${backendUrl}/api/users/user`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (data.success && isMounted.current) setUserData(data.user);
+        else console.warn(data.message);
+      } catch (error) {
+        console.error("Failed to get user:", error);
+      }
+    },
+    [getToken]
+  );
 
   useEffect(() => {
+  if (!user) return;
+  const isMounted = { current: true };
+
+  const fetch = async () => {
+    await fetchUserData(isMounted);
+  };
+
+ 
+  void fetch();
+
+  return () => {
+    isMounted.current = false;
+  };
+}, [user, fetchUserData]);
+
+  
+  useEffect(() => {
+    const isMounted = { current: true };
     const init = async () => {
       try {
         const { data } = await axios.get(`${backendUrl}/api/jobs`);
-        if (data.success) setJobs(data.jobs);
-        else alert(data.message);
+        if (data.success && isMounted.current) setJobs(data.jobs);
+        else console.warn(data.message);
       } catch (err) {
         console.error("Failed to fetch jobs:", err);
       }
 
       const storedToken = localStorage.getItem("companyToken");
-      if (storedToken) setCompanyToken(storedToken);
+      if (storedToken && isMounted.current) setCompanyToken(storedToken);
     };
-
     init();
-  }, []); 
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+ 
   useEffect(() => {
     if (!companyToken) return;
-
-    let active = true;
+    const isMounted = { current: true };
 
     const fetchCompanyData = async () => {
       try {
         const { data } = await axios.get(`${backendUrl}/api/company/company`, {
-          headers: { token: companyToken }
+          headers: { token: companyToken },
         });
-
-        if (!active) return;
-        if (data.success) setCompanyData(data.company);
-        else alert(data.message);
+        if (data.success && isMounted.current) setCompanyData(data.company);
+        else console.warn(data.message);
       } catch (err) {
         console.error("Failed to fetch companyData:", err);
       }
@@ -71,9 +112,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
     fetchCompanyData();
     return () => {
-      active = false; 
+      isMounted.current = false;
     };
-  }, [companyToken]); 
+  }, [companyToken]);
 
 
   const value: AppContextType = useMemo(
@@ -93,7 +134,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       setCompanyToken,
       companyData,
       setCompanyData,
-      backendUrl
+      userData,
+      setUserData,
+      userApplications,
+      setUserApplications,
+      backendUrl,
     }),
     [
       searchFilter,
@@ -102,7 +147,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       showRecruiterLogin,
       recruiter,
       companyToken,
-      companyData
+      companyData,
+      userData,
+      userApplications,
     ]
   );
 

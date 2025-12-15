@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { AppContext, type Job } from "../context/AppContext";
 
 import NavigationBar from "../components/NavigationBar";
@@ -15,10 +15,33 @@ const ApplyJob: React.FC = () => {
   if (!appContext) throw new Error("ApplyJob must be used inside AppProvider");
 
   const { id } = useParams<{ id: string }>();
-  const { jobs, backendUrl } = appContext;
+  const navigate=useNavigate();
+  const { jobs, backendUrl,userData,userApplications} = appContext;
+
+
 
   const [jobData, setJobData] = useState<Job | null>(null);
 
+  const applyHandler=async()=>{
+    try {
+      if (!userData) {
+        return alert('Login to apply for jobs');
+        
+      }
+      if (!userData.resume) {
+        navigate('/applications');
+        return alert('Upload resume to apply');
+        
+      }
+
+      
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+          alert(error.response?.data?.message || "Something went wrong");
+        }
+        console.error(error);
+      }
+  }
   useEffect(() => {
     const getJob = async () => {
       try {
@@ -79,7 +102,7 @@ const ApplyJob: React.FC = () => {
           </div>
 
           <div className="apply-job_header-apply">
-            <button className="apply-btn">Apply Now</button>
+            <button  onClick ={applyHandler} className="apply-btn">Apply Now</button>
             <p className="posted">Posted {moment(jobData.date).fromNow()}</p>
           </div>
         </section>
@@ -91,7 +114,7 @@ const ApplyJob: React.FC = () => {
               className="apply-job_description-text"
               dangerouslySetInnerHTML={{ __html: jobData.description }}
             />
-            <button className="apply-btn">Apply Now</button>
+            <button  onClick ={applyHandler} className="apply-btn">Apply Now</button>
           </article>
 
           {similarJobs.length > 0 && (

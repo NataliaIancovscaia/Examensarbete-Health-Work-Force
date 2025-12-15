@@ -38,6 +38,14 @@ export interface Recruiter {
   company: string;
   image: string;
 }
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  resume?: string;
+  image?: string;
+}
 export interface AppContextType {
   searchFilter: SearchFilter;
   setSearchFilter: React.Dispatch<React.SetStateAction<SearchFilter>>;
@@ -62,6 +70,12 @@ export interface AppContextType {
 
   companyData: Company | null;
  setCompanyData: React.Dispatch<React.SetStateAction<Company | null>>;
+
+ userData: User | null;
+setUserData: React.Dispatch<React.SetStateAction<User | null>>;
+
+userApplications: Job[];
+setUserApplications: React.Dispatch<React.SetStateAction<Job[]>>;
 }
 
 
