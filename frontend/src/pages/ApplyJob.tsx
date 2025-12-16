@@ -56,7 +56,7 @@ const ApplyJob: React.FC = () => {
     }
   };
 
-  /* ---------- FETCH JOB ---------- */
+  
   useEffect(() => {
     const getJob = async () => {
       try {
@@ -78,7 +78,7 @@ const ApplyJob: React.FC = () => {
     getJob();
   }, [id, backendUrl]);
 
-  /* ---------- COMPUTED STATE (NO EFFECT) ---------- */
+  
   const isAlreadyApplied = useMemo(() => {
     if (!jobData) return false;
 

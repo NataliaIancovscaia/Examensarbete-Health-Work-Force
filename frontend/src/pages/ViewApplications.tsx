@@ -1,16 +1,67 @@
-import { useState } from "react";
-import { viewApplicationsPageData } from "../assets/images/assets";
-
+import { useCallback, useContext, useEffect, useState } from "react";
+import { AppContext, type Application } from "../context/AppContext";
+import axios from "axios";
+import Loading from "../components/Loading";
 const ViewApplications: React.FC = () => {
+  const appContext = useContext(AppContext);
+  if (!appContext) {
+    throw new Error("ViewApplications must be used inside AppProvider");
+  }
+
+  const { backendUrl, companyToken } = appContext;
+
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
+  const [applicants, setApplicants] = useState<Application[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const toggleMenu = (index: number) => {
     setOpenMenuIndex(openMenuIndex === index ? null : index);
   };
 
+  const fetchCompanyJobApplications = useCallback(async () => {
+  try {
+    const { data } = await axios.get(
+      backendUrl + "/api/company/applicants",
+      { headers: { token: companyToken } }
+    );
+
+    if (data.success) {
+      setApplicants(data.applications.reverse());
+    } else {
+      alert(data.message);
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      alert(error.response?.data?.message || "Something went wrong");
+    }
+    console.error(error);
+  } finally {
+    setLoading(false);
+  }
+}, [backendUrl, companyToken]);
+
+
+  useEffect(() => {
+  if (companyToken) {
+    fetchCompanyJobApplications();
+  }
+}, [companyToken, fetchCompanyJobApplications]);
+ 
+  if (loading) return <Loading />;
+
+  if (applicants.length === 0) {
+    return (
+      <div className="view-applications empty">
+        <h2>No applications yet</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="view-applications">
-      <h2 className="view-applications_title"><strong>Applications</strong></h2>
+      <h2 className="view-applications_title">
+        <strong>Applications</strong>
+      </h2>
 
       <div className="view-applications_table-wrapper">
         <table className="view-applications_table">
@@ -26,58 +77,65 @@ const ViewApplications: React.FC = () => {
           </thead>
 
           <tbody>
-            {viewApplicationsPageData.map((applicant, index) => (
-              <tr key={index} className="view-applications_row">
+            {applicants
+              .filter(item => item.jobId && item.userId)
+              .map((applicant, index) => (
+                <tr key={applicant._id} className="view-applications_row">
+                  <td data-label="Nr.">{index + 1}</td>
 
-                <td data-label="Nr.">{index + 1}</td>
-
-                <td data-label="User Name" className="view-applications_user-cell">
-                  <img
-                    src={applicant.imgSrc}
-                    alt={applicant.name}
-                    className="view-applications_avatar"
-                  />
-                  <span>{applicant.name}</span>
-                </td>
-
-                <td data-label="Job Title">{applicant.jobTitle}</td>
-                <td data-label="Location">{applicant.location}</td>
-
-                <td data-label="Resume">
-                  <a
-                    href={applicant.resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="view-applications_resume-link"
+                  <td
+                    data-label="User Name"
+                    className="view-applications_user-cell"
                   >
-                    Resume
-                  </a>
-                </td>
+                    <img
+                      src={applicant.userId.image}
+                      alt={applicant.userId.name}
+                      className="view-applications_avatar"
+                    />
+                    <span>{applicant.userId.name}</span>
+                  </td>
 
-                <td data-label="Action">
-                  <div className="view-applications_action-wrapper">
-                    <div
-                      className="view-applications_dots-btn"
-                      onClick={() => toggleMenu(index)}
+                  <td data-label="Job Title">
+                    {applicant.jobId.title}
+                  </td>
+
+                  <td data-label="Location">
+                    {applicant.jobId.location}
+                  </td>
+
+                  <td data-label="Resume">
+                    <a
+                      href={applicant.userId.resume}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="view-applications_resume-link"
                     >
-                      ...
-                    </div>
+                      Resume
+                    </a>
+                  </td>
 
-                    {openMenuIndex === index && (
-                      <div className="view-applications_menu">
-                        <button className="accept">Accept</button>
-                        <button className="reject">Reject</button>
+                  <td data-label="Action">
+                    <div className="view-applications_action-wrapper">
+                      <div
+                        className="view-applications_dots-btn"
+                        onClick={() => toggleMenu(index)}
+                      >
+                        ...
                       </div>
-                    )}
-                  </div>
-                </td>
 
-              </tr>
-            ))}
+                      {openMenuIndex === index && (
+                        <div className="view-applications_menu">
+                          <button className="accept">Accept</button>
+                          <button className="reject">Reject</button>
+                        </div>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
-      
     </div>
   );
 };

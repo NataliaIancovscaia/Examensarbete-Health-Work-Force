@@ -39,7 +39,7 @@ export interface User {
 
 export interface Application {
   _id: string;
-  userId: string;
+   userId: User; 
   companyId: Company;  
   jobId: Job;          
   status: "Pending" | "Accepted" | "Rejected";

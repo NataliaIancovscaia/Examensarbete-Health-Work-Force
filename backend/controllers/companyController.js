@@ -141,7 +141,20 @@ export const postJob=async(req,res)=>{
 //Job Applicants
 
 export const getCompanyJobApplicants=async(req,res)=>{
+try {
 
+  const companyId = req.company._id;
+
+  const applications=await JobApplication.find({companyId})
+  .populate('userId','name image resume')
+  .populate('jobId','title location category level salary')
+  .exec();
+
+  return res.json({success:true,applications})
+
+} catch (error) {
+    res.json({ success: false, message: error.message });
+  }
 }
 
 //Company posted jobs
