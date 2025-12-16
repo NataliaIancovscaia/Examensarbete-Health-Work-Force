@@ -81,27 +81,49 @@ export const getUserJobApplications = async (req, res) => {
 };
 
 // Update user resume
+
 export const updateUserResume = async (req, res) => {
   try {
     const userId = req.auth.userId;
     const resumeFile = req.file;
 
     const userData = await User.findById(userId);
-    if (!userData) {
-      return res.json({ success: false, message: "User not found" });
+    if (!userData) return res.json({ success: false, message: "User not found" });
+    if (!resumeFile) return res.json({ success: false, message: "No file uploaded" });
+    if (resumeFile.mimetype !== "application/pdf")
+      return res.json({ success: false, message: "Only PDF files are allowed" });
+
+    if (userData.resumePublicId) {
+      await cloudinary.uploader.destroy(userData.resumePublicId);
     }
 
-    if (resumeFile) {
-      const upload = await cloudinary.uploader.upload(resumeFile.path);
-      userData.resume = upload.secure_url;
-    }
+    const uploadResult = await cloudinary.uploader.upload_stream(
+      {
+        folder: "resumes",
+        resource_type: "image",
+        access_mode: "public",
+        type: "upload",   
+      },
+      async (error, result) => {
+        if (error) {
+          return res.json({ success: false, message: error.message });
+        }
 
-    await userData.save();
-    res.json({ success: true, message: "Resume updated" });
+        userData.resume = result.secure_url;
+        userData.resumePublicId = result.public_id;
+        await userData.save();
+
+        res.json({
+          success: true,
+          message: "Resume updated",
+          resume: result.secure_url,
+        });
+      }
+    );
+
+    uploadResult.end(resumeFile.buffer);
   } catch (error) {
-    const message =
-      error instanceof Error ? error.message : "Unknown error";
+    const message = error instanceof Error ? error.message : "Unknown error";
     res.json({ success: false, message });
   }
 };
-

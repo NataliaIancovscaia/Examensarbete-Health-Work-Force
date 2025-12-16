@@ -40,36 +40,30 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const logoutRecruiter = () => setRecruiter(null);
 
   
-  const fetchUserData = useCallback(
-    async (isMounted: { current: boolean }) => {
-      try {
-        const token = await getToken();
-        const { data } = await axios.get(`${backendUrl}/api/users/user`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (data.success && isMounted.current) setUserData(data.user);
-        else console.warn(data.message);
-      } catch (error) {
-        console.error("Failed to get user:", error);
-      }
-    },
-    [getToken]
-  );
+ const fetchUserData = useCallback(async () => {
+  try {
+    const token = await getToken();
+    const { data } = await axios.get(`${backendUrl}/api/users/user`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (data.success) {
+      setUserData(data.user);
+    } else {
+      console.warn(data.message);
+    }
+  } catch (error) {
+    console.error("Failed to get user:", error);
+  }
+}, [getToken]);
+
 
   useEffect(() => {
   if (!user) return;
-  const isMounted = { current: true };
 
-  const fetch = async () => {
-    await fetchUserData(isMounted);
-  };
-
- 
-  void fetch();
-
-  return () => {
-    isMounted.current = false;
-  };
+  (async () => {
+    await fetchUserData();
+  })();
 }, [user, fetchUserData]);
 
   
@@ -139,6 +133,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       userApplications,
       setUserApplications,
       backendUrl,
+        fetchUserData, 
     }),
     [
       searchFilter,
@@ -150,6 +145,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       companyData,
       userData,
       userApplications,
+        fetchUserData, 
     ]
   );
 

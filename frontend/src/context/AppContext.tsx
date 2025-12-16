@@ -76,6 +76,8 @@ setUserData: React.Dispatch<React.SetStateAction<User | null>>;
 
 userApplications: Job[];
 setUserApplications: React.Dispatch<React.SetStateAction<Job[]>>;
+
+fetchUserData: () => Promise<void>;
 }
 
 
