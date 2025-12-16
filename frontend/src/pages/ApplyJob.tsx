@@ -9,15 +9,16 @@ import "../assets/scss/ApplyJob.scss";
 import JobCard from "../components/JobCard";
 import Footer from "../components/Footer";
 import axios from "axios";
+import { useAuth } from "@clerk/clerk-react";
 
 const ApplyJob: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) throw new Error("ApplyJob must be used inside AppProvider");
 
   const { id } = useParams<{ id: string }>();
+  const {getToken}=useAuth();
   const navigate=useNavigate();
   const { jobs, backendUrl,userData,userApplications} = appContext;
-
 
 
   const [jobData, setJobData] = useState<Job | null>(null);
@@ -32,6 +33,17 @@ const ApplyJob: React.FC = () => {
         navigate('/applications');
         return alert('Upload resume to apply');
         
+      }
+
+      const token=await getToken();
+      const{data}=await axios.post (backendUrl+'/api/users/apply',
+                                   {jobId:jobData?._id},
+                                   {headers:{Authorization:`Bearer ${token}`}}
+      );
+      if (data.success) {
+        alert(data.message);
+      }else{
+        alert(data.message);
       }
 
       

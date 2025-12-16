@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import {
   AppContext,
   type AppContextType,
+  type Application,
   type Company,
   type Job,
   type Recruiter,
@@ -10,6 +11,7 @@ import {
 } from "./AppContext";
 import axios from "axios";
 import { useAuth, useUser } from "@clerk/clerk-react";
+
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -32,7 +34,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [companyData, setCompanyData] = useState<Company | null>(null);
 
   const [userData, setUserData] = useState<User| null>(null);
-  const [userApplications, setUserApplications] = useState<Job[]>([]);
+  const [userApplications, setUserApplications] = useState<Application[]>([]);
 
   const { user } = useUser();
   const { getToken } = useAuth();
@@ -57,14 +59,37 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }
 }, [getToken]);
 
+ const fetchUsersApplications=useCallback(async()=>{
+  try {
+    const token=await getToken();
 
-  useEffect(() => {
+    const{data}=await axios.get(backendUrl+'/api/users/applications',
+    {headers:{Authorization:`Bearer ${token}`}}
+    );
+    if (data.success) {
+          setUserApplications(data.applications);
+        } else {
+          alert(data.message);
+        }
+
+  } catch (err) {
+        console.error("Failed to fetch usersData:", err);
+      }
+}, [getToken]);
+
+useEffect(() => {
   if (!user) return;
-
+  
   (async () => {
-    await fetchUserData();
+    try {
+      await Promise.all([fetchUserData(), fetchUsersApplications()]);
+    } catch (err) {
+      console.error(err);
+    }
   })();
-}, [user, fetchUserData]);
+}, [user, fetchUserData, fetchUsersApplications]);
+
+
 
   
   useEffect(() => {
@@ -134,6 +159,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       setUserApplications,
       backendUrl,
         fetchUserData, 
+        fetchUsersApplications
     }),
     [
       searchFilter,
@@ -146,6 +172,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       userData,
       userApplications,
         fetchUserData, 
+        fetchUsersApplications
     ]
   );
 

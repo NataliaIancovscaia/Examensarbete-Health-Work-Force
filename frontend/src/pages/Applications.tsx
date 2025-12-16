@@ -4,8 +4,8 @@ import Footer from "../components/Footer";
 import moment from "moment";
 import axios from "axios";
 import { useAuth, useUser } from "@clerk/clerk-react";
-import { AppContext } from "../context/AppContext";
-import { assets, jobsApplied } from "../assets/images/assets";
+import { AppContext, type Application } from "../context/AppContext";
+import { assets } from "../assets/images/assets";
 
 const Applications: React.FC = () => {
   const { user } = useUser();
@@ -14,7 +14,7 @@ const Applications: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) throw new Error("Applications must be used inside AppProvider");
 
-  const { backendUrl, userData, fetchUserData } = appContext;
+  const { backendUrl, userData, fetchUserData, userApplications } = appContext;
 
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState<File | null>(null);
@@ -57,7 +57,6 @@ const Applications: React.FC = () => {
     }
   };
 
-
   const handleDownload = async () => {
     if (!userData?.resume) return;
 
@@ -72,17 +71,17 @@ const Applications: React.FC = () => {
 
     window.URL.revokeObjectURL(url);
   };
+
   const handleView = () => {
-  if (!userData?.resume) return;
-  window.open(userData.resume, "_blank", "noopener,noreferrer");
-};
+    if (!userData?.resume) return;
+    window.open(userData.resume, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <>
       <NavigationBar />
 
       <div className="applications">
-      
         <h2 className="applications_title">Resume</h2>
 
         <div className="applications_resume-container">
@@ -116,11 +115,11 @@ const Applications: React.FC = () => {
           ) : (
             <div className="applications_resume-view">
               <button
-  className="applications_resume-link"
-  onClick={handleView}
->
-  View Resume
-</button>
+                className="applications_resume-link"
+                onClick={handleView}
+              >
+                View Resume
+              </button>
 
               <button
                 className="applications_resume-link"
@@ -139,67 +138,62 @@ const Applications: React.FC = () => {
           )}
         </div>
 
-      
         <h2 className="applications_title">Jobs Applied</h2>
 
         <div className="applications_cards-list">
-          {jobsApplied.map((job, i) => (
-            <div key={i} className="application-card">
+          {userApplications.map((app: Application) => (
+            <div key={app._id} className="application-card">
               <div className="application-card_header">
-                <img src={job.logo} alt="logo" />
-
+                <img src={app.companyId.image} alt="logo" />
                 <div className="application-card_company">
-                  <span className="name">{job.company}</span>
-                  <span className="date">
-                    {moment(job.date).format("ll")}
-                  </span>
+                  <span className="name">{app.companyId.name}</span>
+                  <span className="date">{moment(app.date).format("ll")}</span>
                 </div>
               </div>
 
               <div className="application-card_body">
                 <div className="application-card_info">
-                  <span className="application-card_title">{job.title}</span>
+                  <span className="application-card_title">{app.jobId.title}</span>
                   <span className="application-card_location">
-                    <strong>Place:</strong> {job.location}
+                    <strong>Place:</strong> {app.jobId.location}
                   </span>
                 </div>
 
                 <span
                   className={`application-card_status ${
-                    job.status === "Accepted"
+                    app.status === "Accepted"
                       ? "accepted"
-                      : job.status === "Rejected"
+                      : app.status === "Rejected"
                       ? "rejected"
                       : "pending"
                   }`}
                 >
-                  {job.status}
+                  {app.status}
                 </span>
               </div>
             </div>
           ))}
         </div>
-      </div>
 
-   
-      {isPreviewOpen && userData?.resume && (
-        <div className="resume-modal-overlay">
-          <div className="resume-modal">
-            <div className="resume-modal-header">
-              <span>Resume Preview</span>
-              <button onClick={() => setIsPreviewOpen(false)}>✕</button>
+        {isPreviewOpen && userData?.resume && (
+          <div className="resume-modal-overlay">
+            <div className="resume-modal">
+              <div className="resume-modal-header">
+                <span>Resume Preview</span>
+                <button onClick={() => setIsPreviewOpen(false)}>✕</button>
+              </div>
+
+              <iframe
+                src={userData.resume}
+                width="100%"
+                height="600"
+                title="Resume Preview"
+                style={{ border: "none" }}
+              />
             </div>
-
-            <iframe
-              src={userData.resume}
-              width="100%"
-              height="600"
-              title="Resume Preview"
-              style={{ border: "none" }}
-            />
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <Footer />
     </>
