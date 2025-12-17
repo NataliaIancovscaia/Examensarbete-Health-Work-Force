@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { AppContext, type Application } from "../context/AppContext";
 import axios from "axios";
 import Loading from "../components/Loading";
+
 const ViewApplications: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) {
@@ -19,34 +20,57 @@ const ViewApplications: React.FC = () => {
   };
 
   const fetchCompanyJobApplications = useCallback(async () => {
-  try {
-    const { data } = await axios.get(
-      backendUrl + "/api/company/applicants",
-      { headers: { token: companyToken } }
-    );
+    try {
+      const { data } = await axios.get(
+        backendUrl + "/api/company/applicants",
+        { headers: { token: companyToken } }
+      );
 
-    if (data.success) {
-      setApplicants(data.applications.reverse());
-    } else {
-      alert(data.message);
+      if (data.success) {
+        setApplicants(data.applications.reverse());
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Something went wrong");
+      }
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      alert(error.response?.data?.message || "Something went wrong");
-    }
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-}, [backendUrl, companyToken]);
-
+  }, [backendUrl, companyToken]);
 
   useEffect(() => {
-  if (companyToken) {
-    fetchCompanyJobApplications();
-  }
-}, [companyToken, fetchCompanyJobApplications]);
- 
+    if (companyToken) {
+      fetchCompanyJobApplications();
+    }
+  }, [companyToken, fetchCompanyJobApplications]);
+
+  const changeJobApplicationStatus = async (
+    id: string,
+    status: "Accepted" | "Rejected"
+  ) => {
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/company/change-status",
+        { id, status },
+        { headers: { token: companyToken } }
+      );
+
+      if (data.success) {
+        fetchCompanyJobApplications();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Something went wrong");
+      }
+      console.error(error);
+    }
+  };
+
   if (loading) return <Loading />;
 
   if (applicants.length === 0) {
@@ -81,12 +105,9 @@ const ViewApplications: React.FC = () => {
               .filter(item => item.jobId && item.userId)
               .map((applicant, index) => (
                 <tr key={applicant._id} className="view-applications_row">
-                  <td data-label="Nr.">{index + 1}</td>
+                  <td>{index + 1}</td>
 
-                  <td
-                    data-label="User Name"
-                    className="view-applications_user-cell"
-                  >
+                  <td className="view-applications_user-cell">
                     <img
                       src={applicant.userId.image}
                       alt={applicant.userId.name}
@@ -95,15 +116,10 @@ const ViewApplications: React.FC = () => {
                     <span>{applicant.userId.name}</span>
                   </td>
 
-                  <td data-label="Job Title">
-                    {applicant.jobId.title}
-                  </td>
+                  <td>{applicant.jobId.title}</td>
+                  <td>{applicant.jobId.location}</td>
 
-                  <td data-label="Location">
-                    {applicant.jobId.location}
-                  </td>
-
-                  <td data-label="Resume">
+                  <td>
                     <a
                       href={applicant.userId.resume}
                       target="_blank"
@@ -114,22 +130,47 @@ const ViewApplications: React.FC = () => {
                     </a>
                   </td>
 
-                  <td data-label="Action">
-                    <div className="view-applications_action-wrapper">
-                      <div
-                        className="view-applications_dots-btn"
-                        onClick={() => toggleMenu(index)}
-                      >
-                        ...
-                      </div>
-
-                      {openMenuIndex === index && (
-                        <div className="view-applications_menu">
-                          <button className="accept">Accept</button>
-                          <button className="reject">Reject</button>
+                  <td>
+                    {applicant.status === "Pending" ? (
+                      <div className="view-applications_action-wrapper">
+                        <div
+                          className="view-applications_dots-btn"
+                          onClick={() => toggleMenu(index)}
+                        >
+                          ...
                         </div>
-                      )}
-                    </div>
+
+                        {openMenuIndex === index && (
+                          <div className="view-applications_menu">
+                            <button
+                              className="accept"
+                              onClick={() =>
+                                changeJobApplicationStatus(
+                                  applicant._id,
+                                  "Accepted"
+                                )
+                              }
+                            >
+                              Accept
+                            </button>
+
+                            <button
+                              className="reject"
+                              onClick={() =>
+                                changeJobApplicationStatus(
+                                  applicant._id,
+                                  "Rejected"
+                                )
+                              }
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div>{applicant.status}</div>
+                    )}
                   </td>
                 </tr>
               ))}
