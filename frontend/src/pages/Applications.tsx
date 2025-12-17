@@ -1,4 +1,4 @@
-import { useContext, useState, type ChangeEvent } from "react";
+import { useContext, useEffect, useState, type ChangeEvent } from "react";
 import NavigationBar from "../components/NavigationBar";
 import Footer from "../components/Footer";
 import moment from "moment";
@@ -14,7 +14,7 @@ const Applications: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) throw new Error("Applications must be used inside AppProvider");
 
-  const { backendUrl, userData, fetchUserData, userApplications } = appContext;
+  const { backendUrl, userData, fetchUserData, userApplications,fetchUsersApplications } = appContext;
 
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState<File | null>(null);
@@ -76,6 +76,12 @@ const Applications: React.FC = () => {
     if (!userData?.resume) return;
     window.open(userData.resume, "_blank", "noopener,noreferrer");
   };
+
+  useEffect(() => {
+  if (user) {
+    fetchUsersApplications();
+  }
+}, [user, fetchUsersApplications]);
 
   return (
     <>

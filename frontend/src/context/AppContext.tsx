@@ -24,7 +24,8 @@ export interface Job {
   salary: number;
   date: number;
   visible: boolean;
-  companyId: Company;   
+  companyId: Company;
+      applicants?: number;
 }
 
 

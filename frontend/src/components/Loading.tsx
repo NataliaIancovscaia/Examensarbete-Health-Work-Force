@@ -1,13 +1,15 @@
-
-
-const Loading = () => {
+const Loading: React.FC = () => {
   return (
-    <div>
-      <div>
-        
+    <div className="medical-loader">
+      <div className="medical-loader_pulse" />
+      <div className="medical-loader_bars">
+        <span />
+        <span />
+        <span />
       </div>
+      <p className="medical-loader_text">Processing medical data…</p>
     </div>
-  )
-}
+  );
+};
 
 export default Loading;

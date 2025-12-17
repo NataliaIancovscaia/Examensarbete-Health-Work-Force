@@ -3,74 +3,85 @@ import { useNavigate } from "react-router";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { AppContext, type Job } from "../context/AppContext";
 import axios from "axios";
+import Loading from "../components/Loading";
 
 const ManageJobs: React.FC = () => {
+  const navigate = useNavigate();
+  const { backendUrl, companyToken } = useContext(AppContext)!;
 
-  const navigate=useNavigate();
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [loading, setLoading] = useState(true);
 
-const [jobs, setJobs] = useState<Job[]>([]);
- const { backendUrl, companyToken } = useContext(AppContext)!;
+  
+  const fetchCompanyJobs = useCallback(async () => {
+    if (!companyToken) return;
 
- const fetchCompanyJobs = useCallback(async () => {
-  try {
-    const { data } = await axios.get(
-      backendUrl + "/api/company/list-jobs",
-      { headers: { token: companyToken } }
-    );
+    try {
+      setLoading(true);
 
-    if (data.success) {
-      setJobs(data.jobsData.reverse());
-    } else {
-      alert(data.message);
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      alert(error.response?.data?.message || "Something went wrong");
-      console.error(error.response?.data);
-    } else {
+      const { data } = await axios.get(
+        backendUrl + "/api/company/list-jobs",
+        { headers: { token: companyToken } }
+      );
+
+      if (data.success) {
+        setJobs(data.jobsData.reverse());
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Something went wrong");
+      }
       console.error(error);
+    } finally {
+      setLoading(false);
     }
-  }
-}, [backendUrl, companyToken]);
+  }, [backendUrl, companyToken]);
 
-const changeJobVisibility=async(id: string)=>{
-  try {
-    const { data } = await axios.post(
-      backendUrl + "/api/company/change-visibility",
-      {id},
-      { headers: { token: companyToken } }
-    );
-    if (data.success) {
-        // alert(data.message);
+
+  const changeJobVisibility = async (id: string) => {
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/company/change-visibility",
+        { id },
+        { headers: { token: companyToken } }
+      );
+
+      if (data.success) {
         fetchCompanyJobs();
-    }else {
-      alert(data.message);
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      alert(error.response?.data?.message || "Something went wrong");
-      console.error(error.response?.data);
-    } else {
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Something went wrong");
+      }
       console.error(error);
     }
-  }
-
-}
-
-  useEffect(() => {
-  if (!companyToken) return;
-
-  const loadJobs = async () => {
-    await fetchCompanyJobs();
   };
 
-  loadJobs();
-}, [companyToken, fetchCompanyJobs]);
 
+  useEffect(() => {
+    if (companyToken) {
+      fetchCompanyJobs();
+    }
+  }, [companyToken, fetchCompanyJobs]);
+
+  
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (jobs.length === 0) {
+    return <div className="empty-state">No job available or posted</div>;
+  }
 
   return (
     <div className="manage-jobs">
-      <h2 className="manage-jobs_title"><strong>Manage Jobs</strong></h2>
+      <h2 className="manage-jobs_title">
+        <strong>Manage Jobs</strong>
+      </h2>
 
       <div className="manage-jobs_table-wrapper">
         <table className="manage-jobs_table">
@@ -87,19 +98,19 @@ const changeJobVisibility=async(id: string)=>{
 
           <tbody>
             {jobs.map((job, index) => (
-              <tr key={index} className="manage-jobs_row">
-                <td data-label="Nr.">{index + 1}</td>
-                <td data-label="Job Title">{job.title}</td>
-                <td  data-label="Date">{moment(job.date).format("ll")}</td>
-                <td data-label="Location">{job.location}</td>
-                <td>{job.applicants}</td>
-                <td data-label="Visible">
+              <tr key={job._id} className="manage-jobs_row">
+                <td>{index + 1}</td>
+                <td>{job.title}</td>
+                <td>{moment(job.date).format("ll")}</td>
+                <td>{job.location}</td>
+                <td>{job.applicants ?? 0}</td>
+                <td>
                   <label className="manage-jobs_toggle">
                     <input
-                       type="checkbox"
-                       checked={job.visible}
-                       onChange={() => changeJobVisibility(job._id)}
-                     />
+                      type="checkbox"
+                      checked={job.visible}
+                      onChange={() => changeJobVisibility(job._id)}
+                    />
                     <span className="slider" />
                   </label>
                 </td>
@@ -108,9 +119,10 @@ const changeJobVisibility=async(id: string)=>{
           </tbody>
         </table>
       </div>
-      <div>
-        <button onClick={()=>navigate('/dashboard/add-job')}> Add New Job</button>
-      </div>
+
+      <button onClick={() => navigate("/dashboard/add-job")}>
+        Add New Job
+      </button>
     </div>
   );
 };

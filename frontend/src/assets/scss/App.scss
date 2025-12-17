@@ -11,6 +11,7 @@
 @use './AddJob' as *;
 @use './ViewApplications' as *;
 @use './ManageJobs' as *;
+@use './Loading' as *;
 
 html, body {
   margin: 0;
