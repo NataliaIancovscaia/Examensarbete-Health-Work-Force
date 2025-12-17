@@ -1,12 +1,12 @@
-import { useContext, useMemo, useState } from "react";
-import { AppContext, type Job, type SearchFilter } from "../context/AppContext";
-import { assets, JobCategories, JobLocations } from "../assets/images/assets";
-import JobCard from "./JobCard";
+import { useContext, useMemo, useState } from 'react';
+import { AppContext, type Job, type SearchFilter } from '../context/AppContext';
+import { assets, JobCategories, JobLocations } from '../assets/images/assets';
+import JobCard from './JobCard';
 
 const JobMenu: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) {
-    throw new Error("JobMenu must be used inside AppProvider");
+    throw new Error('JobMenu must be used inside AppProvider');
   }
 
   const { isSearched, searchFilter, setSearchFilter, jobs } = appContext;
@@ -17,35 +17,33 @@ const JobMenu: React.FC = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
 
-  
   const handleCategoryChange = (category: string) => {
-    setSelectedCategories(prev =>
+    setSelectedCategories((prev) =>
       prev.includes(category)
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
+        ? prev.filter((c) => c !== category)
+        : [...prev, category],
     );
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const handleLocationsChange = (location: string) => {
-    setSelectedLocations(prev =>
+    setSelectedLocations((prev) =>
       prev.includes(location)
-        ? prev.filter(c => c !== location)
-        : [...prev, location]
+        ? prev.filter((c) => c !== location)
+        : [...prev, location],
     );
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
   const clearTitleFilter = () => {
-    setSearchFilter((prev: SearchFilter) => ({ ...prev, title: "" }));
+    setSearchFilter((prev: SearchFilter) => ({ ...prev, title: '' }));
     setCurrentPage(1);
   };
 
   const clearLocationFilter = () => {
-    setSearchFilter((prev: SearchFilter) => ({ ...prev, location: "" }));
+    setSearchFilter((prev: SearchFilter) => ({ ...prev, location: '' }));
     setCurrentPage(1);
   };
-
 
   const filteredJobs = useMemo(() => {
     const matchesCategory = (job: Job) =>
@@ -57,49 +55,42 @@ const JobMenu: React.FC = () => {
       selectedLocations.includes(job.location);
 
     const matchesTitle = (job: Job) =>
-      searchFilter.title === "" ||
+      searchFilter.title === '' ||
       job.title.toLowerCase().includes(searchFilter.title.toLowerCase());
 
     const matchesSearchLocation = (job: Job) =>
-      searchFilter.location === "" ||
+      searchFilter.location === '' ||
       job.location.toLowerCase().includes(searchFilter.location.toLowerCase());
 
     return jobs
       .slice()
       .reverse()
       .filter(
-        job =>
+        (job) =>
           matchesCategory(job) &&
           matchesLocation(job) &&
           matchesTitle(job) &&
-          matchesSearchLocation(job)
+          matchesSearchLocation(job),
       );
   }, [jobs, selectedCategories, selectedLocations, searchFilter]);
 
-
   const totalPages = Math.ceil(filteredJobs.length / 6);
 
- 
   const page = Math.min(currentPage, totalPages || 1);
-
-
 
   return (
     <div className="job-menu">
-
-   
       <button
         className="job-menu_toggle"
-        onClick={() => setShowFilter(prev => !prev)}
+        onClick={() => setShowFilter((prev) => !prev)}
       >
-        {showFilter ? "Close" : "Filters"}
+        {showFilter ? 'Close' : 'Filters'}
       </button>
 
-    
       {showFilter && (
         <div className="job-menu_filters">
           {isSearched &&
-            (searchFilter.title !== "" || searchFilter.location !== "") && (
+            (searchFilter.title !== '' || searchFilter.location !== '') && (
               <div className="job-menu_block">
                 <h3>Selected Search</h3>
 
@@ -129,7 +120,6 @@ const JobMenu: React.FC = () => {
               </div>
             )}
 
-        
           <div className="job-menu_block">
             <h4>Category Search</h4>
             <ul className="job-menu_list">
@@ -147,7 +137,6 @@ const JobMenu: React.FC = () => {
             </ul>
           </div>
 
-      
           <div className="job-menu_block">
             <h4>Locations Search</h4>
             <ul className="job-menu_list">
@@ -167,32 +156,28 @@ const JobMenu: React.FC = () => {
         </div>
       )}
 
-      
       <section className="job-menu_block job-menu_jobs">
         <h3>Jobs</h3>
 
         <div className="job-menu_grid">
-          {filteredJobs
-            .slice((page - 1) * 6, page * 6)
-            .map((job, index) => (
-              <JobCard key={index} job={job} />
-            ))}
+          {filteredJobs.slice((page - 1) * 6, page * 6).map((job, index) => (
+            <JobCard key={index} job={job} />
+          ))}
         </div>
 
-     
         {filteredJobs.length > 0 && (
           <div className="pagination">
             <img
               src={assets.left_arrow_icon}
               alt="LeftArrow"
-              onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+              onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             />
 
             {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentPage(index + 1)}
-                className={page === index + 1 ? "active" : "inactive"}
+                className={page === index + 1 ? 'active' : 'inactive'}
               >
                 {index + 1}
               </button>
@@ -201,7 +186,7 @@ const JobMenu: React.FC = () => {
             <img
               src={assets.right_arrow_icon}
               alt="RightArrow"
-              onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+              onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             />
           </div>
         )}
@@ -211,10 +196,3 @@ const JobMenu: React.FC = () => {
 };
 
 export default JobMenu;
-
-
-
-
-
-
-

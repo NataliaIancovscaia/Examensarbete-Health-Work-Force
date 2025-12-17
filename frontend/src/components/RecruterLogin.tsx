@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
-import { assets } from "../assets/images/assets";
-import { AppContext, type Company } from "../context/AppContext";
-import axios from "axios";
-import { useNavigate } from "react-router";
+import { useContext, useEffect, useState } from 'react';
+import { assets } from '../assets/images/assets';
+import { AppContext, type Company } from '../context/AppContext';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 interface CompanyResponse {
   success: boolean;
@@ -14,45 +14,50 @@ interface CompanyResponse {
 const RecruiterLogin: React.FC = () => {
   const navigate = useNavigate();
 
-  const [state, setState] = useState<"Login" | "Sign Up">("Login");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [state, setState] = useState<'Login' | 'Sign Up'>('Login');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isTextDataSubmitted, setIsTextDataSubmitted] = useState(false);
 
   const appContext = useContext(AppContext);
   if (!appContext) {
-    throw new Error("RecruiterLogin must be used inside AppProvider");
+    throw new Error('RecruiterLogin must be used inside AppProvider');
   }
 
-  const { setShowRecruiterLogin, backendUrl, setCompanyData, setCompanyToken } = appContext;
+  const { setShowRecruiterLogin, backendUrl, setCompanyData, setCompanyToken } =
+    appContext;
 
   const resetFormState = () => {
-    setPassword("");
-    setEmail("");
-    setName("");
+    setPassword('');
+    setEmail('');
+    setName('');
     setImage(null);
     setImagePreview(null);
     setIsTextDataSubmitted(false);
   };
 
   const getErrorMessage = (error: unknown) => {
-    if (axios.isAxiosError(error)) return error.message || "Something went wrong";
+    if (axios.isAxiosError(error))
+      return error.message || 'Something went wrong';
     if (error instanceof Error) return error.message;
-    return "Something went wrong";
+    return 'Something went wrong';
   };
 
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      if (state === "Login") {
-        const { data } = await axios.post<CompanyResponse>(backendUrl + "/api/company/login", {
-          email,
-          password,
-        });
+      if (state === 'Login') {
+        const { data } = await axios.post<CompanyResponse>(
+          backendUrl + '/api/company/login',
+          {
+            email,
+            password,
+          },
+        );
 
         if (!data.success) {
           alert(data.message);
@@ -61,10 +66,10 @@ const RecruiterLogin: React.FC = () => {
 
         setCompanyData(data.company ?? null);
         setCompanyToken(data.token ?? null);
-        localStorage.setItem("companyToken", data.token!);
+        localStorage.setItem('companyToken', data.token!);
 
         setShowRecruiterLogin(false);
-        navigate("/dashboard");
+        navigate('/dashboard');
         return;
       }
 
@@ -74,24 +79,28 @@ const RecruiterLogin: React.FC = () => {
       }
 
       if (!image) {
-        alert("Upload company logo");
+        alert('Upload company logo');
         return;
       }
 
       if (password.length < 6) {
-        alert("Password must be at least 6 characters");
+        alert('Password must be at least 6 characters');
         return;
       }
 
       const formData = new FormData();
-      formData.append("name", name);
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("image", image);
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('password', password);
+      formData.append('image', image);
 
-      const { data } = await axios.post<CompanyResponse>(backendUrl + "/api/company/register", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const { data } = await axios.post<CompanyResponse>(
+        backendUrl + '/api/company/register',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        },
+      );
 
       if (!data.success) {
         alert(data.message);
@@ -99,11 +108,11 @@ const RecruiterLogin: React.FC = () => {
       }
 
       setCompanyData(data.company ?? null);
-     setCompanyToken(data.token ?? null);
-      localStorage.setItem("companyToken", data.token!);
+      setCompanyToken(data.token ?? null);
+      localStorage.setItem('companyToken', data.token!);
 
       setShowRecruiterLogin(false);
-      navigate("/dashboard");
+      navigate('/dashboard');
     } catch (error: unknown) {
       alert(getErrorMessage(error));
       console.error(error);
@@ -111,9 +120,9 @@ const RecruiterLogin: React.FC = () => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = "unset";
+      document.body.style.overflow = 'unset';
     };
   }, []);
 
@@ -125,21 +134,32 @@ const RecruiterLogin: React.FC = () => {
 
   return (
     <div className="popup-wrapper" onClick={() => setShowRecruiterLogin(false)}>
-      <form onSubmit={onSubmitHandler} className="popup-form" onClick={(e) => e.stopPropagation()}>
-        <div className="popup-close" onClick={() => setShowRecruiterLogin(false)}>
+      <form
+        onSubmit={onSubmitHandler}
+        className="popup-form"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div
+          className="popup-close"
+          onClick={() => setShowRecruiterLogin(false)}
+        >
           <img src={assets.cross_icon} alt="Close" />
         </div>
 
-        <h1 className="popup-title">Recruiter {state === "Login" ? "Login" : "Sign Up"}</h1>
-        <p className="popup-subtitle">{state === "Login" ? "Sign in to continue" : "Sign up to continue"}</p>
+        <h1 className="popup-title">
+          Recruiter {state === 'Login' ? 'Login' : 'Sign Up'}
+        </h1>
+        <p className="popup-subtitle">
+          {state === 'Login' ? 'Sign in to continue' : 'Sign up to continue'}
+        </p>
 
-        {state === "Sign Up" && isTextDataSubmitted ? (
+        {state === 'Sign Up' && isTextDataSubmitted ? (
           <div className="popup-upload">
             <label htmlFor="image">
               <img
                 src={imagePreview || assets.upload_area}
                 alt="Upload"
-                className={imagePreview ? "uploaded-preview" : ""}
+                className={imagePreview ? 'uploaded-preview' : ''}
               />
               <input
                 type="file"
@@ -157,7 +177,7 @@ const RecruiterLogin: React.FC = () => {
           </div>
         ) : (
           <>
-            {state === "Sign Up" && (
+            {state === 'Sign Up' && (
               <div className="popup-input">
                 <img src={assets.person_icon} alt="Person" />
                 <input
@@ -194,22 +214,22 @@ const RecruiterLogin: React.FC = () => {
           </>
         )}
 
-        {state === "Login" && <p className="forgot">Forgot password?</p>}
+        {state === 'Login' && <p className="forgot">Forgot password?</p>}
 
         <button type="submit" className="popup-btn">
-          {state === "Login" ? "Login" : image ? "Create Account" : "Next"}
+          {state === 'Login' ? 'Login' : image ? 'Create Account' : 'Next'}
         </button>
 
-        {state === "Login" ? (
+        {state === 'Login' ? (
           <p className="switch">
             Don’t have an account?
             <span
               onClick={() => {
-                setState("Sign Up");
+                setState('Sign Up');
                 resetFormState();
               }}
             >
-              {" "}
+              {' '}
               Sign Up
             </span>
           </p>
@@ -218,11 +238,11 @@ const RecruiterLogin: React.FC = () => {
             Already have an account?
             <span
               onClick={() => {
-                setState("Login");
+                setState('Login');
                 resetFormState();
               }}
             >
-              {" "}
+              {' '}
               Login
             </span>
           </p>
@@ -233,7 +253,3 @@ const RecruiterLogin: React.FC = () => {
 };
 
 export default RecruiterLogin;
-
-
-
-

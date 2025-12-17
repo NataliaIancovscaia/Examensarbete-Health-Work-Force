@@ -1,7 +1,7 @@
-import { useCallback, useContext, useEffect, useState } from "react";
-import { AppContext, type Application } from "../context/AppContext";
-import axios from "axios";
-import Loading from "../components/Loading";
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { AppContext, type Application } from '../context/AppContext';
+import axios from 'axios';
+import Loading from '../components/Loading';
 
 interface GetApplicationsResponse {
   success: boolean;
@@ -17,7 +17,7 @@ interface ChangeStatusResponse {
 const ViewApplications: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) {
-    throw new Error("ViewApplications must be used inside AppProvider");
+    throw new Error('ViewApplications must be used inside AppProvider');
   }
 
   const { backendUrl, companyToken } = appContext;
@@ -36,7 +36,7 @@ const ViewApplications: React.FC = () => {
     try {
       const { data } = await axios.get<GetApplicationsResponse>(
         `${backendUrl}/api/company/applicants`,
-        { headers: { token: companyToken } }
+        { headers: { token: companyToken } },
       );
 
       if (data.success) {
@@ -45,7 +45,7 @@ const ViewApplications: React.FC = () => {
         alert(data.message);
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       alert(message);
       console.error(error);
     } finally {
@@ -55,14 +55,14 @@ const ViewApplications: React.FC = () => {
 
   const changeJobApplicationStatus = async (
     id: string,
-    status: "Accepted" | "Rejected"
+    status: 'Accepted' | 'Rejected',
   ) => {
     if (!companyToken) return;
     try {
       const { data } = await axios.post<ChangeStatusResponse>(
         `${backendUrl}/api/company/change-status`,
         { id, status },
-        { headers: { token: companyToken } }
+        { headers: { token: companyToken } },
       );
 
       if (data.success) {
@@ -71,7 +71,7 @@ const ViewApplications: React.FC = () => {
         alert(data.message);
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       alert(message);
       console.error(error);
     }
@@ -139,7 +139,7 @@ const ViewApplications: React.FC = () => {
                   </td>
 
                   <td>
-                    {applicant.status === "Pending" ? (
+                    {applicant.status === 'Pending' ? (
                       <div className="view-applications_action-wrapper">
                         <div
                           className="view-applications_dots-btn"
@@ -155,7 +155,7 @@ const ViewApplications: React.FC = () => {
                               onClick={() =>
                                 changeJobApplicationStatus(
                                   applicant._id,
-                                  "Accepted"
+                                  'Accepted',
                                 )
                               }
                             >
@@ -167,7 +167,7 @@ const ViewApplications: React.FC = () => {
                               onClick={() =>
                                 changeJobApplicationStatus(
                                   applicant._id,
-                                  "Rejected"
+                                  'Rejected',
                                 )
                               }
                             >
@@ -190,10 +190,3 @@ const ViewApplications: React.FC = () => {
 };
 
 export default ViewApplications;
-
-
-
-
-
-
-

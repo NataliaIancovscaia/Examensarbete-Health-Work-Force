@@ -13,13 +13,13 @@
 @use './ManageJobs' as *;
 @use './Loading' as *;
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   height: 100%;
   font-family: sans-serif;
-  
 }
 
 .app-container {
@@ -48,7 +48,7 @@ html, body {
     object-position: center;
     z-index: -2;
 
-    filter: blur(10px) brightness(0.85); 
+    filter: blur(10px) brightness(0.85);
   }
 
   &::after {
@@ -74,9 +74,8 @@ html, body {
 .app-content {
   position: relative;
   z-index: 1;
-  padding-top: 80px; 
+  padding-top: 80px;
 }
-
 
 .input-alert-msg,
 .mobile-alert-error {
@@ -93,4 +92,3 @@ html, body {
   text-align: center;
   margin: 0;
 }
-

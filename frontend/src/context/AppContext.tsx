@@ -1,21 +1,19 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 export interface SearchFilter {
   title: string;
   location: string;
 }
 
-
 export interface Company {
-  _id: string;          
+  _id: string;
   name: string;
   email: string;
-  image?: string;      
+  image?: string;
 }
 
-
 export interface Job {
-  _id: string;  
+  _id: string;
   title: string;
   description: string;
   location: string;
@@ -25,9 +23,8 @@ export interface Job {
   date: number;
   visible: boolean;
   companyId: Company;
-      applicants?: number;
+  applicants?: number;
 }
-
 
 export interface User {
   _id: string;
@@ -37,16 +34,14 @@ export interface User {
   image?: string;
 }
 
-
 export interface Application {
   _id: string;
-   userId: User; 
-  companyId: Company;  
-  jobId: Job;          
-  status: "Pending" | "Accepted" | "Rejected";
+  userId: User;
+  companyId: Company;
+  jobId: Job;
+  status: 'Pending' | 'Accepted' | 'Rejected';
   date: number;
 }
-
 
 export interface Recruiter {
   id: string;
@@ -55,7 +50,6 @@ export interface Recruiter {
   company: string;
   image?: string;
 }
-
 
 export interface AppContextType {
   searchFilter: SearchFilter;
@@ -93,6 +87,3 @@ export interface AppContextType {
 }
 
 export const AppContext = createContext<AppContextType | null>(null);
-
-
-

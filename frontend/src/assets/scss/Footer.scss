@@ -1,10 +1,9 @@
-
 .glass-footer {
   width: 100%;
   padding: 3rem 1.2rem;
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255,255,255,0.22);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
   display: flex;
   justify-content: center;
 }
@@ -13,17 +12,15 @@
   width: 100%;
   max-width: 1250px;
   display: grid;
-  grid-template-columns: 1fr;   
+  grid-template-columns: 1fr;
   gap: 2rem;
 }
-
 
 @media (min-width: 640px) {
   .glass-footer_container {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 
 @media (min-width: 950px) {
   .glass-footer_container {
@@ -32,16 +29,16 @@
 }
 
 .footer-col {
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.22);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 18px;
   padding: 1.4rem;
   backdrop-filter: blur(16px);
-  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
-  transition: .3s;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.25);
+  transition: 0.3s;
 
   &:hover {
-    background: rgba(255,255,255,0.14);
+    background: rgba(255, 255, 255, 0.14);
     transform: translateY(-4px);
   }
 }
@@ -55,25 +52,24 @@
 }
 
 .footer-col h3::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   bottom: -6px;
   width: 48px;
   height: 3px;
- 
+
   border-radius: 3px;
-  box-shadow: 0 0 10px rgba(255,255,255,0.6);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .footer-col p,
 .footer-col a,
 .footer-col li {
   color: black;
-  font-size: .95rem;
+  font-size: 0.95rem;
   line-height: 1.45rem;
 }
-
 
 .footer-col ul {
   list-style: none;
@@ -84,16 +80,15 @@
 
     a {
       text-decoration: none;
-      transition: .2s;
+      transition: 0.2s;
 
       &:hover {
-        opacity: .75;
+        opacity: 0.75;
         color: #fff;
       }
     }
   }
 }
-
 
 .socials {
   margin-top: 1rem;
@@ -103,19 +98,15 @@
   img {
     width: 28px;
     cursor: pointer;
-    transition: .25s;
+    transition: 0.25s;
 
     &:hover {
       transform: translateY(-3px);
-      opacity: .8;
+      opacity: 0.8;
     }
   }
 }
 
 .contact-row {
-  margin-bottom: .8rem;
+  margin-bottom: 0.8rem;
 }
-
-
-
-

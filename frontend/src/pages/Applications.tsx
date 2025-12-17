@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState, type ChangeEvent } from "react";
-import NavigationBar from "../components/NavigationBar";
-import Footer from "../components/Footer";
-import moment from "moment";
-import axios from "axios";
-import { useAuth, useUser } from "@clerk/clerk-react";
-import { AppContext, type Application } from "../context/AppContext";
-import { assets } from "../assets/images/assets";
+import { useContext, useEffect, useState, type ChangeEvent } from 'react';
+import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
+import moment from 'moment';
+import axios from 'axios';
+import { useAuth, useUser } from '@clerk/clerk-react';
+import { AppContext, type Application } from '../context/AppContext';
+import { assets } from '../assets/images/assets';
 
 interface UpdateResumeResponse {
   success: boolean;
@@ -18,7 +18,7 @@ const Applications: React.FC = () => {
 
   const appContext = useContext(AppContext);
   if (!appContext)
-    throw new Error("Applications must be used inside AppProvider");
+    throw new Error('Applications must be used inside AppProvider');
 
   const {
     backendUrl,
@@ -38,29 +38,30 @@ const Applications: React.FC = () => {
   };
 
   const getErrorMessage = (error: unknown) => {
-    if (axios.isAxiosError(error)) return error.message || "Something went wrong";
+    if (axios.isAxiosError(error))
+      return error.message || 'Something went wrong';
     if (error instanceof Error) return error.message;
-    return "Something went wrong";
+    return 'Something went wrong';
   };
 
   const updateResume = async () => {
-    if (!resume) return alert("Please select a resume first");
+    if (!resume) return alert('Please select a resume first');
 
     try {
       const formData = new FormData();
-      formData.append("resume", resume);
+      formData.append('resume', resume);
 
       const token = await getToken();
 
       const { data } = await axios.post<UpdateResumeResponse>(
         `${backendUrl}/api/users/update-resume`,
         formData,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       if (data.success) {
         await fetchUserData();
-        alert("Resume updated successfully");
+        alert('Resume updated successfully');
       } else {
         alert(data.message);
       }
@@ -80,9 +81,9 @@ const Applications: React.FC = () => {
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
 
-    const a = document.createElement("a");
+    const a = document.createElement('a');
     a.href = url;
-    a.download = "resume.pdf";
+    a.download = 'resume.pdf';
     a.click();
 
     window.URL.revokeObjectURL(url);
@@ -90,7 +91,7 @@ const Applications: React.FC = () => {
 
   const handleView = () => {
     if (!userData?.resume) return;
-    window.open(userData.resume, "_blank", "noopener,noreferrer");
+    window.open(userData.resume, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => {
@@ -110,7 +111,7 @@ const Applications: React.FC = () => {
           {isEdit || !userData?.resume ? (
             <label className="application-card application-card-upload">
               <p className="application-card_upload-text">
-                {resume ? resume.name : "Select Resume"}
+                {resume ? resume.name : 'Select Resume'}
               </p>
 
               <input
@@ -140,11 +141,17 @@ const Applications: React.FC = () => {
                 View Resume
               </button>
 
-              <button className="applications_resume-link" onClick={handleDownload}>
+              <button
+                className="applications_resume-link"
+                onClick={handleDownload}
+              >
                 Download
               </button>
 
-              <button className="applications_edit-btn" onClick={() => setIsEdit(true)}>
+              <button
+                className="applications_edit-btn"
+                onClick={() => setIsEdit(true)}
+              >
                 Edit
               </button>
             </div>
@@ -154,41 +161,43 @@ const Applications: React.FC = () => {
         <h2 className="applications_title">Jobs Applied</h2>
 
         <div className="applications_cards-list">
-          {userApplications.length === 0 && (
-            <p>No job applications yet.</p>
-          )}
+          {userApplications.length === 0 && <p>No job applications yet.</p>}
 
           {userApplications.map((app: Application) => (
             <div key={app._id} className="application-card">
               <div className="application-card_header">
                 <img
                   src={app.companyId?.image || assets.company_icon}
-                  alt={app.companyId?.name || "Company logo"}
+                  alt={app.companyId?.name || 'Company logo'}
                 />
                 <div className="application-card_company">
-                  <span className="name">{app.companyId?.name || "Unknown Company"}</span>
-                  <span className="date">{moment(app.date).format("ll")}</span>
+                  <span className="name">
+                    {app.companyId?.name || 'Unknown Company'}
+                  </span>
+                  <span className="date">{moment(app.date).format('ll')}</span>
                 </div>
               </div>
 
               <div className="application-card_body">
                 <div className="application-card_info">
-                  <span className="application-card_title">{app.jobId?.title || "Unknown Job"}</span>
+                  <span className="application-card_title">
+                    {app.jobId?.title || 'Unknown Job'}
+                  </span>
                   <span className="application-card_location">
-                    <strong>Place:</strong> {app.jobId?.location || "-"}
+                    <strong>Place:</strong> {app.jobId?.location || '-'}
                   </span>
                 </div>
 
                 <span
                   className={`application-card_status ${
-                    app.status === "Accepted"
-                      ? "accepted"
-                      : app.status === "Rejected"
-                      ? "rejected"
-                      : "pending"
+                    app.status === 'Accepted'
+                      ? 'accepted'
+                      : app.status === 'Rejected'
+                        ? 'rejected'
+                        : 'pending'
                   }`}
                 >
-                  {app.status || "Pending"}
+                  {app.status || 'Pending'}
                 </span>
               </div>
             </div>
@@ -208,7 +217,7 @@ const Applications: React.FC = () => {
                 width="100%"
                 height="600"
                 title="Resume Preview"
-                style={{ border: "none" }}
+                style={{ border: 'none' }}
               />
             </div>
           </div>
@@ -221,8 +230,3 @@ const Applications: React.FC = () => {
 };
 
 export default Applications;
-
-
-
-
-

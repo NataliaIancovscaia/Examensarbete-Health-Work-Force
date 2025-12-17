@@ -1,9 +1,9 @@
-import Quill from "quill";
-import "quill/dist/quill.snow.css";
-import { useContext, useEffect, useRef, useState } from "react";
-import { JobCategories, JobLocations } from "../assets/images/assets";
-import axios from "axios";
-import { AppContext } from "../context/AppContext";
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { JobCategories, JobLocations } from '../assets/images/assets';
+import axios from 'axios';
+import { AppContext } from '../context/AppContext';
 
 interface PostJobResponse {
   success: boolean;
@@ -11,48 +11,47 @@ interface PostJobResponse {
 }
 
 const getErrorMessage = (error: unknown) => {
-    if (axios.isAxiosError(error)) return error.message || "Something went wrong";
-    if (error instanceof Error) return error.message;
-    return "Something went wrong";
-  };
+  if (axios.isAxiosError(error)) return error.message || 'Something went wrong';
+  if (error instanceof Error) return error.message;
+  return 'Something went wrong';
+};
 const AddJob = () => {
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("Malmo");
-  const [category, setCategory] = useState("Diagnostics");
-  const [level, setLevel] = useState("Intermediate Level");
+  const [title, setTitle] = useState('');
+  const [location, setLocation] = useState('Malmo');
+  const [category, setCategory] = useState('Diagnostics');
+  const [level, setLevel] = useState('Intermediate Level');
   const [salary, setSalary] = useState(0);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState('');
 
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillRef = useRef<Quill | null>(null);
 
   const { backendUrl, companyToken } = useContext(AppContext)!;
 
-  
   useEffect(() => {
     if (!editorRef.current) return;
 
     if (!quillRef.current) {
       quillRef.current = new Quill(editorRef.current, {
-        theme: "snow",
-        placeholder: "Write job description...",
+        theme: 'snow',
+        placeholder: 'Write job description...',
         modules: {
           toolbar: [
-            ["bold", "italic", "underline"],
+            ['bold', 'italic', 'underline'],
             [{ header: [1, 2, 3, false] }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["link", "clean"],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['link', 'clean'],
           ],
         },
       });
 
-      quillRef.current.on("text-change", () => {
-        setDescription(quillRef.current?.root.innerHTML || "");
+      quillRef.current.on('text-change', () => {
+        setDescription(quillRef.current?.root.innerHTML || '');
       });
     }
 
     return () => {
-      quillRef.current?.off("text-change");
+      quillRef.current?.off('text-change');
       quillRef.current = null;
     };
   }, []);
@@ -64,17 +63,16 @@ const AddJob = () => {
       const { data } = await axios.post<PostJobResponse>(
         `${backendUrl}/api/company/post-job`,
         { title, description, location, salary, category, level },
-        { headers: { token: companyToken ?? "" } }
+        { headers: { token: companyToken ?? '' } },
       );
 
       alert(data.message);
 
       if (data.success) {
-    
-        setTitle("");
+        setTitle('');
         setSalary(0);
-        setDescription("");
-        if (quillRef.current) quillRef.current.root.innerHTML = "";
+        setDescription('');
+        if (quillRef.current) quillRef.current.root.innerHTML = '';
       }
     } catch (error: unknown) {
       alert(getErrorMessage(error));
@@ -87,7 +85,9 @@ const AddJob = () => {
       <h2 className="add-job-form_headline">Add Job Listing</h2>
 
       <div className="add-job-form_field">
-        <label><strong>Job Title</strong></label>
+        <label>
+          <strong>Job Title</strong>
+        </label>
         <input
           type="text"
           placeholder="Enter position title"
@@ -106,18 +106,28 @@ const AddJob = () => {
       <div className="add-job-form_grid">
         <div className="add-job-form_field">
           <label>Category</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             {JobCategories.map((item, i) => (
-              <option key={i} value={item}>{item}</option>
+              <option key={i} value={item}>
+                {item}
+              </option>
             ))}
           </select>
         </div>
 
         <div className="add-job-form_field">
           <label>Location</label>
-          <select value={location} onChange={(e) => setLocation(e.target.value)}>
+          <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          >
             {JobLocations.map((item, i) => (
-              <option key={i} value={item}>{item}</option>
+              <option key={i} value={item}>
+                {item}
+              </option>
             ))}
           </select>
         </div>
@@ -143,10 +153,11 @@ const AddJob = () => {
         />
       </div>
 
-      <button type="submit" className="add-job-form_submit">Publish Job</button>
+      <button type="submit" className="add-job-form_submit">
+        Publish Job
+      </button>
     </form>
   );
 };
 
 export default AddJob;
-

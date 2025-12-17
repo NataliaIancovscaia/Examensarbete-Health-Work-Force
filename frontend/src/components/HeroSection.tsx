@@ -1,23 +1,20 @@
-import React, { useContext, useRef } from "react";
-import { assets } from "../assets/images/assets";
-import { AppContext } from "../context/AppContext";
-import type { AppContextType } from "../context/AppContext";
+import React, { useContext, useRef } from 'react';
+import { assets } from '../assets/images/assets';
+import { AppContext } from '../context/AppContext';
+import type { AppContextType } from '../context/AppContext';
 
 const HeroSection: React.FC = () => {
-  
   const appContext = useContext<AppContextType | null>(AppContext);
   if (!appContext) {
-    throw new Error("HeroSection must be used inside AppProvider");
+    throw new Error('HeroSection must be used inside AppProvider');
   }
 
   const { setSearchFilter, setIsSearched } = appContext;
-
 
   const titleRef = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLInputElement>(null);
 
   const onSearch = () => {
-    
     if (!titleRef.current || !locationRef.current) return;
 
     setSearchFilter({
@@ -68,5 +65,3 @@ const HeroSection: React.FC = () => {
 };
 
 export default HeroSection;
-
-

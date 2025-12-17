@@ -19,7 +19,10 @@
   transform-origin: center top;
   user-select: none;
   cursor: pointer;
-  transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.3s;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease,
+    box-shadow 0.3s;
 
   h3 {
     margin: 0;
@@ -50,9 +53,3 @@
     opacity: 0.75;
   }
 }
-
-
-
-
-
-

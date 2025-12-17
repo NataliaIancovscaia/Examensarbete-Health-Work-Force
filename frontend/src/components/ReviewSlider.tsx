@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import type { Review } from "../types/Review.types";
-import { siteReviews } from "../assets/images/assets";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import type { Review } from '../types/Review.types';
+import { siteReviews } from '../assets/images/assets';
 
 const ReviewSlider: React.FC = () => {
   const [index, setIndex] = useState(0);
@@ -12,7 +12,6 @@ const ReviewSlider: React.FC = () => {
     <div className="cardstack-container">
       <AnimatePresence initial={false}>
         {siteReviews.map((review: Review, i: number) => {
-          
           const rel = (i - index + siteReviews.length) % siteReviews.length;
 
           const rotate = rel * -4;
@@ -30,12 +29,12 @@ const ReviewSlider: React.FC = () => {
               initial={{ opacity: 0, scale: 0.95, y: -20 }}
               animate={{ rotate, x, y, scale, opacity }}
               exit={{ opacity: 0, scale: 0.9, y: 0 }}
-              transition={{ type: "spring", stiffness: 140, damping: 20 }}
+              transition={{ type: 'spring', stiffness: 140, damping: 20 }}
               onClick={nextCard}
             >
               <div className="card-header">
                 <h3>{review.name || review.employer}</h3>
-                <p className="role">{review.role || "Employer"}</p>
+                <p className="role">{review.role || 'Employer'}</p>
               </div>
 
               <p className="comment">"{review.comment}"</p>
@@ -50,12 +49,3 @@ const ReviewSlider: React.FC = () => {
 };
 
 export default ReviewSlider;
-
-
-
-
-
-
-
-
-

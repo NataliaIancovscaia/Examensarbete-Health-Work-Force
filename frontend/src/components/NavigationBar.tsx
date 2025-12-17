@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
-import { assets } from "../assets/images/assets";
-import "../assets/scss/NavigationBar.scss";
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
-import { Link, useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
+import React, { useContext, useState } from 'react';
+import { assets } from '../assets/images/assets';
+import '../assets/scss/NavigationBar.scss';
+import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppContext } from '../context/AppContext';
 
 const NavigationBar: React.FC = () => {
   const navigate = useNavigate();
@@ -12,7 +12,8 @@ const NavigationBar: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   const appContext = useContext(AppContext);
-  if (!appContext) throw new Error("NavigationBar must be used inside AppProvider");
+  if (!appContext)
+    throw new Error('NavigationBar must be used inside AppProvider');
 
   const {
     companyData,
@@ -34,26 +35,25 @@ const NavigationBar: React.FC = () => {
   const logoutCompany = () => {
     setCompanyToken(null);
     setCompanyData(null);
-    localStorage.removeItem("companyToken");
-     navigate("/");
+    localStorage.removeItem('companyToken');
+    navigate('/');
   };
 
   return (
     <nav className="glass-navbar">
       <div className="glass-navbar_left">
-       <div
-  className="glass-navbar_logo-container"
-  onClick={() => navigate("/")}
-  style={{ cursor: "pointer" }}
->
-  <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
-  <h2>Health Work Force</h2>
-</div>
+        <div
+          className="glass-navbar_logo-container"
+          onClick={() => navigate('/')}
+          style={{ cursor: 'pointer' }}
+        >
+          <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
+          <h2>Health Work Force</h2>
+        </div>
       </div>
 
-      <div className={`glass-navbar_menu ${open ? "open" : ""}`}>
-
-      {/* Clerk */}
+      <div className={`glass-navbar_menu ${open ? 'open' : ''}`}>
+        {/* Clerk */}
         {user && !companyData && (
           <>
             <Link to="/applications" className="glass-navbar_menu-link">
@@ -68,24 +68,13 @@ const NavigationBar: React.FC = () => {
           </>
         )}
 
-       {/* recruter */}
         {!user && companyData && (
           <>
-            {/* <Link to="/dashboard/add-job" className="glass-navbar_menu-link">
-              Post Job
-            </Link>
-            <Link to="/dashboard/manage-jobs" className="glass-navbar_menu-link">
-              My Jobs
-            </Link>
-            <Link to="/dashboard/view-applications" className="glass-navbar_menu-link">
-              Applications
-            </Link> */}
-             
             <p className="glass-navbar_menu-user">Hi, {companyData.name}</p>
-           <img
-               src={companyData.image}
-               alt="Recruiter Logo"
-               className="recruiter-avatar"
+            <img
+              src={companyData.image}
+              alt="Recruiter Logo"
+              className="recruiter-avatar"
             />
 
             <button className="glass-navbar_menu-btn" onClick={logoutCompany}>
@@ -94,7 +83,6 @@ const NavigationBar: React.FC = () => {
           </>
         )}
 
-        
         {!user && !companyData && (
           <>
             <button
@@ -104,10 +92,7 @@ const NavigationBar: React.FC = () => {
               Recruiter Login
             </button>
 
-            <button
-              className="glass-navbar_menu-btn"
-              onClick={handleUserLogin}
-            >
+            <button className="glass-navbar_menu-btn" onClick={handleUserLogin}>
               User Login
             </button>
           </>
@@ -115,7 +100,7 @@ const NavigationBar: React.FC = () => {
       </div>
 
       <button
-        className={`glass-navbar_burger ${open ? "active" : ""}`}
+        className={`glass-navbar_burger ${open ? 'active' : ''}`}
         onClick={() => setOpen(!open)}
       >
         <span />
@@ -127,7 +112,3 @@ const NavigationBar: React.FC = () => {
 };
 
 export default NavigationBar;
-
-
-
-

@@ -1,9 +1,9 @@
-import moment from "moment";
-import { useNavigate } from "react-router";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { AppContext, type Job } from "../context/AppContext";
-import axios from "axios";
-import Loading from "../components/Loading";
+import moment from 'moment';
+import { useNavigate } from 'react-router';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { AppContext, type Job } from '../context/AppContext';
+import axios from 'axios';
+import Loading from '../components/Loading';
 
 interface GetJobsResponse {
   success: boolean;
@@ -29,7 +29,7 @@ const ManageJobs: React.FC = () => {
     try {
       const { data } = await axios.get<GetJobsResponse>(
         `${backendUrl}/api/company/list-jobs`,
-        { headers: { token: companyToken } }
+        { headers: { token: companyToken } },
       );
 
       if (data.success) {
@@ -38,7 +38,7 @@ const ManageJobs: React.FC = () => {
         alert(data.message);
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       alert(message);
       console.error(error);
     } finally {
@@ -51,7 +51,7 @@ const ManageJobs: React.FC = () => {
       const { data } = await axios.post<ChangeVisibilityResponse>(
         `${backendUrl}/api/company/change-visibility`,
         { id },
-        { headers: { token: companyToken } }
+        { headers: { token: companyToken } },
       );
 
       if (data.success) {
@@ -60,7 +60,7 @@ const ManageJobs: React.FC = () => {
         alert(data.message);
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       alert(message);
       console.error(error);
     }
@@ -104,7 +104,7 @@ const ManageJobs: React.FC = () => {
               <tr key={job._id} className="manage-jobs_row">
                 <td>{index + 1}</td>
                 <td>{job.title}</td>
-                <td>{moment(job.date).format("ll")}</td>
+                <td>{moment(job.date).format('ll')}</td>
                 <td>{job.location}</td>
                 <td>{job.applicants ?? 0}</td>
                 <td>
@@ -123,7 +123,7 @@ const ManageJobs: React.FC = () => {
         </table>
       </div>
 
-      <button onClick={() => navigate("/dashboard/add-job")}>
+      <button onClick={() => navigate('/dashboard/add-job')}>
         Add New Job
       </button>
     </div>
@@ -131,4 +131,3 @@ const ManageJobs: React.FC = () => {
 };
 
 export default ManageJobs;
-

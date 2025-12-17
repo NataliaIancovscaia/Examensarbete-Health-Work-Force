@@ -1,7 +1,19 @@
 @keyframes lazyFadeUp {
-  0% { opacity: 0; transform: translateY(20px); filter: blur(4px); }
-  60% { opacity: 0.6; transform: translateY(8px); filter: blur(2px); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .applications {
@@ -27,10 +39,10 @@
     max-width: 680px;
     padding: 1.4rem 1rem;
     border-radius: 14px;
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.27);
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.27);
     backdrop-filter: blur(16px) brightness(0.98);
-    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,8 +56,8 @@
     .applications_save-btn {
       padding: 0.55rem 1.3rem;
       border-radius: 12px;
-      background: rgba(255,255,255,0.25);
-      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       backdrop-filter: blur(12px);
       font-weight: 600;
       cursor: pointer;
@@ -54,7 +66,7 @@
       transition: 0.3s ease;
 
       &:hover {
-        background: rgba(255,255,255,0.35);
+        background: rgba(255, 255, 255, 0.35);
         transform: translateY(-2px);
       }
     }
@@ -71,10 +83,10 @@
       max-width: 680px;
       padding: 1.4rem 1rem;
       border-radius: 14px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.27);
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.27);
       backdrop-filter: blur(16px) brightness(0.98);
-      box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
@@ -131,25 +143,24 @@
           min-width: 70px;
 
           &.accepted {
-            background: rgba(0,255,0,0.15);
-            border: 1px solid rgba(0,255,0,0.3);
+            background: rgba(0, 255, 0, 0.15);
+            border: 1px solid rgba(0, 255, 0, 0.3);
           }
 
           &.rejected {
-            background: rgba(255,0,0,0.15);
-            border: 1px solid rgba(255,0,0,0.3);
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid rgba(255, 0, 0, 0.3);
           }
 
           &.pending {
-            background: rgba(255,255,0,0.15);
-            border: 1px solid rgba(255,255,0,0.3);
+            background: rgba(255, 255, 0, 0.15);
+            border: 1px solid rgba(255, 255, 0, 0.3);
           }
         }
       }
     }
   }
 }
-
 
 @media (min-width: 768px) {
   .applications {

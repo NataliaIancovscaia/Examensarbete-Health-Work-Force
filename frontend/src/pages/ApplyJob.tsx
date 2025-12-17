@@ -1,15 +1,15 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { AppContext, type Job, type Application } from "../context/AppContext";
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { AppContext, type Job, type Application } from '../context/AppContext';
 
-import NavigationBar from "../components/NavigationBar";
-import { assets } from "../assets/images/assets";
-import moment from "moment";
-import "../assets/scss/ApplyJob.scss";
-import JobCard from "../components/JobCard";
-import Footer from "../components/Footer";
-import axios from "axios";
-import { useAuth } from "@clerk/clerk-react";
+import NavigationBar from '../components/NavigationBar';
+import { assets } from '../assets/images/assets';
+import moment from 'moment';
+import '../assets/scss/ApplyJob.scss';
+import JobCard from '../components/JobCard';
+import Footer from '../components/Footer';
+import axios from 'axios';
+import { useAuth } from '@clerk/clerk-react';
 
 interface ApplyJobResponse {
   success: boolean;
@@ -24,23 +24,23 @@ interface GetJobResponse {
 
 const ApplyJob: React.FC = () => {
   const appContext = useContext(AppContext);
-  if (!appContext) throw new Error("ApplyJob must be used inside AppProvider");
+  if (!appContext) throw new Error('ApplyJob must be used inside AppProvider');
 
   const { id } = useParams<{ id: string }>();
   const { getToken } = useAuth();
   const navigate = useNavigate();
 
-  const { jobs, backendUrl, userData, userApplications, setUserApplications } = appContext;
+  const { jobs, backendUrl, userData, userApplications, setUserApplications } =
+    appContext;
 
   const [jobData, setJobData] = useState<Job | null>(null);
 
-  // --- Функция подачи заявки ---
   const applyHandler = async () => {
     try {
-      if (!userData) return alert("Login to apply for jobs");
+      if (!userData) return alert('Login to apply for jobs');
       if (!userData.resume) {
-        navigate("/applications");
-        return alert("Upload resume to apply");
+        navigate('/applications');
+        return alert('Upload resume to apply');
       }
 
       if (!jobData) return;
@@ -50,31 +50,35 @@ const ApplyJob: React.FC = () => {
       const { data } = await axios.post<ApplyJobResponse>(
         `${backendUrl}/api/users/apply`,
         { jobId: jobData._id },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       alert(data.message);
 
-      // Обновляем контекст, чтобы кнопка и похожие вакансии обновились
       if (data.success) {
-        setUserApplications([...userApplications, { jobId: jobData } as Application]);
+        setUserApplications([
+          ...userApplications,
+          { jobId: jobData } as Application,
+        ]);
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "Unknown error";
+      const message = error instanceof Error ? error.message : 'Unknown error';
       alert(message);
       console.error(error);
     }
   };
 
-  // --- Загрузка данных вакансии ---
   useEffect(() => {
     const getJob = async () => {
       try {
-        const { data } = await axios.get<GetJobResponse>(`${backendUrl}/api/jobs/${id}`);
+        const { data } = await axios.get<GetJobResponse>(
+          `${backendUrl}/api/jobs/${id}`,
+        );
         if (data.success) setJobData(data.job);
         else alert(data.message);
       } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : "Unknown error";
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
         alert(message);
         console.error(error);
       }
@@ -83,13 +87,12 @@ const ApplyJob: React.FC = () => {
     getJob();
   }, [id, backendUrl]);
 
-  // --- Проверка, подал ли пользователь заявку ---
   const isAlreadyApplied = useMemo(() => {
     if (!jobData) return false;
 
-    return userApplications.some(app => {
+    return userApplications.some((app) => {
       if (!app.jobId) return false;
-      return typeof app.jobId === "string"
+      return typeof app.jobId === 'string'
         ? app.jobId === jobData._id
         : app.jobId._id === jobData._id;
     });
@@ -99,14 +102,17 @@ const ApplyJob: React.FC = () => {
 
   // --- Похожие вакансии ---
   const appliedJobsIds = new Set(
-    userApplications.map(app =>
-      typeof app.jobId === "string" ? app.jobId : app.jobId?._id
-    )
+    userApplications.map((app) =>
+      typeof app.jobId === 'string' ? app.jobId : app.jobId?._id,
+    ),
   );
 
   const similarJobs = jobs
-    .filter(job => job._id !== jobData._id && job.companyId._id === jobData.companyId._id)
-    .filter(job => !appliedJobsIds.has(job._id))
+    .filter(
+      (job) =>
+        job._id !== jobData._id && job.companyId._id === jobData.companyId._id,
+    )
+    .filter((job) => !appliedJobsIds.has(job._id))
     .slice(0, 3);
 
   return (
@@ -138,8 +144,12 @@ const ApplyJob: React.FC = () => {
           </div>
 
           <div className="apply-job_header-apply">
-            <button onClick={applyHandler} className="apply-btn" disabled={isAlreadyApplied}>
-              {isAlreadyApplied ? "Already applied" : "Apply now"}
+            <button
+              onClick={applyHandler}
+              className="apply-btn"
+              disabled={isAlreadyApplied}
+            >
+              {isAlreadyApplied ? 'Already applied' : 'Apply now'}
             </button>
             <p className="posted">Posted {moment(jobData.date).fromNow()}</p>
           </div>
@@ -152,8 +162,12 @@ const ApplyJob: React.FC = () => {
               className="apply-job_description-text"
               dangerouslySetInnerHTML={{ __html: jobData.description }}
             />
-            <button onClick={applyHandler} className="apply-btn" disabled={isAlreadyApplied}>
-              {isAlreadyApplied ? "Already applied" : "Apply now"}
+            <button
+              onClick={applyHandler}
+              className="apply-btn"
+              disabled={isAlreadyApplied}
+            >
+              {isAlreadyApplied ? 'Already applied' : 'Apply now'}
             </button>
           </article>
 
@@ -161,7 +175,7 @@ const ApplyJob: React.FC = () => {
             <aside className="apply-job_sidebar">
               <h2>More similar {jobData.companyId.name} jobs</h2>
               <div className="apply-job_more-jobs-list">
-                {similarJobs.map(job => (
+                {similarJobs.map((job) => (
                   <JobCard key={job._id} job={job} />
                 ))}
               </div>
@@ -173,7 +187,7 @@ const ApplyJob: React.FC = () => {
           <section className="mobile-only">
             <h2>More similar {jobData.companyId.name} jobs</h2>
             <div className="apply-job_more-jobs-list">
-              {similarJobs.map(job => (
+              {similarJobs.map((job) => (
                 <JobCard key={job._id} job={job} />
               ))}
             </div>
@@ -187,15 +201,3 @@ const ApplyJob: React.FC = () => {
 };
 
 export default ApplyJob;
-
-
-
-
-
-
-
-
-
-
-
-
