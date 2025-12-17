@@ -3,6 +3,17 @@ import { AppContext, type Application } from "../context/AppContext";
 import axios from "axios";
 import Loading from "../components/Loading";
 
+interface GetApplicationsResponse {
+  success: boolean;
+  message: string;
+  applications: Application[];
+}
+
+interface ChangeStatusResponse {
+  success: boolean;
+  message: string;
+}
+
 const ViewApplications: React.FC = () => {
   const appContext = useContext(AppContext);
   if (!appContext) {
@@ -20,9 +31,11 @@ const ViewApplications: React.FC = () => {
   };
 
   const fetchCompanyJobApplications = useCallback(async () => {
+    if (!companyToken) return;
+    setLoading(true);
     try {
-      const { data } = await axios.get(
-        backendUrl + "/api/company/applicants",
+      const { data } = await axios.get<GetApplicationsResponse>(
+        `${backendUrl}/api/company/applicants`,
         { headers: { token: companyToken } }
       );
 
@@ -31,29 +44,23 @@ const ViewApplications: React.FC = () => {
       } else {
         alert(data.message);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Something went wrong");
-      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      alert(message);
       console.error(error);
     } finally {
       setLoading(false);
     }
   }, [backendUrl, companyToken]);
 
-  useEffect(() => {
-    if (companyToken) {
-      fetchCompanyJobApplications();
-    }
-  }, [companyToken, fetchCompanyJobApplications]);
-
   const changeJobApplicationStatus = async (
     id: string,
     status: "Accepted" | "Rejected"
   ) => {
+    if (!companyToken) return;
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/company/change-status",
+      const { data } = await axios.post<ChangeStatusResponse>(
+        `${backendUrl}/api/company/change-status`,
         { id, status },
         { headers: { token: companyToken } }
       );
@@ -63,19 +70,25 @@ const ViewApplications: React.FC = () => {
       } else {
         alert(data.message);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Something went wrong");
-      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      alert(message);
       console.error(error);
     }
   };
 
+  useEffect(() => {
+    if (companyToken) {
+      fetchCompanyJobApplications();
+    }
+  }, [companyToken, fetchCompanyJobApplications]);
+
   if (loading) return <Loading />;
 
- if (applicants.length=== 0) {
-    return <div className="empty-state">No applicants  available or posted</div>;
+  if (applicants.length === 0) {
+    return <div className="empty-state">No applicants available or posted</div>;
   }
+
   return (
     <div className="view-applications">
       <h2 className="view-applications_title">
@@ -97,7 +110,7 @@ const ViewApplications: React.FC = () => {
 
           <tbody>
             {applicants
-              .filter(item => item.jobId && item.userId)
+              .filter((item) => item.jobId && item.userId)
               .map((applicant, index) => (
                 <tr key={applicant._id} className="view-applications_row">
                   <td>{index + 1}</td>

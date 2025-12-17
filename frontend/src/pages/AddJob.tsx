@@ -5,6 +5,16 @@ import { JobCategories, JobLocations } from "../assets/images/assets";
 import axios from "axios";
 import { AppContext } from "../context/AppContext";
 
+interface PostJobResponse {
+  success: boolean;
+  message: string;
+}
+
+const getErrorMessage = (error: unknown) => {
+    if (axios.isAxiosError(error)) return error.message || "Something went wrong";
+    if (error instanceof Error) return error.message;
+    return "Something went wrong";
+  };
 const AddJob = () => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("Malmo");
@@ -18,7 +28,7 @@ const AddJob = () => {
 
   const { backendUrl, companyToken } = useContext(AppContext)!;
 
-
+  
   useEffect(() => {
     if (!editorRef.current) return;
 
@@ -47,46 +57,28 @@ const AddJob = () => {
     };
   }, []);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/company/post-job",
-        {
-          title,
-          description,
-          location,
-          salary,
-          category,
-          level,
-        },
-        { headers: { token: companyToken } }
+      const { data } = await axios.post<PostJobResponse>(
+        `${backendUrl}/api/company/post-job`,
+        { title, description, location, salary, category, level },
+        { headers: { token: companyToken ?? "" } }
       );
 
-      if (data.success) {
-        alert(data.message);
+      alert(data.message);
 
-     
+      if (data.success) {
+    
         setTitle("");
         setSalary(0);
         setDescription("");
-
-        
-        if (quillRef.current) {
-          quillRef.current.root.innerHTML = "";
-        }
-      } else {
-        alert(data.message);
+        if (quillRef.current) quillRef.current.root.innerHTML = "";
       }
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Something went wrong");
-        console.error(error.response?.data);
-      } else {
-        console.error(error);
-      }
+      alert(getErrorMessage(error));
+      console.error(error);
     }
   };
 
@@ -99,8 +91,8 @@ const AddJob = () => {
         <input
           type="text"
           placeholder="Enter position title"
-          onChange={(e) => setTitle(e.target.value)}
           value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </div>
 
@@ -114,7 +106,7 @@ const AddJob = () => {
       <div className="add-job-form_grid">
         <div className="add-job-form_field">
           <label>Category</label>
-          <select onChange={(e) => setCategory(e.target.value)} value={category}>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
             {JobCategories.map((item, i) => (
               <option key={i} value={item}>{item}</option>
             ))}
@@ -123,7 +115,7 @@ const AddJob = () => {
 
         <div className="add-job-form_field">
           <label>Location</label>
-          <select onChange={(e) => setLocation(e.target.value)} value={location}>
+          <select value={location} onChange={(e) => setLocation(e.target.value)}>
             {JobLocations.map((item, i) => (
               <option key={i} value={item}>{item}</option>
             ))}
@@ -132,7 +124,7 @@ const AddJob = () => {
 
         <div className="add-job-form_field">
           <label>Seniority</label>
-          <select onChange={(e) => setLevel(e.target.value)} value={level}>
+          <select value={level} onChange={(e) => setLevel(e.target.value)}>
             <option value="Beginner Level">Beginner Level</option>
             <option value="Intermediate Level">Intermediate Level</option>
             <option value="Senior Level">Senior Level</option>
@@ -145,9 +137,9 @@ const AddJob = () => {
         <input
           type="number"
           placeholder="25000"
-          onChange={(e) => setSalary(parseInt(e.target.value) || 0)}
           value={salary}
           min={0}
+          onChange={(e) => setSalary(parseInt(e.target.value) || 0)}
         />
       </div>
 
@@ -157,3 +149,4 @@ const AddJob = () => {
 };
 
 export default AddJob;
+

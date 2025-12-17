@@ -5,6 +5,17 @@ import { AppContext, type Job } from "../context/AppContext";
 import axios from "axios";
 import Loading from "../components/Loading";
 
+interface GetJobsResponse {
+  success: boolean;
+  message: string;
+  jobsData: Job[];
+}
+
+interface ChangeVisibilityResponse {
+  success: boolean;
+  message: string;
+}
+
 const ManageJobs: React.FC = () => {
   const navigate = useNavigate();
   const { backendUrl, companyToken } = useContext(AppContext)!;
@@ -12,15 +23,12 @@ const ManageJobs: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
 
-  
   const fetchCompanyJobs = useCallback(async () => {
     if (!companyToken) return;
     setLoading(true);
     try {
-      setLoading(true);
-
-      const { data } = await axios.get(
-        backendUrl + "/api/company/list-jobs",
+      const { data } = await axios.get<GetJobsResponse>(
+        `${backendUrl}/api/company/list-jobs`,
         { headers: { token: companyToken } }
       );
 
@@ -29,21 +37,19 @@ const ManageJobs: React.FC = () => {
       } else {
         alert(data.message);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Something went wrong");
-      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      alert(message);
       console.error(error);
     } finally {
       setLoading(false);
     }
   }, [backendUrl, companyToken]);
 
-
   const changeJobVisibility = async (id: string) => {
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/company/change-visibility",
+      const { data } = await axios.post<ChangeVisibilityResponse>(
+        `${backendUrl}/api/company/change-visibility`,
         { id },
         { headers: { token: companyToken } }
       );
@@ -53,14 +59,12 @@ const ManageJobs: React.FC = () => {
       } else {
         alert(data.message);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Something went wrong");
-      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      alert(message);
       console.error(error);
     }
   };
-
 
   useEffect(() => {
     if (companyToken) {
@@ -68,12 +72,11 @@ const ManageJobs: React.FC = () => {
     }
   }, [companyToken, fetchCompanyJobs]);
 
-  
   if (loading) {
     return <Loading />;
   }
 
-  if (jobs.length=== 0) {
+  if (jobs.length === 0) {
     return <div className="empty-state">No job available or posted</div>;
   }
 
@@ -128,3 +131,4 @@ const ManageJobs: React.FC = () => {
 };
 
 export default ManageJobs;
+

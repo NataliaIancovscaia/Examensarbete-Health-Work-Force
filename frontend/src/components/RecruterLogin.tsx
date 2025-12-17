@@ -1,10 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { assets } from "../assets/images/assets";
-import { AppContext } from "../context/AppContext";
+import { AppContext, type Company } from "../context/AppContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
-const RecruiterLogin = () => {
+interface CompanyResponse {
+  success: boolean;
+  message: string;
+  company?: Company;
+  token?: string;
+}
+
+const RecruiterLogin: React.FC = () => {
   const navigate = useNavigate();
 
   const [state, setState] = useState<"Login" | "Sign Up">("Login");
@@ -20,12 +27,7 @@ const RecruiterLogin = () => {
     throw new Error("RecruiterLogin must be used inside AppProvider");
   }
 
-  const {
-    setShowRecruiterLogin,
-    backendUrl,
-    setCompanyData,
-    setCompanyToken,
-  } = appContext;
+  const { setShowRecruiterLogin, backendUrl, setCompanyData, setCompanyToken } = appContext;
 
   const resetFormState = () => {
     setPassword("");
@@ -36,38 +38,41 @@ const RecruiterLogin = () => {
     setIsTextDataSubmitted(false);
   };
 
+  const getErrorMessage = (error: unknown) => {
+    if (axios.isAxiosError(error)) return error.message || "Something went wrong";
+    if (error instanceof Error) return error.message;
+    return "Something went wrong";
+  };
+
   const onSubmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-     
       if (state === "Login") {
-        const { data } = await axios.post(
-          backendUrl + "/api/company/login",
-          { email, password }
-        );
+        const { data } = await axios.post<CompanyResponse>(backendUrl + "/api/company/login", {
+          email,
+          password,
+        });
 
         if (!data.success) {
           alert(data.message);
           return;
         }
 
-        setCompanyData(data.company);
-        setCompanyToken(data.token);
-        localStorage.setItem("companyToken", data.token);
+        setCompanyData(data.company ?? null);
+        setCompanyToken(data.token ?? null);
+        localStorage.setItem("companyToken", data.token!);
 
         setShowRecruiterLogin(false);
         navigate("/dashboard");
         return;
       }
 
-    
       if (!isTextDataSubmitted) {
         setIsTextDataSubmitted(true);
         return;
       }
 
-      
       if (!image) {
         alert("Upload company logo");
         return;
@@ -84,34 +89,24 @@ const RecruiterLogin = () => {
       formData.append("password", password);
       formData.append("image", image);
 
-      const { data } = await axios.post(
-        backendUrl + "/api/company/register",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const { data } = await axios.post<CompanyResponse>(backendUrl + "/api/company/register", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (!data.success) {
         alert(data.message);
         return;
       }
 
-      setCompanyData(data.company);
-      setCompanyToken(data.token);
-      localStorage.setItem("companyToken", data.token);
+      setCompanyData(data.company ?? null);
+     setCompanyToken(data.token ?? null);
+      localStorage.setItem("companyToken", data.token!);
 
       setShowRecruiterLogin(false);
       navigate("/dashboard");
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Something went wrong");
-        console.error(error.response?.data);
-      } else {
-        console.error(error);
-      }
+      alert(getErrorMessage(error));
+      console.error(error);
     }
   };
 
@@ -130,27 +125,13 @@ const RecruiterLogin = () => {
 
   return (
     <div className="popup-wrapper" onClick={() => setShowRecruiterLogin(false)}>
-      <form
-        onSubmit={onSubmitHandler}
-        className="popup-form"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div
-          className="popup-close"
-          onClick={() => setShowRecruiterLogin(false)}
-        >
+      <form onSubmit={onSubmitHandler} className="popup-form" onClick={(e) => e.stopPropagation()}>
+        <div className="popup-close" onClick={() => setShowRecruiterLogin(false)}>
           <img src={assets.cross_icon} alt="Close" />
         </div>
 
-        <h1 className="popup-title">
-          Recruiter {state === "Login" ? "Login" : "Sign Up"}
-        </h1>
-
-        <p className="popup-subtitle">
-          {state === "Login"
-            ? "Sign in to continue"
-            : "Sign up to continue"}
-        </p>
+        <h1 className="popup-title">Recruiter {state === "Login" ? "Login" : "Sign Up"}</h1>
+        <p className="popup-subtitle">{state === "Login" ? "Sign in to continue" : "Sign up to continue"}</p>
 
         {state === "Sign Up" && isTextDataSubmitted ? (
           <div className="popup-upload">
@@ -167,10 +148,8 @@ const RecruiterLogin = () => {
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (!file) return;
-
                   setImage(file);
-                  const url = URL.createObjectURL(file);
-                  setImagePreview(url);
+                  setImagePreview(URL.createObjectURL(file));
                 }}
               />
             </label>
@@ -218,11 +197,7 @@ const RecruiterLogin = () => {
         {state === "Login" && <p className="forgot">Forgot password?</p>}
 
         <button type="submit" className="popup-btn">
-          {state === "Login"
-            ? "Login"
-            : image
-            ? "Create Account"
-            : "Next"}
+          {state === "Login" ? "Login" : image ? "Create Account" : "Next"}
         </button>
 
         {state === "Login" ? (
@@ -258,6 +233,7 @@ const RecruiterLogin = () => {
 };
 
 export default RecruiterLogin;
+
 
 
 

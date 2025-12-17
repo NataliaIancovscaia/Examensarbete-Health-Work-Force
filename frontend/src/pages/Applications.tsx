@@ -7,14 +7,26 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import { AppContext, type Application } from "../context/AppContext";
 import { assets } from "../assets/images/assets";
 
+interface UpdateResumeResponse {
+  success: boolean;
+  message: string;
+}
+
 const Applications: React.FC = () => {
   const { user } = useUser();
   const { getToken } = useAuth();
 
   const appContext = useContext(AppContext);
-  if (!appContext) throw new Error("Applications must be used inside AppProvider");
+  if (!appContext)
+    throw new Error("Applications must be used inside AppProvider");
 
-  const { backendUrl, userData, fetchUserData, userApplications,fetchUsersApplications } = appContext;
+  const {
+    backendUrl,
+    userData,
+    fetchUserData,
+    userApplications,
+    fetchUsersApplications,
+  } = appContext;
 
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState<File | null>(null);
@@ -23,6 +35,12 @@ const Applications: React.FC = () => {
   const handleResumeUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0]) return;
     setResume(e.target.files[0]);
+  };
+
+  const getErrorMessage = (error: unknown) => {
+    if (axios.isAxiosError(error)) return error.message || "Something went wrong";
+    if (error instanceof Error) return error.message;
+    return "Something went wrong";
   };
 
   const updateResume = async () => {
@@ -34,7 +52,7 @@ const Applications: React.FC = () => {
 
       const token = await getToken();
 
-      const { data } = await axios.post(
+      const { data } = await axios.post<UpdateResumeResponse>(
         `${backendUrl}/api/users/update-resume`,
         formData,
         { headers: { Authorization: `Bearer ${token}` } }
@@ -46,10 +64,8 @@ const Applications: React.FC = () => {
       } else {
         alert(data.message);
       }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        alert(error.response?.data?.message || "Upload failed");
-      }
+    } catch (error: unknown) {
+      alert(getErrorMessage(error));
       console.error(error);
     } finally {
       setIsEdit(false);
@@ -78,10 +94,10 @@ const Applications: React.FC = () => {
   };
 
   useEffect(() => {
-  if (user) {
-    fetchUsersApplications();
-  }
-}, [user, fetchUsersApplications]);
+    if (user) {
+      fetchUsersApplications();
+    }
+  }, [user, fetchUsersApplications]);
 
   return (
     <>
@@ -120,24 +136,15 @@ const Applications: React.FC = () => {
             </label>
           ) : (
             <div className="applications_resume-view">
-              <button
-                className="applications_resume-link"
-                onClick={handleView}
-              >
+              <button className="applications_resume-link" onClick={handleView}>
                 View Resume
               </button>
 
-              <button
-                className="applications_resume-link"
-                onClick={handleDownload}
-              >
+              <button className="applications_resume-link" onClick={handleDownload}>
                 Download
               </button>
 
-              <button
-                className="applications_edit-btn"
-                onClick={() => setIsEdit(true)}
-              >
+              <button className="applications_edit-btn" onClick={() => setIsEdit(true)}>
                 Edit
               </button>
             </div>
@@ -147,21 +154,28 @@ const Applications: React.FC = () => {
         <h2 className="applications_title">Jobs Applied</h2>
 
         <div className="applications_cards-list">
+          {userApplications.length === 0 && (
+            <p>No job applications yet.</p>
+          )}
+
           {userApplications.map((app: Application) => (
             <div key={app._id} className="application-card">
               <div className="application-card_header">
-                <img src={app.companyId.image} alt="logo" />
+                <img
+                  src={app.companyId?.image || assets.company_icon}
+                  alt={app.companyId?.name || "Company logo"}
+                />
                 <div className="application-card_company">
-                  <span className="name">{app.companyId.name}</span>
+                  <span className="name">{app.companyId?.name || "Unknown Company"}</span>
                   <span className="date">{moment(app.date).format("ll")}</span>
                 </div>
               </div>
 
               <div className="application-card_body">
                 <div className="application-card_info">
-                  <span className="application-card_title">{app.jobId.title}</span>
+                  <span className="application-card_title">{app.jobId?.title || "Unknown Job"}</span>
                   <span className="application-card_location">
-                    <strong>Place:</strong> {app.jobId.location}
+                    <strong>Place:</strong> {app.jobId?.location || "-"}
                   </span>
                 </div>
 
@@ -174,7 +188,7 @@ const Applications: React.FC = () => {
                       : "pending"
                   }`}
                 >
-                  {app.status}
+                  {app.status || "Pending"}
                 </span>
               </div>
             </div>
@@ -207,5 +221,8 @@ const Applications: React.FC = () => {
 };
 
 export default Applications;
+
+
+
 
 
