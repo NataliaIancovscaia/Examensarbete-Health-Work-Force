@@ -73,14 +73,9 @@ const ViewApplications: React.FC = () => {
 
   if (loading) return <Loading />;
 
-  if (applicants.length === 0) {
-    return (
-      <div className="view-applications empty">
-        <h2>No applications yet</h2>
-      </div>
-    );
+ if (applicants.length=== 0) {
+    return <div className="empty-state">No applicants  available or posted</div>;
   }
-
   return (
     <div className="view-applications">
       <h2 className="view-applications_title">

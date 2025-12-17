@@ -7,7 +7,7 @@ const Loading: React.FC = () => {
         <span />
         <span />
       </div>
-      <p className="medical-loader_text">Processing medical data…</p>
+      <p className="medical-loader_text">Processing  data…</p>
     </div>
   );
 };

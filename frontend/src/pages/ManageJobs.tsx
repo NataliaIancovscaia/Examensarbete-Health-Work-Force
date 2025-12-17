@@ -15,7 +15,7 @@ const ManageJobs: React.FC = () => {
   
   const fetchCompanyJobs = useCallback(async () => {
     if (!companyToken) return;
-
+    setLoading(true);
     try {
       setLoading(true);
 
@@ -73,7 +73,7 @@ const ManageJobs: React.FC = () => {
     return <Loading />;
   }
 
-  if (jobs.length === 0) {
+  if (jobs.length=== 0) {
     return <div className="empty-state">No job available or posted</div>;
   }
 
