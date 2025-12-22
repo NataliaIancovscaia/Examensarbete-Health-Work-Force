@@ -19,7 +19,7 @@ export interface Job {
   location: string;
   category: string;
   level: string;
-  salary: number;
+  salary: string;
   date: number;
   visible: boolean;
   companyId: Company;
