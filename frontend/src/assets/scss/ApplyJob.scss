@@ -16,262 +16,259 @@
   }
 }
 
+
+
 .apply-job {
   width: 100%;
-  padding: 1.2rem 1rem;
-  margin: 60px auto;
+  padding: 1rem;
+  margin: 40px auto;
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
   align-items: center;
-}
 
-.apply-job_header {
-  position: relative;
-  width: 100%;
-  max-width: 860px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  padding: 2.2rem 2rem;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.22);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(18px) brightness(0.96);
-  box-shadow:
-    0 8px 26px rgba(0, 0, 0, 0.08),
-    0 2px 10px rgba(255, 255, 255, 0.06);
-  opacity: 0;
-  animation: lazyFadeUp 1.2s ease forwards;
-}
 
-.apply-job_header img {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  object-fit: cover;
-  align-self: center;
-}
-
-.apply-job_header h1 {
-  font-size: 2.4rem;
-  font-weight: 900;
-  margin: 0;
-  text-align: center;
-  letter-spacing: 0.4px;
-  line-height: 1.25;
-}
-
-.apply-job_header-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.36rem;
-  justify-content: center;
-  margin-top: 3px;
-}
-
-.apply-job_header-tags span {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.26rem 0.58rem;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  font-size: 0.74rem;
-  font-weight: 500;
-  opacity: 0.85;
-}
-
-.apply-job_header-tags span img {
-  width: 13px;
-  height: 13px;
-  opacity: 0.9;
-}
-
-.apply-job_header-apply {
-  position: absolute;
-  right: 1.6rem;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.25rem;
-}
-
-.apply-job_header-apply button {
-  padding: 0.58rem 1.1rem;
-  border-radius: 13px;
-  font-size: 0.76rem;
-  font-weight: 600;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(16px) brightness(1.05);
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  transition: 0.3s ease;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-}
-
-.apply-job_header-apply button:hover {
-  background: rgba(255, 255, 255, 0.34);
-  transform: translateY(-52%);
-  box-shadow:
-    0 0 10px rgba(255, 255, 255, 0.35),
-    0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-.apply-job_header-apply p.posted {
-  font-size: 0.7rem;
-  opacity: 0.6;
-}
-
-.apply-job_content {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-  padding: 0 1rem;
-}
-
-.apply-job_description {
-  width: 100%;
-  max-width: 680px;
-  padding: 2rem 1.6rem;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.27);
-  backdrop-filter: blur(16px) brightness(0.98);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
-  font-size: 1.18rem;
-  line-height: 1.8;
-  opacity: 0;
-  animation: lazyFadeUp 1.3s ease forwards;
-  animation-delay: 0.15s;
-}
-
-.apply-job_description h2 {
-  font-size: 1.45rem;
-  font-weight: 800;
-  margin-bottom: 0.8rem;
-  letter-spacing: 0.3px;
-  text-align: left;
-}
-
-.apply-job_description-text {
-  margin-bottom: 0.8rem;
-  opacity: 0.92;
-}
-
-.apply-job_description button {
-  display: block;
-  margin: 1.2rem auto 0;
-  padding: 0.7rem 1.6rem;
-  border-radius: 16px;
-  font-size: 0.94rem;
-  font-weight: 700;
-  cursor: pointer;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.36);
-  transition: 0.32s ease;
-  box-shadow:
-    0 4px 18px rgba(0, 0, 0, 0.05),
-    0 0 10px rgba(255, 255, 255, 0.1);
-}
-
-.apply-job_description button:hover {
-  background: rgba(255, 255, 255, 0.44);
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 12px rgba(255, 255, 255, 0.4),
-    0 8px 26px rgba(0, 0, 0, 0.12);
-}
-
-.apply-job_sidebar {
-  display: none;
-}
-
-.apply-job_more-jobs {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
-  opacity: 0;
-  animation: lazyFadeUp 1.4s ease forwards;
-  animation-delay: 0.3s;
-}
-
-.apply-job_more-jobs h2 {
-  font-size: 1.2rem;
-  font-weight: 800;
-  margin: 0;
-  padding-bottom: 0.4rem;
-  text-align: left;
-}
-
-.apply-job_more-jobs-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-
-.apply-job_sidebar .apply-job_more-jobs-list .job-card {
-  width: 88%;
-  margin: 0 auto;
-  height: 88%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(10px);
-}
-
-@media (min-width: 768px) {
-  .apply-job_content {
-    flex-direction: row;
-    justify-content: center;
-    gap: 1.8rem;
-    padding: 0;
-  }
-
-  .apply-job_description {
-    width: 66%;
-  }
-
-  .apply-job_sidebar {
+  &_header {
+    width: 100%;
+    max-width: 860px;
     display: flex;
     flex-direction: column;
-    width: 32%;
-    max-width: 310px;
-    gap: 1rem;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(16px) brightness(0.94);
-    border-radius: 18px;
-    padding: 1.2rem;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1.6rem 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(18px) brightness(0.96);
+    box-shadow:
+      0 8px 26px rgba(0, 0, 0, 0.08),
+      0 2px 10px rgba(255, 255, 255, 0.06);
     opacity: 0;
-    animation: lazyFadeUp 1.5s ease forwards;
-    animation-delay: 0.38s;
+    animation: lazyFadeUp 1.2s ease forwards;
+
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      margin: 0;
+      text-align: center;
+      letter-spacing: 0.4px;
+      line-height: 1.2;
+    }
+
+
+    &-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.28rem;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.2rem 0.45rem;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        font-size: 0.65rem;
+        font-weight: 500;
+        opacity: 0.85;
+
+        img {
+          width: 11px;
+          height: 11px;
+          opacity: 0.9;
+        }
+      }
+    }
+
+ 
+
+    &-apply {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+
+      button {
+        padding: 0.48rem 0.95rem;
+        border-radius: 13px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        cursor: pointer;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(16px) brightness(1.05);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        transition: 0.3s ease;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.34);
+        }
+      }
+
+      p.posted {
+        font-size: 0.62rem;
+        opacity: 0.6;
+      }
+    }
   }
 
-  .apply-job_sidebar .apply-job_more-jobs {
+
+
+  &_content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .apply-job_sidebar .apply-job_more-jobs-list {
-    grid-template-columns: 1fr;
-    grid-auto-rows: minmax(120px, auto);
+ 
+
+  &_description {
+    width: 100%;
+    padding: 1.4rem 1rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.27);
+    backdrop-filter: blur(16px) brightness(0.98);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+    font-size: 0.96rem;
+    line-height: 1.8;
+    opacity: 0;
+    animation: lazyFadeUp 1.3s ease forwards;
+    animation-delay: 0.15s;
+    position: relative;
+
+    h2 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    &-text {
+      margin-bottom: 0.5rem;
+      opacity: 0.92;
+    }
+
+   
+
+    button {
+      position: fixed;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+
+    margin: 0 auto;
+    display: block;
+
+    padding: 0.7rem 1.6rem;
+    border-radius: 16px;
+    font-size: 0.94rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.36);
+    z-index: 10;
+    }
+  }
+
+
+
+  &_sidebar {
+    display: none;
   }
 
   .mobile-only {
-    display: none;
+    width: 100%;
+    margin-top: 1rem;
   }
 }
+
+
+
+@media (min-width: 768px) {
+  .apply-job {
+    margin: 60px auto;
+
+    &_header {
+      position: relative;
+      padding: 2.2rem 2rem;
+      border-radius: 22px;
+
+      img {
+        width: 54px;
+        height: 54px;
+      }
+
+      h1 {
+        font-size: 2.4rem;
+        line-height: 1.25;
+      }
+
+      &-apply {
+        position: absolute;
+        right: 1.6rem;
+        bottom: 1.6rem;
+        margin: 0;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+    }
+
+    &_content {
+      flex-direction: row;
+      justify-content: center;
+      gap: 1.8rem;
+    }
+
+    &_description {
+      width: 66%;
+      font-size: 1.18rem;
+      padding: 2rem 1.6rem;
+      border-radius: 20px;
+
+      button {
+        position: static;
+        transform: none;
+      
+        margin: 1.2rem auto 0;
+      }
+    }
+
+    &_sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 32%;
+      max-width: 310px;
+      gap: 1rem;
+      padding: 1.2rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(16px) brightness(0.94);
+      opacity: 0;
+      animation: lazyFadeUp 1.5s ease forwards;
+      animation-delay: 0.38s;
+    }
+
+    .mobile-only {
+      display: none;
+    }
+  }
+}
+
 
 @media (min-width: 1024px) {
   .apply-job_header h1 {
@@ -279,110 +276,4 @@
   }
 }
 
-@media (max-width: 767px) {
-  .apply-job {
-    padding: 1rem 1rem;
-    margin: 40px auto;
-  }
 
-  .apply-job_header {
-    padding: 1.6rem 1rem;
-    border-radius: 16px;
-    gap: 0.6rem;
-  }
-
-  .apply-job_header img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .apply-job_header h1 {
-    font-size: 1.6rem;
-    line-height: 1.2;
-    text-align: center;
-  }
-
-  .apply-job_header-tags {
-    gap: 0.28rem;
-  }
-
-  .apply-job_header-tags span {
-    font-size: 0.65rem;
-    padding: 0.2rem 0.45rem;
-  }
-
-  .apply-job_header-tags span img {
-    width: 11px;
-    height: 11px;
-  }
-
-  .apply-job_header-apply {
-    position: static;
-    transform: none;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 0.8rem;
-    gap: 0.4rem;
-    width: 100%;
-  }
-
-  .apply-job_header-apply button {
-    padding: 0.48rem 0.95rem;
-    font-size: 0.7rem;
-  }
-
-  .apply-job_header-apply p.posted {
-    font-size: 0.62rem;
-  }
-
-  .apply-job_content {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 0 1rem;
-  }
-
-  .apply-job_description {
-    padding: 1.4rem 1rem;
-    font-size: 0.96rem;
-    border-radius: 14px;
-  }
-
-  .apply-job_description h2 {
-    font-size: 1.15rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .apply-job_description-text {
-    margin-bottom: 0.5rem;
-  }
-
-  .apply-job_description button {
-    padding: 0.55rem 1.3rem;
-    font-size: 0.78rem;
-  }
-
-  .mobile-only {
-    display: block;
-    margin-top: 1rem;
-    padding: 0 1rem;
-  }
-
-  .mobile-only h2 {
-    font-size: 1rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .mobile-only .apply-job_more-jobs-list {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
-  }
-
-  .mobile-only .apply-job_more-jobs-list .job-card {
-    padding: 0.7rem;
-    font-size: 0.88rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(10px);
-  }
-}
