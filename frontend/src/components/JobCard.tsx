@@ -17,7 +17,9 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
           alt="Company icon"
         />
 
-        <h4 className="job-card_title">{job.title}</h4>
+        <div className="job-card_title-wrapper">
+          <h4 className="job-card_title">{job.title}</h4>
+        </div>
       </div>
 
       <div className="job-card_meta">
@@ -28,8 +30,10 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
       <p
         className="job-card_description"
-        dangerouslySetInnerHTML={{ __html: job.description.slice(0, 150) }}
-      ></p>
+        dangerouslySetInnerHTML={{
+          __html: job.description.slice(0, 150),
+        }}
+      />
 
       <div className="job-card_buttons">
         <button
@@ -55,3 +59,4 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 };
 
 export default JobCard;
+

@@ -222,7 +222,7 @@ const RecruiterLogin: React.FC = () => {
 
         {state === 'Login' ? (
           <p className="switch">
-            Don’t have an account?
+            Don't have an account?
             <span
               onClick={() => {
                 setState('Sign Up');
