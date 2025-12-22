@@ -44,16 +44,23 @@ const NavigationBar: React.FC = () => {
       <div className="glass-navbar_left">
         <div
           className="glass-navbar_logo-container"
-          onClick={() => navigate('/')}
-          style={{ cursor: 'pointer' }}
-        >
-          <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
-          <h2>Health Work Force</h2>
-        </div>
+           onClick={() => {
+       if (companyData) {
+        navigate('/dashboard/manage-jobs'); 
+       } else {
+        navigate('/'); 
+      }
+  }}
+  style={{ cursor: 'pointer' }}
+>
+  <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
+  <h2>Health Work Force</h2>
+</div>
+
       </div>
 
       <div className={`glass-navbar_menu ${open ? 'open' : ''}`}>
-        {/* Clerk */}
+       
         {user && !companyData && (
           <>
             <Link to="/applications" className="glass-navbar_menu-link">
