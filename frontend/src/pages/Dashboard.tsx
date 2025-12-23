@@ -31,7 +31,7 @@ const Dashboard = () => {
 
           <NavLink to="/dashboard/manage-jobs" className="dashboard-link">
             <img src={assets.home_icon} alt="home icon" />
-            <span>My Jobs</span>
+            <span>Manage Jobs</span>
           </NavLink>
 
           <NavLink to="/dashboard/view-applications" className="dashboard-link">
