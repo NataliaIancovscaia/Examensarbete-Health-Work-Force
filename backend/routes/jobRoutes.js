@@ -1,12 +1,10 @@
-import express from 'express';
-import { getJobById, getJobs } from '../controllers/jobControllers.js';
+import express from "express";
+import { getJobById, getJobs } from "../controllers/jobControllers.js";
 
-const router=express.Router();
+const router = express.Router();
 
-//Get all jobs data
+router.get("/", getJobs);
 
-router.get('/',getJobs);
-//Get a single job
-router.get('/:id',getJobById);
+router.get("/:id", getJobById);
 
 export default router;

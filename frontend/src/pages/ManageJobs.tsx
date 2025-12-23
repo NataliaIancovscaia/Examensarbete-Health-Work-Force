@@ -100,31 +100,33 @@ const ManageJobs: React.FC = () => {
           </thead>
 
           <tbody>
-  {jobs.map((job, index) => (
-    <tr key={job._id} className="manage-jobs_row">
-      <td data-label="Nr.">{index + 1}</td>
-      <td data-label="Job Title">{job.title}</td>
-      <td data-label="Date">{moment(job.date).format('ll')}</td>
-      <td data-label="Location">{job.location}</td>
-      <td data-label="Applicants">{job.applicants ?? 0}</td>
-      <td data-label="Visible">
-        <label className="manage-jobs_toggle">
-          <input
-            type="checkbox"
-            checked={job.visible}
-            onChange={() => changeJobVisibility(job._id)}
-          />
-          <span className="slider" />
-        </label>
-      </td>
-    </tr>
-  ))}
-</tbody>
+            {jobs.map((job, index) => (
+              <tr key={job._id} className="manage-jobs_row">
+                <td data-label="Nr.">{index + 1}</td>
+                <td data-label="Job Title">{job.title}</td>
+                <td data-label="Date">{moment(job.date).format('ll')}</td>
+                <td data-label="Location">{job.location}</td>
+                <td data-label="Applicants">{job.applicants ?? 0}</td>
+                <td data-label="Visible">
+                  <label className="manage-jobs_toggle">
+                    <input
+                      type="checkbox"
+                      checked={job.visible}
+                      onChange={() => changeJobVisibility(job._id)}
+                    />
+                    <span className="slider" />
+                  </label>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
 
-      <button className="add-new-job"
-              onClick={() => navigate('/dashboard/add-job')}>
+      <button
+        className="add-new-job"
+        onClick={() => navigate('/dashboard/add-job')}
+      >
         Add New Job
       </button>
     </div>

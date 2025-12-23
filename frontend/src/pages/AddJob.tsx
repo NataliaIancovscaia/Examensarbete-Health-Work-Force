@@ -21,14 +21,13 @@ const AddJob = () => {
   const [location, setLocation] = useState('Malmo');
   const [category, setCategory] = useState('Diagnostics');
   const [level, setLevel] = useState('Intermediate Level');
-  const [salary, setSalary] = useState(''); 
+  const [salary, setSalary] = useState('');
   const [description, setDescription] = useState('');
 
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillRef = useRef<Quill | null>(null);
 
   const { backendUrl, companyToken } = useContext(AppContext)!;
-
 
   useEffect(() => {
     if (!editorRef.current || quillRef.current) return;
@@ -56,7 +55,6 @@ const AddJob = () => {
     };
   }, []);
 
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -75,7 +73,7 @@ const AddJob = () => {
         },
         {
           headers: { token: companyToken ?? '' },
-        }
+        },
       );
 
       alert(data.message);
@@ -92,92 +90,89 @@ const AddJob = () => {
     }
   };
 
-  
   return (
-   <form onSubmit={handleSubmit} className="add-job-form">
+    <form onSubmit={handleSubmit} className="add-job-form">
+      <h2 className="add-job-form_headline">
+        <strong>Add Job Listing</strong>
+      </h2>
 
-  <h2 className="add-job-form_headline"><strong>Add Job Listing</strong></h2>
+      <div className="add-job-form_body">
+        <div className="add-job-form_field">
+          <label>
+            <strong>Job Title</strong>
+          </label>
+          <input
+            type="text"
+            placeholder="Enter position title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
 
-  
-  <div className="add-job-form_body">
-    <div className="add-job-form_field">
-      <label>
-        <strong>Job Title</strong>
-      </label>
-      <input
-        type="text"
-        placeholder="Enter position title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        required
-      />
-    </div>
+        <div className="add-job-form_field">
+          <label>Job Description</label>
+          <div className="add-job-form_editor">
+            <div ref={editorRef} className="editor-container" />
+          </div>
+        </div>
 
-    <div className="add-job-form_field">
-      <label>Job Description</label>
-      <div className="add-job-form_editor">
-        <div ref={editorRef} className="editor-container" />
+        <div className="add-job-form_grid">
+          <div className="add-job-form_field">
+            <label>Category</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {JobCategories.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="add-job-form_field">
+            <label>Location</label>
+            <select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            >
+              {JobLocations.map((item, i) => (
+                <option key={i} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="add-job-form_field">
+            <label>Seniority</label>
+            <select value={level} onChange={(e) => setLevel(e.target.value)}>
+              <option value="Beginner Level">Beginner Level</option>
+              <option value="Intermediate Level">Intermediate Level</option>
+              <option value="Senior Level">Senior Level</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="add-job-form_field">
+          <label>Salary (SEK)</label>
+          <input
+            type="number"
+            placeholder="25000"
+            value={salary}
+            min={0}
+            onChange={(e) => setSalary(e.target.value)}
+          />
+        </div>
+
+        <button type="submit" className="add-job-form_submit">
+          Publish Job
+        </button>
       </div>
-    </div>
-
-    <div className="add-job-form_grid">
-      <div className="add-job-form_field">
-        <label>Category</label>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          {JobCategories.map((item, i) => (
-            <option key={i} value={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="add-job-form_field">
-        <label>Location</label>
-        <select
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        >
-          {JobLocations.map((item, i) => (
-            <option key={i} value={item}>
-              {item}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="add-job-form_field">
-        <label>Seniority</label>
-        <select value={level} onChange={(e) => setLevel(e.target.value)}>
-          <option value="Beginner Level">Beginner Level</option>
-          <option value="Intermediate Level">Intermediate Level</option>
-          <option value="Senior Level">Senior Level</option>
-        </select>
-      </div>
-    </div>
-
-    <div className="add-job-form_field">
-      <label>Salary (SEK)</label>
-      <input
-        type="number"
-        placeholder="25000"
-        value={salary}
-        min={0}
-        onChange={(e) => setSalary(e.target.value)}
-      />
-    </div>
-
-    <button type="submit" className="add-job-form_submit">
-      Publish Job
-    </button>
-  </div>
-</form>
-
+    </form>
   );
 };
 
 export default AddJob;
-

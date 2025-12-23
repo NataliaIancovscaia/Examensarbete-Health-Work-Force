@@ -178,29 +178,27 @@ const Applications: React.FC = () => {
                 </div>
               </div>
 
-              
-                <div className="application-card_info">
-                  <span className="application-card_title">
-                    {app.jobId?.title || 'Unknown Job'}
-                  </span>
-                  <span className="application-card_location">
-                    <strong>Place:</strong> {app.jobId?.location || '-'}
-                  </span>
-                </div>
-
-                <span
-                  className={`application-card_status ${
-                    app.status === 'Accepted'
-                      ? 'accepted'
-                      : app.status === 'Rejected'
-                        ? 'rejected'
-                        : 'pending'
-                  }`}
-                >
-                  {app.status || 'Pending'}
+              <div className="application-card_info">
+                <span className="application-card_title">
+                  {app.jobId?.title || 'Unknown Job'}
+                </span>
+                <span className="application-card_location">
+                  <strong>Place:</strong> {app.jobId?.location || '-'}
                 </span>
               </div>
-          
+
+              <span
+                className={`application-card_status ${
+                  app.status === 'Accepted'
+                    ? 'accepted'
+                    : app.status === 'Rejected'
+                      ? 'rejected'
+                      : 'pending'
+                }`}
+              >
+                {app.status || 'Pending'}
+              </span>
+            </div>
           ))}
         </div>
 

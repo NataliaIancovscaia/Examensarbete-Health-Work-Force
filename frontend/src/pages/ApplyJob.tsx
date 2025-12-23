@@ -100,7 +100,6 @@ const ApplyJob: React.FC = () => {
 
   if (!jobData) return <div className="loading">Loading...</div>;
 
-
   const appliedJobsIds = new Set(
     userApplications.map((app) =>
       typeof app.jobId === 'string' ? app.jobId : app.jobId?._id,

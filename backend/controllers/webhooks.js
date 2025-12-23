@@ -3,11 +3,10 @@ import User from "../models/User.js";
 
 export const clerkWebhooks = async (req, res) => {
   try {
-    
-    const isLocal = process.env.LOCAL && process.env.LOCAL.toLowerCase() === "true";
+    const isLocal =
+      process.env.LOCAL && process.env.LOCAL.toLowerCase() === "true";
     console.log("LOCAL:", process.env.LOCAL, "isLocal:", isLocal);
 
-   
     if (!isLocal) {
       const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
       await whook.verify(JSON.stringify(req.body), {
@@ -23,14 +22,16 @@ export const clerkWebhooks = async (req, res) => {
 
     if (!data || !type) {
       console.warn("Webhook received without type or data", req.body);
-      return res.status(400).json({ success: false, message: "Invalid webhook payload" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid webhook payload" });
     }
 
     const userData = {
       _id: data.id,
       email: data.email_addresses?.[0]?.email_address || "",
       name: `${data.first_name || ""} ${data.last_name || ""}`.trim(),
-      image: data.image_url ||"default.png",
+      image: data.image_url || "default.png",
       resume: "",
     };
 
@@ -53,4 +54,3 @@ export const clerkWebhooks = async (req, res) => {
     res.status(500).json({ success: false, message: "Webhooks error" });
   }
 };
-

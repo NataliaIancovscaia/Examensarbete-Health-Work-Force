@@ -16,8 +16,6 @@
   }
 }
 
-
-
 .apply-job {
   width: 100%;
   padding: 1rem;
@@ -26,7 +24,6 @@
   flex-direction: column;
   gap: 1.6rem;
   align-items: center;
-
 
   &_header {
     width: 100%;
@@ -62,7 +59,6 @@
       line-height: 1.2;
     }
 
-
     &-tags {
       display: flex;
       flex-wrap: wrap;
@@ -89,8 +85,6 @@
         }
       }
     }
-
- 
 
     &-apply {
       display: flex;
@@ -123,16 +117,12 @@
     }
   }
 
-
-
   &_content {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-
- 
 
   &_description {
     width: 100%;
@@ -160,31 +150,27 @@
       opacity: 0.92;
     }
 
-   
-
     button {
       position: fixed;
-    bottom: 1rem;
-    left: 0;
-    right: 0;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
 
-    margin: 0 auto;
-    display: block;
+      margin: 0 auto;
+      display: block;
 
-    padding: 0.7rem 1.6rem;
-    border-radius: 16px;
-    font-size: 0.94rem;
-    font-weight: 700;
-    cursor: pointer;
+      padding: 0.7rem 1.6rem;
+      border-radius: 16px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      cursor: pointer;
 
-    background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgba(255, 255, 255, 0.36);
-    z-index: 10;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      z-index: 10;
     }
   }
-
-
 
   &_sidebar {
     display: none;
@@ -195,8 +181,6 @@
     margin-top: 1rem;
   }
 }
-
-
 
 @media (min-width: 768px) {
   .apply-job {
@@ -242,7 +226,7 @@
       button {
         position: static;
         transform: none;
-      
+
         margin: 1.2rem auto 0;
       }
     }
@@ -269,11 +253,8 @@
   }
 }
 
-
 @media (min-width: 1024px) {
   .apply-job_header h1 {
     font-size: 2.6rem;
   }
 }
-
-

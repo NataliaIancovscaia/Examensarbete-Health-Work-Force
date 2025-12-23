@@ -17,31 +17,36 @@
   font-family: 'Inter', sans-serif;
   color: #000;
 
- 
   &_headline {
     font-size: 20px;
     font-weight: 700;
     text-align: center;
     margin-bottom: 16px;
-    background: linear-gradient(130deg, rgba(0,0,0,0.85), rgba(0,0,0,0.4));
+    background: linear-gradient(
+      130deg,
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.4)
+    );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  
   &_body {
     padding: 20px 12px 24px;
     border-radius: 20px;
 
-    @include glass-box(rgba(255, 255, 255, 0.06), 14px, rgba(255, 255, 255, 0.12));
+    @include glass-box(
+      rgba(255, 255, 255, 0.06),
+      14px,
+      rgba(255, 255, 255, 0.12)
+    );
 
     display: flex;
     flex-direction: column;
     gap: 12px;
     animation: fadeInGlass 0.6s ease forwards;
   }
-
 
   &_field {
     display: flex;
@@ -62,7 +67,11 @@
       padding: 12px;
       border-radius: 14px;
 
-      @include glass-box(rgba(255, 255, 255, 0.1), 6px, rgba(255, 255, 255, 0.18));
+      @include glass-box(
+        rgba(255, 255, 255, 0.1),
+        6px,
+        rgba(255, 255, 255, 0.18)
+      );
 
       font-size: 14px;
       color: #000;
@@ -96,12 +105,15 @@
     }
   }
 
-  
   &_editor {
     border-radius: 16px;
     overflow: hidden;
 
-    @include glass-box(rgba(255, 255, 255, 0.04), 18px, rgba(255, 255, 255, 0.18));
+    @include glass-box(
+      rgba(255, 255, 255, 0.04),
+      18px,
+      rgba(255, 255, 255, 0.18)
+    );
 
     .editor-container {
       min-height: 150px;
@@ -130,7 +142,6 @@
     gap: 12px;
   }
 
- 
   &_submit {
     width: 100%;
     padding: 14px;
@@ -138,7 +149,11 @@
     font-weight: 700;
     border-radius: 14px;
 
-    @include glass-box(rgba(255, 255, 255, 0.12), 10px, rgba(255, 255, 255, 0.22));
+    @include glass-box(
+      rgba(255, 255, 255, 0.12),
+      10px,
+      rgba(255, 255, 255, 0.22)
+    );
 
     color: #000;
     cursor: pointer;
@@ -155,8 +170,8 @@
   }
 
   @media (min-width: 769px) {
-     padding: 120px 40px 60px;
-     
+    padding: 120px 40px 60px;
+
     &_headline {
       font-size: 26px;
       margin-bottom: 24px;
@@ -195,7 +210,6 @@
   }
 }
 
-
 @keyframes fadeInGlass {
   from {
     opacity: 0;
@@ -208,5 +222,3 @@
     filter: blur(0);
   }
 }
-
-

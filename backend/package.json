@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "start:local": "export LOCAL=true && node server.js"
+    "start:local": "export LOCAL=true && node server.js",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
@@ -26,5 +27,8 @@
     "nodemon": "^3.1.11",
     "serverless-http": "^4.0.0",
     "svix": "^1.42.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4"
   }
 }
