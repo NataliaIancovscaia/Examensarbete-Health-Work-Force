@@ -97,7 +97,8 @@ const NavigationBar: React.FC = () => {
               Recruiter Login
             </button>
 
-            <button className="glass-navbar_menu-btn" onClick={handleUserLogin}>
+            <button className="glass-navbar_menu-btn" 
+                    onClick={handleUserLogin}>
               User Login
             </button>
           </>
