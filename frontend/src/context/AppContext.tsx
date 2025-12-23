@@ -84,6 +84,9 @@ export interface AppContextType {
 
   fetchUserData: () => Promise<void>;
   fetchUsersApplications: () => Promise<void>;
+
+  resetAuth: () => void;
 }
 
 export const AppContext = createContext<AppContextType | null>(null);
+
