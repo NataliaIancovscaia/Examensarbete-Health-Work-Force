@@ -44,14 +44,9 @@ const NavigationBar: React.FC = () => {
       <div className="glass-navbar_left">
         <div
           className="glass-navbar_logo-container"
-          onClick={() => {
-            if (companyData) {
-              navigate('/dashboard/manage-jobs');
-            } else {
-              navigate('/');
-            }
-          }}
-          style={{ cursor: 'pointer' }}
+          onClick={() =>
+            companyData ? navigate('/dashboard/manage-jobs') : navigate('/')
+          }
         >
           <img src={assets.logo} alt="Logo" className="glass-navbar_logo" />
           <h2>Health Work Force</h2>
@@ -61,28 +56,37 @@ const NavigationBar: React.FC = () => {
       <div className={`glass-navbar_menu ${open ? 'open' : ''}`}>
         {user && !companyData && (
           <>
-            <Link to="/applications" className="glass-navbar_menu-link">
+            <Link
+              to="/applications"
+              className="glass-navbar_btn"
+              onClick={() => setOpen(false)}
+            >
               Applied Jobs
             </Link>
 
-            <p className="glass-navbar_menu-user">
+            <div className="glass-navbar_btn glass-navbar_btn-static">
               Hi, {user.firstName} {user.lastName}
-            </p>
+            </div>
 
-            <UserButton />
+            <div className="glass-navbar_user-button">
+              <UserButton />
+            </div>
           </>
         )}
 
         {!user && companyData && (
           <>
-            <p className="glass-navbar_menu-user">Hi, {companyData.name}</p>
+            <div className="glass-navbar_btn glass-navbar_btn-static">
+              Hi, {companyData.name}
+            </div>
+
             <img
               src={companyData.image}
               alt="Recruiter Logo"
               className="recruiter-avatar"
             />
 
-            <button className="glass-navbar_menu-btn" onClick={logoutCompany}>
+            <button className="glass-navbar_btn" onClick={logoutCompany}>
               Logout
             </button>
           </>
@@ -90,15 +94,11 @@ const NavigationBar: React.FC = () => {
 
         {!user && !companyData && (
           <>
-            <button
-              className="glass-navbar_menu-btn"
-              onClick={handleRecruiterLogin}
-            >
+            <button className="glass-navbar_btn" onClick={handleRecruiterLogin}>
               Recruiter Login
             </button>
 
-            <button className="glass-navbar_menu-btn" 
-                    onClick={handleUserLogin}>
+            <button className="glass-navbar_btn" onClick={handleUserLogin}>
               User Login
             </button>
           </>

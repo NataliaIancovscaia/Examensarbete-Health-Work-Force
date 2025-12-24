@@ -143,25 +143,24 @@
   }
 
   &_submit {
-    width: 100%;
-    padding: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
 
-    @include glass-box(
-      rgba(255, 255, 255, 0.12),
-      10px,
-      rgba(255, 255, 255, 0.22)
-    );
-
-    color: #000;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.2s;
+    margin: auto;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.22);
       transform: translateY(-2px);
+      background: rgba(255, 255, 255, 1);
     }
 
     &:active {

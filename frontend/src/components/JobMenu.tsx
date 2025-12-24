@@ -156,7 +156,10 @@ const JobMenu: React.FC = () => {
       </aside>
 
       <section className="job-menu_jobs">
-        <h3>Jobs</h3>
+        <div className="job-menu_title">
+          <h3>Jobs</h3>
+          <span>{filteredJobs.length} results</span>
+        </div>
 
         <div className="job-menu_grid">
           {filteredJobs.slice((page - 1) * 6, page * 6).map((job) => (

@@ -76,6 +76,22 @@ const ViewApplications: React.FC = () => {
       console.error(error);
     }
   };
+  const handleDownloadResume = async (resumeUrl?: string) => {
+    if (!resumeUrl) return;
+    try {
+      const response = await fetch(resumeUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'resume.pdf';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading resume', error);
+      alert('Failed to download resume');
+    }
+  };
 
   useEffect(() => {
     if (companyToken) {
@@ -113,9 +129,9 @@ const ViewApplications: React.FC = () => {
               .filter((item) => item.jobId && item.userId)
               .map((applicant, index) => (
                 <tr key={applicant._id} className="view-applications_row">
-                  <td>{index + 1}</td>
+                  <td data-label="Nr.">{index + 1}</td>
 
-                  <td className="view-applications_user-cell">
+                  <td data-label="User" className="view-applications_user-cell">
                     <img
                       src={applicant.userId.image}
                       alt={applicant.userId.name}
@@ -124,21 +140,23 @@ const ViewApplications: React.FC = () => {
                     <span>{applicant.userId.name}</span>
                   </td>
 
-                  <td>{applicant.jobId.title}</td>
-                  <td>{applicant.jobId.location}</td>
+                  <td data-label="Job">{applicant.jobId.title}</td>
+                  <td data-label="Location">{applicant.jobId.location}</td>
 
-                  <td>
-                    <a
-                      href={applicant.userId.resume}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="view-applications_resume-link"
-                    >
-                      Resume
-                    </a>
+                  <td data-label="Resume">
+                    {applicant.userId.resume && (
+                      <button
+                        className="view-applications_resume-link"
+                        onClick={() =>
+                          handleDownloadResume(applicant.userId.resume)
+                        }
+                      >
+                        Download
+                      </button>
+                    )}
                   </td>
 
-                  <td>
+                  <td data-label="Action">
                     {applicant.status === 'Pending' ? (
                       <div className="view-applications_action-wrapper">
                         <div

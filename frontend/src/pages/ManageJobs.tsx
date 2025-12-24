@@ -1,9 +1,9 @@
 import moment from 'moment';
 import { useNavigate } from 'react-router';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { AppContext, type Job } from '../context/AppContext';
 import axios from 'axios';
 import Loading from '../components/Loading';
+import { AppContext, type Job } from '../context/AppContext';
 
 interface GetJobsResponse {
   success: boolean;
@@ -14,17 +14,20 @@ interface GetJobsResponse {
 interface ChangeVisibilityResponse {
   success: boolean;
   message: string;
+  job: Job;
 }
 
 const ManageJobs: React.FC = () => {
   const navigate = useNavigate();
-  const { backendUrl, companyToken } = useContext(AppContext)!;
+  const { backendUrl, companyToken, updateJobInContext } =
+    useContext(AppContext)!;
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchCompanyJobs = useCallback(async () => {
     if (!companyToken) return;
+
     setLoading(true);
     try {
       const { data } = await axios.get<GetJobsResponse>(
@@ -37,10 +40,9 @@ const ManageJobs: React.FC = () => {
       } else {
         alert(data.message);
       }
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      alert(message);
+    } catch (error) {
       console.error(error);
+      alert('Failed to load jobs');
     } finally {
       setLoading(false);
     }
@@ -54,27 +56,24 @@ const ManageJobs: React.FC = () => {
         { headers: { token: companyToken } },
       );
 
-      if (data.success) {
-        fetchCompanyJobs();
+      if (data.success && data.job) {
+        setJobs((prevJobs) =>
+          prevJobs.map((job) => (job._id === data.job._id ? data.job : job)),
+        );
+        updateJobInContext(data.job);
       } else {
         alert(data.message);
       }
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      alert(message);
+    } catch (error) {
       console.error(error);
+      alert('Failed to change visibility');
     }
   };
-
   useEffect(() => {
-    if (companyToken) {
-      fetchCompanyJobs();
-    }
-  }, [companyToken, fetchCompanyJobs]);
+    fetchCompanyJobs();
+  }, [fetchCompanyJobs]);
 
-  if (loading) {
-    return <Loading />;
-  }
+  if (loading) return <Loading />;
 
   if (jobs.length === 0) {
     return <div className="empty-state">No job available or posted</div>;
@@ -95,18 +94,26 @@ const ManageJobs: React.FC = () => {
               <th>Date</th>
               <th>Location</th>
               <th>Applicants</th>
+              <th>Status</th>
               <th>Visible</th>
             </tr>
           </thead>
 
           <tbody>
             {jobs.map((job, index) => (
-              <tr key={job._id} className="manage-jobs_row">
+              <tr key={job._id}>
                 <td data-label="Nr.">{index + 1}</td>
                 <td data-label="Job Title">{job.title}</td>
                 <td data-label="Date">{moment(job.date).format('ll')}</td>
                 <td data-label="Location">{job.location}</td>
                 <td data-label="Applicants">{job.applicants ?? 0}</td>
+                <td data-label="Status">
+                  {job.visible ? (
+                    <span className="status-active">Active</span>
+                  ) : (
+                    <span className="status-hidden">Hidden</span>
+                  )}
+                </td>
                 <td data-label="Visible">
                   <label className="manage-jobs_toggle">
                     <input

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import {
   AppContext,
   type AppContextType,
@@ -46,8 +46,6 @@ if (!rawBackendUrl) {
 }
 const backendUrl: string = rawBackendUrl;
 
-
-
 const initAuthState = () => {
   const isFirstLoad = !sessionStorage.getItem('app_initialized');
 
@@ -61,32 +59,47 @@ const initAuthState = () => {
     initialUserData: null as User | null,
     initialUserApplications: [] as Application[],
     initialRecruiter: null as Recruiter | null,
-    initialCompanyToken: isFirstLoad ? null : localStorage.getItem('companyToken'),
+    initialCompanyToken: isFirstLoad
+      ? null
+      : localStorage.getItem('companyToken'),
     initialCompanyData: null as Company | null,
   };
 };
 
-
-
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const { initialUserData, initialUserApplications, initialRecruiter, initialCompanyToken, initialCompanyData } = initAuthState();
+  const {
+    initialUserData,
+    initialUserApplications,
+    initialRecruiter,
+    initialCompanyToken,
+    initialCompanyData,
+  } = initAuthState();
 
-  const [searchFilter, setSearchFilter] = useState<SearchFilter>({ title: '', location: '' });
+  const [searchFilter, setSearchFilter] = useState<SearchFilter>({
+    title: '',
+    location: '',
+  });
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState<boolean>(false);
 
-  const [recruiter, setRecruiter] = useState<Recruiter | null>(initialRecruiter);
-  const [companyToken, setCompanyToken] = useState<string | null>(initialCompanyToken);
-  const [companyData, setCompanyData] = useState<Company | null>(initialCompanyData);
+  const [recruiter, setRecruiter] = useState<Recruiter | null>(
+    initialRecruiter,
+  );
+  const [companyToken, setCompanyToken] = useState<string | null>(
+    initialCompanyToken,
+  );
+  const [companyData, setCompanyData] = useState<Company | null>(
+    initialCompanyData,
+  );
 
   const [userData, setUserData] = useState<User | null>(initialUserData);
-  const [userApplications, setUserApplications] = useState<Application[]>(initialUserApplications);
+  const [userApplications, setUserApplications] = useState<Application[]>(
+    initialUserApplications,
+  );
 
   const { user } = useUser();
   const { getToken } = useAuth();
-
- 
 
   const resetAuth = useCallback(() => {
     setUserData(null);
@@ -99,13 +112,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const logoutRecruiter = () => setRecruiter(null);
 
-
   const fetchUserData = useCallback(async () => {
     try {
       const token = await getToken();
-      const { data } = await axios.get<GetUserResponse>(`${backendUrl}/api/users/user`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.get<GetUserResponse>(
+        `${backendUrl}/api/users/user`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
 
       if (data.success) setUserData(data.user);
       else console.warn(data.message);
@@ -143,18 +158,52 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     })();
   }, [user, fetchUserData, fetchUsersApplications]);
 
- 
+  const fetchJobs = useCallback(async () => {
+    try {
+      const { data } = await axios.get<GetJobsResponse>(
+        `${backendUrl}/api/jobs`,
+      );
+      if (data.success) setJobs(data.jobs);
+    } catch {
+      console.error('Failed to fetch jobs');
+    }
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    (async () => {
+      try {
+        const { data } = await axios.get<GetJobsResponse>(
+          `${backendUrl}/api/jobs`,
+        );
+
+        if (data.success && isMounted) {
+          setJobs(data.jobs);
+        }
+      } catch {
+        console.error('Failed to fetch jobs');
+      }
+    })();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   React.useEffect(() => {
     let isMounted = true;
 
     const init = async () => {
       try {
-        const { data } = await axios.get<GetJobsResponse>(`${backendUrl}/api/jobs`);
+        const { data } = await axios.get<GetJobsResponse>(
+          `${backendUrl}/api/jobs`,
+        );
         if (data.success && isMounted) setJobs(data.jobs);
         else console.warn(data.message);
       } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
         console.error('Failed to fetch jobs:', message);
       }
 
@@ -168,8 +217,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       isMounted = false;
     };
   }, []);
-
-
 
   React.useEffect(() => {
     if (!companyToken) return;
@@ -186,7 +233,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         if (data.success && isMounted) setCompanyData(data.company);
         else console.warn(data.message);
       } catch (error: unknown) {
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        const message =
+          error instanceof Error ? error.message : 'Unknown error';
         console.error('Failed to fetch company data:', message);
       }
     };
@@ -197,7 +245,23 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       isMounted = false;
     };
   }, [companyToken]);
+  const updateJobInContext = useCallback(async (updatedJob: Job) => {
+    if (!updatedJob.visible) {
+      setJobs((prev) => prev.filter((job) => job._id !== updatedJob._id));
+      return;
+    }
 
+    try {
+      const { data } = await axios.get<GetJobsResponse>(
+        `${backendUrl}/api/jobs`,
+      );
+
+      if (data.success) setJobs(data.jobs);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Failed to refetch public jobs', message);
+    }
+  }, []);
 
   const value: AppContextType = useMemo(
     () => ({
@@ -224,6 +288,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       fetchUserData,
       fetchUsersApplications,
       resetAuth,
+      updateJobInContext,
+      fetchJobs,
     }),
     [
       searchFilter,
@@ -238,11 +304,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       fetchUserData,
       fetchUsersApplications,
       resetAuth,
+      updateJobInContext,
+      fetchJobs,
     ],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
-
-
-

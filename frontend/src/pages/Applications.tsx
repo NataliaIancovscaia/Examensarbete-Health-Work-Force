@@ -30,13 +30,11 @@ const Applications: React.FC = () => {
 
   const [isEdit, setIsEdit] = useState(false);
   const [resume, setResume] = useState<File | null>(null);
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
   const handleResumeUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0]) return;
     setResume(e.target.files[0]);
   };
-
   const getErrorMessage = (error: unknown) => {
     if (axios.isAxiosError(error))
       return error.message || 'Something went wrong';
@@ -76,28 +74,35 @@ const Applications: React.FC = () => {
 
   const handleDownload = async () => {
     if (!userData?.resume) return;
-
     const response = await fetch(userData.resume);
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
-
     const a = document.createElement('a');
     a.href = url;
     a.download = 'resume.pdf';
     a.click();
-
     window.URL.revokeObjectURL(url);
   };
 
-  const handleView = () => {
+  const handleView = async () => {
     if (!userData?.resume) return;
-    window.open(userData.resume, '_blank', 'noopener,noreferrer');
+
+    const response = await fetch(userData.resume);
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(
+      new Blob([blob], { type: 'application/pdf' }),
+    );
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url);
+    }, 1000);
   };
 
   useEffect(() => {
-    if (user) {
-      fetchUsersApplications();
-    }
+    if (user) fetchUsersApplications();
   }, [user, fetchUsersApplications]);
 
   return (
@@ -109,10 +114,10 @@ const Applications: React.FC = () => {
 
         <div className="applications_resume-container">
           {isEdit || !userData?.resume ? (
-            <label className="application-card application-card-upload">
-              <p className="application-card_upload-text">
+            <label className="applications_upload">
+              <span className="applications_upload-text">
                 {resume ? resume.name : 'Select Resume'}
-              </p>
+              </span>
 
               <input
                 type="file"
@@ -124,11 +129,11 @@ const Applications: React.FC = () => {
               <img
                 src={assets.profile_upload_icon}
                 alt="upload"
-                className="application-card_upload-icon"
+                className="applications_upload-icon"
               />
 
               <button
-                className="applications_save-btn"
+                className="applications_btn"
                 type="button"
                 onClick={updateResume}
               >
@@ -136,20 +141,17 @@ const Applications: React.FC = () => {
               </button>
             </label>
           ) : (
-            <div className="applications_resume-view">
-              <button className="applications_resume-link" onClick={handleView}>
+            <div className="applications_resume-actions">
+              <button className="applications_btn" onClick={handleView}>
                 View Resume
               </button>
 
-              <button
-                className="applications_resume-link"
-                onClick={handleDownload}
-              >
+              <button className="applications_btn" onClick={handleDownload}>
                 Download
               </button>
 
               <button
-                className="applications_edit-btn"
+                className="applications_btn"
                 onClick={() => setIsEdit(true)}
               >
                 Edit
@@ -168,7 +170,7 @@ const Applications: React.FC = () => {
               <div className="application-card_header">
                 <img
                   src={app.companyId?.image || assets.company_icon}
-                  alt={app.companyId?.name || 'Company logo'}
+                  alt="Company logo"
                 />
                 <div className="application-card_company">
                   <span className="name">
@@ -201,25 +203,6 @@ const Applications: React.FC = () => {
             </div>
           ))}
         </div>
-
-        {isPreviewOpen && userData?.resume && (
-          <div className="resume-modal-overlay">
-            <div className="resume-modal">
-              <div className="resume-modal-header">
-                <span>Resume Preview</span>
-                <button onClick={() => setIsPreviewOpen(false)}>✕</button>
-              </div>
-
-              <iframe
-                src={userData.resume}
-                width="100%"
-                height="600"
-                title="Resume Preview"
-                style={{ border: 'none' }}
-              />
-            </div>
-          </div>
-        )}
       </div>
 
       <Footer />

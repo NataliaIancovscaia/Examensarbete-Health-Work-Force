@@ -27,7 +27,7 @@ const AddJob = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillRef = useRef<Quill | null>(null);
 
-  const { backendUrl, companyToken } = useContext(AppContext)!;
+  const { backendUrl, companyToken, fetchJobs } = useContext(AppContext)!;
 
   useEffect(() => {
     if (!editorRef.current || quillRef.current) return;
@@ -56,46 +56,44 @@ const AddJob = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const salaryNumber = salary === '' ? 0 : Number(salary);
+    const salaryNumber = salary === '' ? 0 : Number(salary);
 
-  try {
-    const { data } = await axios.post<PostJobResponse>(
-      `${backendUrl}/api/company/post-job`,
-      {
-        title,
-        description,
-        location,
-        salary: salaryNumber,
-        category,
-        level,
-      },
-      {
-        headers: { token: companyToken ?? '' },
-      },
-    );
+    try {
+      const { data } = await axios.post<PostJobResponse>(
+        `${backendUrl}/api/company/post-job`,
+        {
+          title,
+          description,
+          location,
+          salary: salaryNumber,
+          category,
+          level,
+        },
+        {
+          headers: { token: companyToken ?? '' },
+        },
+      );
 
-    alert(data.message);
+      alert(data.message);
 
-    if (data.success) {
-   
-      setTitle('');
-      setSalary('');
-      setDescription('');
-      setLocation('Malmo');
-      setCategory('Diagnostics');
-      setLevel('Intermediate Level');
+      if (data.success) {
+        await fetchJobs();
+        setTitle('');
+        setSalary('');
+        setDescription('');
+        setLocation('Malmo');
+        setCategory('Diagnostics');
+        setLevel('Intermediate Level');
 
-      
-      quillRef.current?.setContents([]);
+        quillRef.current?.setContents([]);
+      }
+    } catch (error: unknown) {
+      alert(getErrorMessage(error));
+      console.error(error);
     }
-  } catch (error: unknown) {
-    alert(getErrorMessage(error));
-    console.error(error);
-  }
-};
-
+  };
 
   return (
     <form onSubmit={handleSubmit} className="add-job-form">

@@ -86,7 +86,8 @@ export interface AppContextType {
   fetchUsersApplications: () => Promise<void>;
 
   resetAuth: () => void;
+  updateJobInContext: (job: Job) => void;
+  fetchJobs: () => Promise<void>;
 }
 
 export const AppContext = createContext<AppContextType | null>(null);
-

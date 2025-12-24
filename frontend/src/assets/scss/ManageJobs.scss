@@ -1,15 +1,16 @@
 .manage-jobs {
   width: 100%;
-  padding: 60px 16px 40px;
+  max-width: 100%;
+  padding: 120px 32px 60px;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
   color: #000;
 
   &_title {
-    font-size: 20px;
+    font-size: 26px;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
     background: linear-gradient(
       130deg,
       rgba(0, 0, 0, 0.85),
@@ -21,47 +22,35 @@
   }
 
   &_table-wrapper {
-    padding: 0;
-    background: transparent;
-    border: none;
+    width: 100%;
     overflow-x: auto;
-    backdrop-filter: none;
-  }
-
-  &_table,
-  thead,
-  tbody,
-  tr,
-  th,
-  td {
-    display: block;
-  }
-
-  thead tr {
-    display: none;
-  }
-
-  tbody tr {
-    margin-bottom: 16px;
-    background: rgba(255, 255, 255, 0.06);
     border-radius: 16px;
-    padding: 16px;
-    backdrop-filter: blur(12px);
-    position: relative;
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  td {
-    display: block;
-    padding: 6px 0;
-    border-bottom: none;
-    word-break: break-word;
+  &_table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    table-layout: auto;
 
-    &::before {
-      content: attr(data-label);
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    th {
+      font-size: 13px;
       font-weight: 600;
-      color: rgba(0, 0, 0, 0.7);
-      display: block;
-      margin-bottom: 4px;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    td {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
     }
   }
 
@@ -110,103 +99,65 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 24px auto 0;
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 12px;
+    min-width: 120px;
+
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #000;
-    transition: 0.3s;
+    transition: 0.2s;
+    margin: auto;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
+      background: rgba(255, 255, 255, 1);
     }
     &:active {
       transform: scale(0.97);
     }
   }
 
-  @media (min-width: 769px) {
-    padding: 120px 40px 60px;
+  @media (max-width: 768px) {
+    padding: 80px 16px 40px;
 
-    &_title {
-      font-size: 26px;
-      margin-bottom: 24px;
+    &_table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
     }
 
-    &_table-wrapper {
-      background: rgba(255, 255, 255, 0.06);
-      border-radius: 16px;
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      margin-bottom: 16px;
       padding: 16px;
-      backdrop-filter: blur(18px);
-      overflow-x: auto;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.08);
     }
 
-    &_table {
-      display: table;
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 15px;
+    td {
+      padding: 6px 0;
 
-      thead {
-        display: table-header-group;
-      }
-      tbody {
-        display: table-row-group;
-      }
-      tr {
-        display: table-row;
-      }
-      th,
-      td {
-        display: table-cell;
-      }
-
-      th,
-      td {
-        text-align: left;
-        padding: 10px;
-        white-space: nowrap;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      }
-
-      th {
-        font-weight: 600;
+      &::before {
+        content: attr(data-label);
+        display: block;
         font-size: 12px;
-        background: rgba(255, 255, 255, 0.1);
-        color: #000;
-      }
-
-      td::before {
-        content: none;
+        font-weight: 600;
+        opacity: 0.6;
+        margin-bottom: 4px;
       }
     }
 
     button.add-new-job {
-      width: 140px;
-      height: 40px;
-      margin: 24px auto 0;
-      font-size: 16px;
-      border-radius: 8px;
-      display: block;
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      cursor: pointer;
-      color: #000;
-      transition: 0.3s;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
-      }
-      &:active {
-        transform: scale(0.97);
-      }
+      width: 100%;
     }
   }
 }
