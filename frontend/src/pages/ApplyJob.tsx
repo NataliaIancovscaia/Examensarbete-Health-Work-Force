@@ -37,49 +37,48 @@ const ApplyJob: React.FC = () => {
 
   const { isSignedIn } = useAuth();
 
-const applyHandler = async () => {
-  try {
-    if (!isSignedIn) {
-      alert('Login to apply for jobs');
-      return;
+  const applyHandler = async () => {
+    try {
+      if (!isSignedIn) {
+        alert('Login to apply for jobs');
+        return;
+      }
+
+      if (!userData) {
+        alert('User data is loading, try again');
+        return;
+      }
+
+      if (!userData.resume) {
+        navigate('/applications');
+        alert('Upload resume to apply');
+        return;
+      }
+
+      if (!jobData) return;
+
+      const token = await getToken();
+
+      const { data } = await axios.post<ApplyJobResponse>(
+        `${backendUrl}/api/users/apply`,
+        { jobId: jobData._id },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      alert(data.message);
+
+      if (data.success) {
+        setUserApplications([
+          ...userApplications,
+          { jobId: jobData } as Application,
+        ]);
+      }
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Unknown error';
+      alert(message);
+      console.error(error);
     }
-
-    if (!userData) {
-      alert('User data is loading, try again');
-      return;
-    }
-
-    if (!userData.resume) {
-      navigate('/applications');
-      alert('Upload resume to apply');
-      return;
-    }
-
-    if (!jobData) return;
-
-    const token = await getToken();
-
-    const { data } = await axios.post<ApplyJobResponse>(
-      `${backendUrl}/api/users/apply`,
-      { jobId: jobData._id },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
-
-    alert(data.message);
-
-    if (data.success) {
-      setUserApplications([
-        ...userApplications,
-        { jobId: jobData } as Application,
-      ]);
-    }
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
-    alert(message);
-    console.error(error);
-  }
-};
-
+  };
 
   useEffect(() => {
     const getJob = async () => {

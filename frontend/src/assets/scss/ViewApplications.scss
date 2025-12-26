@@ -96,7 +96,7 @@
   }
 
   &_dots-btn {
-   display: inline-flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     width: 34px;
@@ -133,33 +133,33 @@
     z-index: 10;
 
     button {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 120px;
-    padding: 8px 14px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-    transition: 0.2s;
-    margin: 0 auto;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 120px;
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      transition: 0.2s;
+      margin: 0 auto;
 
-    &:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 1);
-    }
+      &:hover {
+        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 1);
+      }
 
       &.accept {
         border-color: rgba(17, 97, 46, 0.6);
-        color: rgba(5, 107, 41, 0.6) ;
+        color: rgba(5, 107, 41, 0.6);
       }
 
       &.reject {
         border-color: rgba(177, 45, 45, 0.6);
-        color:rgba(221, 11, 11, 0.6);
+        color: rgba(221, 11, 11, 0.6);
       }
     }
   }

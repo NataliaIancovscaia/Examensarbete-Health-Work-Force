@@ -12,8 +12,6 @@ import {
 import axios from 'axios';
 import { useAuth, useUser } from '@clerk/clerk-react';
 
-
-
 interface GetUserResponse {
   success: boolean;
   message: string;
@@ -42,15 +40,10 @@ interface AppProviderProps {
   children: React.ReactNode;
 }
 
-
-
 const backendUrl = import.meta.env.VITE_BACKEND_URL as string;
 if (!backendUrl) throw new Error('VITE_BACKEND_URL is not defined');
 
-
-
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-
   const [searchFilter, setSearchFilter] = useState<SearchFilter>({
     title: '',
     location: '',
@@ -58,13 +51,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isSearched, setIsSearched] = useState(false);
   const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
 
-
   const [jobs, setJobs] = useState<Job[]>([]);
-
 
   const [userData, setUserData] = useState<User | null>(null);
   const [userApplications, setUserApplications] = useState<Application[]>([]);
-
 
   const [recruiter, setRecruiter] = useState<Recruiter | null>(null);
   const [companyToken, setCompanyToken] = useState<string | null>(
@@ -74,8 +64,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const { user } = useUser();
   const { getToken } = useAuth();
-
-
 
   const resetAuth = useCallback(() => {
     setUserData(null);
@@ -87,7 +75,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   }, []);
 
   const logoutRecruiter = () => setRecruiter(null);
-
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -126,31 +113,28 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   }, [getToken]);
 
-  
- useEffect(() => {
-  let active = true;
+  useEffect(() => {
+    let active = true;
 
-  (async () => {
-    try {
-      const { data } = await axios.get<GetJobsResponse>(
-        `${backendUrl}/api/jobs`,
-      );
+    (async () => {
+      try {
+        const { data } = await axios.get<GetJobsResponse>(
+          `${backendUrl}/api/jobs`,
+        );
 
-      if (data.success && active) {
-        setJobs(data.jobs);
+        if (data.success && active) {
+          setJobs(data.jobs);
+        }
+      } catch (error) {
+        console.error('Failed to fetch jobs', error);
       }
-    } catch (error) {
-      console.error('Failed to fetch jobs', error);
-    }
-  })();
+    })();
 
-  return () => {
-    active = false;
-  };
-}, []);
+    return () => {
+      active = false;
+    };
+  }, []);
 
-
- 
   useEffect(() => {
     if (!user) return;
 
@@ -185,7 +169,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     };
   }, [user, getToken]);
 
-  
   useEffect(() => {
     if (!companyToken) return;
 
@@ -209,8 +192,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     };
   }, [companyToken]);
 
-  
-
   const updateJobInContext = useCallback(
     async (updatedJob: Job) => {
       if (!updatedJob.visible) {
@@ -221,8 +202,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     },
     [fetchJobs],
   );
-
- 
 
   const value: AppContextType = useMemo(
     () => ({
@@ -272,4 +251,3 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
-
