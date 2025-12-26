@@ -12,6 +12,8 @@ import {
 import axios from 'axios';
 import { useAuth, useUser } from '@clerk/clerk-react';
 
+
+
 interface GetUserResponse {
   success: boolean;
   message: string;
@@ -40,66 +42,40 @@ interface AppProviderProps {
   children: React.ReactNode;
 }
 
-const rawBackendUrl = import.meta.env.VITE_BACKEND_URL;
-if (!rawBackendUrl) {
-  throw new Error('VITE_BACKEND_URL is not defined');
-}
-const backendUrl: string = rawBackendUrl;
 
-const initAuthState = () => {
-  const isFirstLoad = !sessionStorage.getItem('app_initialized');
 
-  if (isFirstLoad) {
-    sessionStorage.setItem('app_initialized', 'true');
-    localStorage.removeItem('companyToken');
-  }
+const backendUrl = import.meta.env.VITE_BACKEND_URL as string;
+if (!backendUrl) throw new Error('VITE_BACKEND_URL is not defined');
 
-  return {
-    isFirstLoad,
-    initialUserData: null as User | null,
-    initialUserApplications: [] as Application[],
-    initialRecruiter: null as Recruiter | null,
-    initialCompanyToken: isFirstLoad
-      ? null
-      : localStorage.getItem('companyToken'),
-    initialCompanyData: null as Company | null,
-  };
-};
+
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const {
-    initialUserData,
-    initialUserApplications,
-    initialRecruiter,
-    initialCompanyToken,
-    initialCompanyData,
-  } = initAuthState();
 
   const [searchFilter, setSearchFilter] = useState<SearchFilter>({
     title: '',
     location: '',
   });
-  const [isSearched, setIsSearched] = useState<boolean>(false);
+  const [isSearched, setIsSearched] = useState(false);
+  const [showRecruiterLogin, setShowRecruiterLogin] = useState(false);
+
+
   const [jobs, setJobs] = useState<Job[]>([]);
-  const [showRecruiterLogin, setShowRecruiterLogin] = useState<boolean>(false);
 
-  const [recruiter, setRecruiter] = useState<Recruiter | null>(
-    initialRecruiter,
-  );
+
+  const [userData, setUserData] = useState<User | null>(null);
+  const [userApplications, setUserApplications] = useState<Application[]>([]);
+
+
+  const [recruiter, setRecruiter] = useState<Recruiter | null>(null);
   const [companyToken, setCompanyToken] = useState<string | null>(
-    initialCompanyToken,
+    localStorage.getItem('companyToken'),
   );
-  const [companyData, setCompanyData] = useState<Company | null>(
-    initialCompanyData,
-  );
-
-  const [userData, setUserData] = useState<User | null>(initialUserData);
-  const [userApplications, setUserApplications] = useState<Application[]>(
-    initialUserApplications,
-  );
+  const [companyData, setCompanyData] = useState<Company | null>(null);
 
   const { user } = useUser();
   const { getToken } = useAuth();
+
+
 
   const resetAuth = useCallback(() => {
     setUserData(null);
@@ -112,51 +88,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const logoutRecruiter = () => setRecruiter(null);
 
-  const fetchUserData = useCallback(async () => {
-    try {
-      const token = await getToken();
-      const { data } = await axios.get<GetUserResponse>(
-        `${backendUrl}/api/users/user`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-
-      if (data.success) setUserData(data.user);
-      else console.warn(data.message);
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to get user:', message);
-    }
-  }, [getToken]);
-
-  const fetchUsersApplications = useCallback(async () => {
-    try {
-      const token = await getToken();
-      const { data } = await axios.get<GetApplicationsResponse>(
-        `${backendUrl}/api/users/applications`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-
-      if (data.success) setUserApplications(data.applications);
-      else console.warn(data.message);
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to fetch user applications:', message);
-    }
-  }, [getToken]);
-
-  React.useEffect(() => {
-    if (!user) return;
-
-    (async () => {
-      try {
-        await Promise.all([fetchUserData(), fetchUsersApplications()]);
-      } catch (err) {
-        console.error(err);
-      }
-    })();
-  }, [user, fetchUserData, fetchUsersApplications]);
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -169,99 +100,129 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   }, []);
 
+  const fetchUserData = useCallback(async () => {
+    try {
+      const token = await getToken();
+      const { data } = await axios.get<GetUserResponse>(
+        `${backendUrl}/api/users/user`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      if (data.success) setUserData(data.user);
+    } catch (err) {
+      console.error('Failed to fetch user data', err);
+    }
+  }, [getToken]);
+
+  const fetchUsersApplications = useCallback(async () => {
+    try {
+      const token = await getToken();
+      const { data } = await axios.get<GetApplicationsResponse>(
+        `${backendUrl}/api/users/applications`,
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      if (data.success) setUserApplications(data.applications);
+    } catch (err) {
+      console.error('Failed to fetch applications', err);
+    }
+  }, [getToken]);
+
+  
+ useEffect(() => {
+  let active = true;
+
+  (async () => {
+    try {
+      const { data } = await axios.get<GetJobsResponse>(
+        `${backendUrl}/api/jobs`,
+      );
+
+      if (data.success && active) {
+        setJobs(data.jobs);
+      }
+    } catch (error) {
+      console.error('Failed to fetch jobs', error);
+    }
+  })();
+
+  return () => {
+    active = false;
+  };
+}, []);
+
+
+ 
   useEffect(() => {
-    let isMounted = true;
+    if (!user) return;
+
+    let active = true;
 
     (async () => {
       try {
-        const { data } = await axios.get<GetJobsResponse>(
-          `${backendUrl}/api/jobs`,
-        );
+        const token = await getToken();
 
-        if (data.success && isMounted) {
-          setJobs(data.jobs);
-        }
-      } catch {
-        console.error('Failed to fetch jobs');
+        const [userRes, appsRes] = await Promise.all([
+          axios.get<GetUserResponse>(`${backendUrl}/api/users/user`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get<GetApplicationsResponse>(
+            `${backendUrl}/api/users/applications`,
+            { headers: { Authorization: `Bearer ${token}` } },
+          ),
+        ]);
+
+        if (!active) return;
+
+        if (userRes.data.success) setUserData(userRes.data.user);
+        if (appsRes.data.success)
+          setUserApplications(appsRes.data.applications);
+      } catch (err) {
+        console.error('Failed to load user state', err);
       }
     })();
 
     return () => {
-      isMounted = false;
+      active = false;
     };
-  }, []);
+  }, [user, getToken]);
 
-  React.useEffect(() => {
-    let isMounted = true;
-
-    const init = async () => {
-      try {
-        const { data } = await axios.get<GetJobsResponse>(
-          `${backendUrl}/api/jobs`,
-        );
-        if (data.success && isMounted) setJobs(data.jobs);
-        else console.warn(data.message);
-      } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : 'Unknown error';
-        console.error('Failed to fetch jobs:', message);
-      }
-
-      const storedToken = localStorage.getItem('companyToken');
-      if (storedToken && isMounted) setCompanyToken(storedToken);
-    };
-
-    init();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  React.useEffect(() => {
+  
+  useEffect(() => {
     if (!companyToken) return;
 
-    let isMounted = true;
+    let active = true;
 
-    const fetchCompanyData = async () => {
+    (async () => {
       try {
         const { data } = await axios.get<GetCompanyResponse>(
           `${backendUrl}/api/company/company`,
           { headers: { token: companyToken } },
         );
 
-        if (data.success && isMounted) setCompanyData(data.company);
-        else console.warn(data.message);
-      } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : 'Unknown error';
-        console.error('Failed to fetch company data:', message);
+        if (data.success && active) setCompanyData(data.company);
+      } catch (err) {
+        console.error('Failed to fetch company data', err);
       }
-    };
-
-    fetchCompanyData();
+    })();
 
     return () => {
-      isMounted = false;
+      active = false;
     };
   }, [companyToken]);
-  const updateJobInContext = useCallback(async (updatedJob: Job) => {
-    if (!updatedJob.visible) {
-      setJobs((prev) => prev.filter((job) => job._id !== updatedJob._id));
-      return;
-    }
 
-    try {
-      const { data } = await axios.get<GetJobsResponse>(
-        `${backendUrl}/api/jobs`,
-      );
+  
 
-      if (data.success) setJobs(data.jobs);
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Unknown error';
-      console.error('Failed to refetch public jobs', message);
-    }
-  }, []);
+  const updateJobInContext = useCallback(
+    async (updatedJob: Job) => {
+      if (!updatedJob.visible) {
+        setJobs((prev) => prev.filter((j) => j._id !== updatedJob._id));
+        return;
+      }
+      fetchJobs();
+    },
+    [fetchJobs],
+  );
+
+ 
 
   const value: AppContextType = useMemo(
     () => ({
@@ -311,3 +272,4 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
+
